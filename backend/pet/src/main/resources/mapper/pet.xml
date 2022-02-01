@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sns.pet.dao.petDao">
+
+    <!-- 특정 반려동물 상세정보 조회 -->
+    <select id="selectPet" resultType="petDto" parameterType="map">
+        SELECT *
+        FROM Pet
+        WHERE userNumber = #{userNumber} and petNumber = #{petNumber}
+    </select>
+
+    <!-- 반려동물 정보 추가 -->
+    <insert id="insertPet" parameterType="petDto">
+        INSERT INTO Pet (userNumber, petNumber, animalNumber, petName, petGender, petBirth, petProfilePicture, petProfileContent)
+        VALUES (#{userNumber}, #{petNumber}, #{animalNumber}, #{petName}, #{petGender}, #{petBirth}, #{petProfilePicture}, #{petProfileContent})
+    </insert>
+
+    <!-- 반려동물 정보 수정 -->
+    <!-- animalNumber도 사용자가 수정할까..? -->
+    <update id="updatePet" parameterType="petDto">
+        UPDATE Pet
+        SET petName=#{petName}, petGender=#{petGender}, petBirth=#{petBirth}, petProfilePicture=#{petProfilePicture}, petProfileContent=#{petProfileContent}
+        WHERE userNumber = #{userNumber} and petNumber = #{petNumber}
+    </update>
+
+    <!-- 반려동물 정보 삭제 -->
+    <delete id="deletePet" parameterType="map">
+        DELETE FROM Pet
+        WHERE userNumber = #{userNumber} and petNumber = #{petNumber}
+    </delete>
+</mapper>
