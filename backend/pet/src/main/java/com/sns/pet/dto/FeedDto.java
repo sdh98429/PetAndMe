@@ -1,59 +1,34 @@
 package com.sns.pet.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.List;
+
+@Getter @Setter
 public class FeedDto {
-    private int feedNumber;
-    private String userID;
+    private Long feedNumber;
+    private Long userNumber;
     private String feedContent;
     private String feedDate;
+    private String feedThumbnailFolder;
+    private String feedThumbnailName;
     private int cntLike;
     private int cntComment;
+    private List<FileInfoDto> fileInfoDtoList;
 
-    public int getFeedNumber() {
-        return feedNumber;
+    public FeedDto() {}
+
+    @Override
+    public String toString() {
+        return "FeedDto{" +
+                "feedNumber=" + feedNumber +
+                ", userNumber=" + userNumber +
+                ", feedContent='" + feedContent + '\'' +
+                ", feedDate='" + feedDate + '\'' +
+                ", feedThumbnailFolder='" + feedThumbnailFolder + '\'' +
+                ", feedThumbnailName='" + feedThumbnailName + '\'' +
+                ", fileInfoDtoList=" + fileInfoDtoList +
+                '}';
     }
-
-    public void setFeedNumber(int feedNumber) {
-        this.feedNumber = feedNumber;
-    }
-
-    public String getUserID() {
-        return userID;
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
-    }
-
-    public String getFeedContent() {
-        return feedContent;
-    }
-
-    public void setFeedContent(String feedContent) {
-        this.feedContent = feedContent;
-    }
-
-    public String getFeedDate() {
-        return feedDate;
-    }
-
-    public void setFeedDate(String feedDate) {
-        this.feedDate = feedDate;
-    }
-
-    public int getCntLike() {
-        return cntLike;
-    }
-
-    public void setCntLike(int cntLike) {
-        this.cntLike = cntLike;
-    }
-
-    public int getCntComment() {
-        return cntComment;
-    }
-
-    public void setCntComment(int cntComment) {
-        this.cntComment = cntComment;
-    }
-
 }

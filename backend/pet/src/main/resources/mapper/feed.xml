@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sns.pet.dao.FeedDao">
+    <insert id="insertFeed" parameterType="FeedDto">
+        INSERT INTO Feed (userNumber, feedContent, feedDate, feedThumbnailFolder, feedThumbnailName)
+        VALUES (#{userNumber}, #{feedContent}, now(), #{feedThumbnailFolder}, #{feedThumbnailName})
+        <selectKey resultType="Long" keyProperty="feedNumber" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+    <insert id="insertImages" parameterType="FeedDto">
+        INSERT INTO FeedPhoto (photoName, saveFolder, feedNumber)
+        VALUES
+        <foreach collection="fileInfoDtoList" item="fileInfo" separator=" , ">
+            (#{fileInfo.photoName}, #{fileInfo.saveFolder}, #{feedNumber})
+        </foreach>
+    </insert>
+
+    <select id="selectFeed" parameterType="Long" resultMap="getFeed">
+        SELECT feedNumber, feedContent, feedDate
+        FROM Feed
+        WHERE feedNumber = #{feedNumber}
+    </select>
+
+    <resultMap id="getFeed" type="FeedDto">
+        <result column="feedNumber" property="feedNumber"/>
+        <result column="feedContent" property="feedContent"/>
+        <result column="feedDate" property="feedDate"/>
+        <collection property="fileInfoDtoList" column="feedNumber=feedNumber" javaType="list" ofType="FileInfoDto"
+                    select="getFeedPhotoByFeedNumber"/>
+    </resultMap>
+
+    <select id="getFeedPhotoByFeedNumber" resultType="FileInfoDto">
+        SELECT saveFolder, photoName
+        FROM FeedPhoto
+        WHERE feedNumber = #{feedNumber}
+    </select>
+
+    <select id="selectMyFeedList" resultType="FeedDto">
+        SELECT feedNumber, feedThumbnailFolder, feedThumbnailName
+        FROM Feed
+        WHERE userNumber = #{userNumber}
+    </select>
+</mapper>
