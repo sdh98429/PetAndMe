@@ -2,14 +2,14 @@ package com.sns.pet.service;
 
 import com.sns.pet.dao.FeedDao;
 import com.sns.pet.dto.FeedDto;
+import com.sns.pet.dto.FeedPhotoDto;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.io.IOUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Service
@@ -20,22 +20,15 @@ public class FeedServiceImpl implements FeedService {
 
     @Override
     public List<FeedDto> findMyFeedList(Long userNumber) throws Exception {
-        List<FeedDto> feedDtos = sqlSession.getMapper(FeedDao.class).selectMyFeedList(userNumber);
-        InputStream imageStream;
-        for (FeedDto feedDto : feedDtos) {
-            imageStream = new FileInputStream(feedDto.getFeedThumbnailFolder() + feedDto.getFeedThumbnailName());
-            feedDto.setFeedThumbnail(IOUtils.toByteArray(imageStream));
-        }
-        return feedDtos;
-//        return sqlSession.getMapper(FeedDao.class).selectMyFeedList(userNumber);
+        return sqlSession.getMapper(FeedDao.class).selectMyFeedList(userNumber);
     }
 
     @Override
     @Transactional
     public boolean addFeed(FeedDto feedDto) throws Exception {
         if (sqlSession.getMapper(FeedDao.class).insertFeed(feedDto) == 1) {
-            if (feedDto.getFileInfoDtoList() != null)
-                return sqlSession.getMapper(FeedDao.class).insertImages(feedDto) == feedDto.getFileInfoDtoList().size();
+            if (feedDto.getFeedPhotoDtoList() != null)
+                return sqlSession.getMapper(FeedDao.class).insertImages(feedDto) == feedDto.getFeedPhotoDtoList().size();
             else
                 return true;
         } else {
@@ -49,12 +42,21 @@ public class FeedServiceImpl implements FeedService {
     }
 
 //    @Override
-//    public boolean feedModify(FeedDto feedDto) throws Exception {
-//        return feedDao.updateFeed(feedDto);
+//    public boolean modifyFeed(FeedDto feedDto) throws Exception {
+//        return sqlSession.getMapper(FeedDao.class).updateFeed(feedDto) == 1;
 //    }
-//
-//    @Override
-//    public boolean feedRemove(int feedNumber) throws Exception {
-//        return feedDao.deleteFeed(feedNumber);
-//    }
+
+    @Override
+    @Transactional
+    public boolean removeFeed(Long feedNumber) throws Exception {
+        List<FeedPhotoDto> fileInfoDtoList = sqlSession.getMapper(FeedDao.class).selectFeedPhotoByFeedNumber(feedNumber);
+        sqlSession.getMapper(FeedDao.class).deletePhotos(feedNumber);
+        sqlSession.getMapper(FeedDao.class).deleteFeed(feedNumber);
+
+        // 파일 삭제
+        for (FeedPhotoDto feedPhotoDto : fileInfoDtoList) {
+            Files.delete(Paths.get(feedPhotoDto.getSaveFolder() + feedPhotoDto.getPhotoName()));
+        }
+        return true;
+    }
 }

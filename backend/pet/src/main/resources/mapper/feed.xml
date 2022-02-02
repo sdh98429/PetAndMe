@@ -12,8 +12,8 @@
     <insert id="insertImages" parameterType="FeedDto">
         INSERT INTO FeedPhoto (photoName, saveFolder, feedNumber)
         VALUES
-        <foreach collection="fileInfoDtoList" item="fileInfo" separator=" , ">
-            (#{fileInfo.photoName}, #{fileInfo.saveFolder}, #{feedNumber})
+        <foreach collection="feedPhotoDtoList" item="feedPhoto" separator=" , ">
+            (#{feedPhoto.photoName}, #{feedPhoto.saveFolder}, #{feedNumber})
         </foreach>
     </insert>
 
@@ -27,11 +27,11 @@
         <result column="feedNumber" property="feedNumber"/>
         <result column="feedContent" property="feedContent"/>
         <result column="feedDate" property="feedDate"/>
-        <collection property="fileInfoDtoList" column="feedNumber=feedNumber" javaType="list" ofType="FileInfoDto"
-                    select="getFeedPhotoByFeedNumber"/>
+        <collection property="feedPhotoDtoList" column="feedNumber=feedNumber" javaType="list" ofType="FeedPhotoDto"
+                    select="selectFeedPhotoByFeedNumber"/>
     </resultMap>
 
-    <select id="getFeedPhotoByFeedNumber" resultType="FileInfoDto">
+    <select id="selectFeedPhotoByFeedNumber" resultType="FeedPhotoDto">
         SELECT saveFolder, photoName
         FROM FeedPhoto
         WHERE feedNumber = #{feedNumber}
@@ -42,4 +42,14 @@
         FROM Feed
         WHERE userNumber = #{userNumber}
     </select>
+
+    <delete id="deleteFeed" parameterType="Long" >
+        DELETE FROM Feed
+        WHERE feedNumber = #{feedNumber}
+    </delete>
+
+    <delete id="deletePhotos" parameterType="Long" >
+        DELETE FROM FeedPhoto
+        WHERE feedNumber = #{feedNumber}
+    </delete>
 </mapper>

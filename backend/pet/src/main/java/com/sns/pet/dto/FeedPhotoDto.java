@@ -4,14 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class FileInfoDto {
+public class FeedPhotoDto {
     private String saveFolder;
     private String photoName;
     private byte[] photo;
 
-    public FileInfoDto() {}
+    public FeedPhotoDto() {}
 
-    public FileInfoDto(String saveFolder, String photoName) {
+    public FeedPhotoDto(String saveFolder, String photoName) {
         this.saveFolder = saveFolder;
         this.photoName = photoName;
     }

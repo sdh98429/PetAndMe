@@ -16,7 +16,7 @@ public class FeedDto {
     private int cntLike;
     private int cntComment;
     private byte[] feedThumbnail;
-    private List<FileInfoDto> fileInfoDtoList;
+    private List<FeedPhotoDto> feedPhotoDtoList;
 
     public FeedDto() {}
 
@@ -29,7 +29,7 @@ public class FeedDto {
                 ", feedDate='" + feedDate + '\'' +
                 ", feedThumbnailFolder='" + feedThumbnailFolder + '\'' +
                 ", feedThumbnailName='" + feedThumbnailName + '\'' +
-                ", fileInfoDtoList=" + fileInfoDtoList +
+                ", fileInfoDtoList=" + feedPhotoDtoList +
                 '}';
     }
 }
