@@ -8,9 +8,9 @@ import java.sql.SQLException;
 @Mapper
 public interface UserDao {
 
-    public int join(UserDto userDto) throws SQLException;
-    public UserDto userInfo(long userNumber) throws SQLException;
-    public int userModify(UserDto userDto) throws SQLException;
-    public int userRemove(long userNumber) throws SQLException;
+    public int insertUser(UserDto userDto) throws SQLException;
+    public UserDto selectUser(long userNumber) throws SQLException;
+    public int updateUser(UserDto userDto) throws SQLException;
+    public int deleteUser(long userNumber) throws SQLException;
 
 }

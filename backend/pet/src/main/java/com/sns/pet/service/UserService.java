@@ -4,9 +4,9 @@ import com.sns.pet.dto.UserDto;
 
 public interface UserService {
 
-    public boolean join (UserDto userDto) throws Exception;
-    public UserDto userInfo(long userNumber) throws Exception;
-    public boolean userModify(UserDto userDto) throws Exception;
-    public boolean userRemove(long userNumber) throws Exception;
+    public boolean addUser (UserDto userDto) throws Exception;
+    public UserDto findUser(long userNumber) throws Exception;
+    public boolean modifyUser(UserDto userDto) throws Exception;
+    public boolean removeUser(long userNumber) throws Exception;
 
 }

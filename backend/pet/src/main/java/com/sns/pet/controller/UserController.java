@@ -5,6 +5,7 @@ import com.sns.pet.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,22 +14,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Api("User 컨트롤러")
+@RequiredArgsConstructor
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @ApiOperation(value = "회원가입", notes = "회원가입을 한다. DB 성공 여부에 따라 SUCCESS, FAIL 반환",response = String.class)
     @PostMapping
     public ResponseEntity<String> join(@RequestBody @ApiParam(value = "회원정보", required = true)UserDto userDto) throws Exception{
         logger.info("join - 호출");
-        if(userService.join(userDto)){
+        if(userService.addUser(userDto)){
             return new ResponseEntity<String>(SUCCESS,HttpStatus.OK);
         }
         return new ResponseEntity<String>(FAIL,HttpStatus.NO_CONTENT);
@@ -39,7 +40,7 @@ public class UserController {
     @GetMapping("/{userNumber}")
     public ResponseEntity<UserDto> userDetails(@PathVariable("userNumber") @ApiParam(value = "조회할 회원번호") long userNumber) throws Exception{
         logger.info("userDetails 호출");
-        UserDto userDto = userService.userInfo(userNumber);
+        UserDto userDto = userService.findUser(userNumber);
         if(userDto != null){
             return new ResponseEntity<UserDto>(userDto, HttpStatus.OK);
         }
@@ -51,11 +52,9 @@ public class UserController {
     @PutMapping
     public ResponseEntity<String> userModify(@RequestBody @ApiParam(value = "수정할 회원정보") UserDto userDto) throws Exception{
         logger.info("userModify 호출");
-        if(userService.userModify(userDto)){
-            System.out.println("성공");
+        if(userService.modifyUser(userDto)){
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }
-            System.out.println("실패");
         return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
     }
 
@@ -63,7 +62,7 @@ public class UserController {
     @DeleteMapping("/{userNumber}")
     public ResponseEntity<String> userRemove(@PathVariable("userNumber") @ApiParam(value = "탈퇴할 회원번호") long userNumber) throws Exception{
         logger.info("userRemove 호출 ");
-        if(userService.userRemove(userNumber)){
+        if(userService.removeUser(userNumber)){
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }
         return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
