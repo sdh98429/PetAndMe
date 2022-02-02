@@ -1,7 +1,8 @@
 package com.sns.pet.dto;
 
-public class userDto {
-    private int userNumber;
+public class UserDto {
+
+    private Long userNumber;
     private String userID;
     private String userPW;
     private String userNickName;
@@ -12,11 +13,11 @@ public class userDto {
     private String userProfileContent;
     private boolean userType;
 
-    public int getUserNumber() {
+    public Long getUserNumber() {
         return userNumber;
     }
 
-    public void setUserNumber(int userNumber) {
+    public void setUserNumber(Long userNumber) {
         this.userNumber = userNumber;
     }
 
