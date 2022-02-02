@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @ApiModel(value = "반려동물 정보")
-public class petDto {
+public class PetDto {
     @ApiModelProperty(value = "반려인 회원번호")
     private Long userNumber;
     @ApiModelProperty(value = "반려동물 번호")
