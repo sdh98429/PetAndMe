@@ -8,7 +8,7 @@
         values(#{userID},#{userPW},#{userName},#{userNickName},#{userEmail},#{petCheck},#{userProfilePicture},#{userProfileContent},#{userType});
     </insert>
 
-    <select id="selectUser" parameterType="long" resultType="userDto">
+    <select id="selectUser" parameterType="Long" resultType="userDto">
         select userID, userPW, userName, userNickName, userEmail, petCheck, userProfilePicture, userProfileContent, userType
         from user
         where userNumber=#{userNumber};
@@ -20,7 +20,7 @@
         where userNumber=#{userNumber};
     </update>
 
-    <delete id="deleteUser" parameterType="long">
+    <delete id="deleteUser" parameterType="Long">
         delete from user
         where userNumber=#{userNumber}
     </delete>

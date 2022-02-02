@@ -38,7 +38,7 @@ public class UserController {
 
     @ApiOperation(value = "회원정보 조회", notes = "회원정보를 조회한다.", response = String.class)
     @GetMapping("/{userNumber}")
-    public ResponseEntity<UserDto> userDetails(@PathVariable("userNumber") @ApiParam(value = "조회할 회원번호") long userNumber) throws Exception{
+    public ResponseEntity<UserDto> userDetails(@PathVariable("userNumber") @ApiParam(value = "조회할 회원번호") Long userNumber) throws Exception{
         logger.info("userDetails 호출");
         UserDto userDto = userService.findUser(userNumber);
         if(userDto != null){
@@ -60,7 +60,7 @@ public class UserController {
 
     @ApiOperation(value = "회원 탈퇴", notes ="회원 탈퇴, DB 성공 여부에 따라 SUCCESS, FAIL 반환", response = String.class)
     @DeleteMapping("/{userNumber}")
-    public ResponseEntity<String> userRemove(@PathVariable("userNumber") @ApiParam(value = "탈퇴할 회원번호") long userNumber) throws Exception{
+    public ResponseEntity<String> userRemove(@PathVariable("userNumber") @ApiParam(value = "탈퇴할 회원번호") Long userNumber) throws Exception{
         logger.info("userRemove 호출 ");
         if(userService.removeUser(userNumber)){
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);

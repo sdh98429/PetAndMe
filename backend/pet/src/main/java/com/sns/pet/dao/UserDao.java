@@ -9,8 +9,8 @@ import java.sql.SQLException;
 public interface UserDao {
 
     public int insertUser(UserDto userDto) throws SQLException;
-    public UserDto selectUser(long userNumber) throws SQLException;
+    public UserDto selectUser(Long userNumber) throws SQLException;
     public int updateUser(UserDto userDto) throws SQLException;
-    public int deleteUser(long userNumber) throws SQLException;
+    public int deleteUser(Long userNumber) throws SQLException;
 
 }

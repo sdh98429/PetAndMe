@@ -2,7 +2,7 @@ package com.sns.pet.dto;
 
 public class UserDto {
 
-    private long userNumber;
+    private Long userNumber;
     private String userID;
     private String userPW;
     private String userNickName;
@@ -13,11 +13,11 @@ public class UserDto {
     private String userProfileContent;
     private boolean userType;
 
-    public long getUserNumber() {
+    public Long getUserNumber() {
         return userNumber;
     }
 
-    public void setUserNumber(long userNumber) {
+    public void setUserNumber(Long userNumber) {
         this.userNumber = userNumber;
     }
 

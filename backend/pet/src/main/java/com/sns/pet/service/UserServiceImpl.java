@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserDto findUser(long userNumber) throws Exception {
+    public UserDto findUser(Long userNumber) throws Exception {
         return sqlSession.getMapper(UserDao.class).selectUser(userNumber);
     }
 
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public boolean removeUser(long userNumber) throws Exception {
+    public boolean removeUser(Long userNumber) throws Exception {
         return sqlSession.getMapper(UserDao.class).deleteUser(userNumber) == 1;
     }
 }
