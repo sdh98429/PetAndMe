@@ -15,6 +15,7 @@ public class FeedDto {
     private String feedThumbnailName;
     private int cntLike;
     private int cntComment;
+    private byte[] feedThumbnail;
     private List<FileInfoDto> fileInfoDtoList;
 
     public FeedDto() {}

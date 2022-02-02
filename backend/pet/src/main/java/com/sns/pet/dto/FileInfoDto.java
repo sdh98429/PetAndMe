@@ -7,6 +7,7 @@ import lombok.Setter;
 public class FileInfoDto {
     private String saveFolder;
     private String photoName;
+    private byte[] photo;
 
     public FileInfoDto() {}
 

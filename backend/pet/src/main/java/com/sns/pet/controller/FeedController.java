@@ -3,6 +3,7 @@ package com.sns.pet.controller;
 import com.sns.pet.dto.FeedDto;
 import com.sns.pet.dto.FileInfoDto;
 import com.sns.pet.service.FeedService;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -46,14 +47,14 @@ public class FeedController {
 //        return null;
 //    }
 
-//    @ApiOperation(value = "userNumber에 해당하는 내 피드 목록 반환", response = FeedDto.class)
+    @ApiOperation(value = "userNumber에 해당하는 내 피드 목록 반환", response = FeedDto.class)
     @GetMapping("/feed/list/{userNumber}")
     public ResponseEntity<List<FeedDto>> myFeedList(@PathVariable("userNumber") Long userNumber) throws Exception{
         logger.info("내 피드 목록 - 호출" + userNumber);
         return new ResponseEntity<>(feedService.findMyFeedList(userNumber), HttpStatus.OK);
     }
 
-    //    @ApiOperation(value = "feed 생성, DB 입력 여부에 따라 success, fail 반환", response = FeedDto.class)
+    @ApiOperation(value = "feed 생성, DB 입력 여부에 따라 success, fail 반환", response = FeedDto.class)
     @PostMapping("/feed")
     public ResponseEntity<String> feedAdd(@RequestPart(value = "feedContent") String feedContent,
                                           @RequestPart(value = "userNumber") String userNumber,
@@ -113,11 +114,19 @@ public class FeedController {
         return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
     }
 
-//    @ApiOperation(value = "feedNumber에 해당하는 피드 반환", response = FeedDto.class)
+    @ApiOperation(value = "feedNumber에 해당하는 피드 반환", response = FeedDto.class)
     @GetMapping("/feed/{feedNumber}")
     public ResponseEntity<FeedDto> feedDetails(@PathVariable("feedNumber") Long feedNumber) throws Exception{
         logger.info("feedDetails - 호출" + feedNumber);
-        return new ResponseEntity<FeedDto>(feedService.findFeed(feedNumber), HttpStatus.OK);
+        FeedDto feedDto = feedService.findFeed(feedNumber);
+
+        // 이미지 변환
+        InputStream imageStream;
+        for (FileInfoDto fileInfoDto : feedDto.getFileInfoDtoList()) {
+            imageStream = new FileInputStream(fileInfoDto.getSaveFolder() + fileInfoDto.getPhotoName());
+            fileInfoDto.setPhoto(IOUtils.toByteArray(imageStream));
+        }
+        return new ResponseEntity<FeedDto>(feedDto, HttpStatus.OK);
     }
 
     @GetMapping("/feed/img")
