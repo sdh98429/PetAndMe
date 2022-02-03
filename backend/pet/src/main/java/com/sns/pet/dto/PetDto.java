@@ -21,8 +21,4 @@ public class PetDto {
     private String petGender;
     @ApiModelProperty(value = "반려동물 생일", example = "2022.02.01")
     private String petBirth;
-    @ApiModelProperty(value = "반려동물 프로필 사진")
-    private String petProfilePicture;
-    @ApiModelProperty(value = "반려동물 프로필 소개글")
-    private String petProfileContent;
 }

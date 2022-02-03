@@ -6,14 +6,14 @@
 
     <!-- 모든 반려동물 목록 조회 -->
     <select id="selectAllPets" resultType="PetDto" parameterType="Long">
-        SELECT userNumber, petNumber, animalNumber, petName, petGender, petBirth, petProfilePicture, petProfileContent
+        SELECT userNumber, petNumber, animalNumber, petName, petGender, petBirth
         FROM Pet
         WHERE userNumber = #{userNumber}
     </select>
 
     <!-- 특정 반려동물 상세정보 조회 -->
     <select id="selectPet" resultType="PetDto" parameterType="map">
-        SELECT userNumber, petNumber, animalNumber, petName, petGender, petBirth, petProfilePicture, petProfileContent
+        SELECT userNumber, petNumber, animalNumber, petName, petGender, petBirth
         FROM Pet
         WHERE userNumber = #{userNumber} and petNumber = #{petNumber}
     </select>
@@ -27,14 +27,14 @@
 
     <!-- 반려동물 정보 추가 -->
     <insert id="insertPet" parameterType="PetDto">
-        INSERT IGNORE INTO Pet (userNumber, animalNumber, petName, petGender, petBirth, petProfilePicture, petProfileContent)
-        VALUES (#{userNumber}, #{animalNumber}, #{petName}, #{petGender}, #{petBirth}, #{petProfilePicture}, #{petProfileContent})
+        INSERT IGNORE INTO Pet (userNumber, animalNumber, petName, petGender, petBirth)
+        VALUES (#{userNumber}, #{animalNumber}, #{petName}, #{petGender}, #{petBirth})
     </insert>
 
     <!-- 반려동물 정보 수정 -->
     <update id="updatePet" parameterType="PetDto">
         UPDATE Pet
-        SET animalNumber=#{animalNumber}, petName=#{petName}, petGender=#{petGender}, petBirth=#{petBirth}, petProfilePicture=#{petProfilePicture}, petProfileContent=#{petProfileContent}
+        SET animalNumber=#{animalNumber}, petName=#{petName}, petGender=#{petGender}, petBirth=#{petBirth}
         WHERE userNumber = #{userNumber} and petNumber = #{petNumber}
     </update>
 
