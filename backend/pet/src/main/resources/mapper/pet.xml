@@ -2,26 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.sns.pet.dao.petDao">
+<mapper namespace="com.sns.pet.dao.PetDao">
+
+    <!-- 모든 반려동물 목록 조회 -->
+    <select id="selectAllPets" resultType="PetDto" parameterType="Long">
+        SELECT userNumber, petNumber, animalNumber, petName, petGender, petBirth
+        FROM Pet
+        WHERE userNumber = #{userNumber}
+    </select>
 
     <!-- 특정 반려동물 상세정보 조회 -->
-    <select id="selectPet" resultType="petDto" parameterType="map">
-        SELECT *
+    <select id="selectPet" resultType="PetDto" parameterType="map">
+        SELECT userNumber, petNumber, animalNumber, petName, petGender, petBirth
         FROM Pet
         WHERE userNumber = #{userNumber} and petNumber = #{petNumber}
     </select>
 
+    <!-- 유저의 반려동물 이름 중복 체크 -->
+    <select id="selectPetName" resultType="integer" parameterType="map">
+        SELECT count(*)
+        FROM Pet
+        WHERE userNumber = #{userNumber} AND petName = #{petName}
+    </select>
+
     <!-- 반려동물 정보 추가 -->
-    <insert id="insertPet" parameterType="petDto">
-        INSERT INTO Pet (userNumber, petNumber, animalNumber, petName, petGender, petBirth, petProfilePicture, petProfileContent)
-        VALUES (#{userNumber}, #{petNumber}, #{animalNumber}, #{petName}, #{petGender}, #{petBirth}, #{petProfilePicture}, #{petProfileContent})
+    <insert id="insertPet" parameterType="PetDto">
+        INSERT IGNORE INTO Pet (userNumber, animalNumber, petName, petGender, petBirth)
+        VALUES (#{userNumber}, #{animalNumber}, #{petName}, #{petGender}, #{petBirth})
     </insert>
 
     <!-- 반려동물 정보 수정 -->
-    <!-- animalNumber도 사용자가 수정할까..? -->
-    <update id="updatePet" parameterType="petDto">
+    <update id="updatePet" parameterType="PetDto">
         UPDATE Pet
-        SET petName=#{petName}, petGender=#{petGender}, petBirth=#{petBirth}, petProfilePicture=#{petProfilePicture}, petProfileContent=#{petProfileContent}
+        SET animalNumber=#{animalNumber}, petName=#{petName}, petGender=#{petGender}, petBirth=#{petBirth}
         WHERE userNumber = #{userNumber} and petNumber = #{petNumber}
     </update>
 
