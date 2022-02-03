@@ -8,11 +8,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @ApiModel(value = "반려동물 정보")
-public class petDto {
+public class PetDto {
     @ApiModelProperty(value = "반려인 회원번호")
     private Long userNumber;
     @ApiModelProperty(value = "반려동물 번호")
-    private int petNumber;
+    private Long petNumber;
     @ApiModelProperty(value = "반려동물 종류")
     private int animalNumber;
     @ApiModelProperty(value = "반려동물 이름", example = "초코")
@@ -21,8 +21,4 @@ public class petDto {
     private String petGender;
     @ApiModelProperty(value = "반려동물 생일", example = "2022.02.01")
     private String petBirth;
-    @ApiModelProperty(value = "반려동물 프로필 사진")
-    private String petProfilePicture;
-    @ApiModelProperty(value = "반려동물 프로필 소개글")
-    private String petProfileContent;
 }
