@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sns.pet.dao.CommentDao">
+    <insert id="insertComment" parameterType="CommentDto">
+        INSERT INTO Comment (commentContent, commentDate, userNumber, feedNumber)
+        VALUES (#{commentContent}, now(), #{userNumber}, #{feedNumber})
+    </insert>
+
+    <select id="selectCommentList" parameterType="Long" resultType="CommentDto">
+        SELECT c.feedNumber, c.commentNumber, c.commentContent, c.commentDate, u.userID, u.userName, u.userNickName, u.userProfileContent
+        FROM Comment c INNER JOIN User u
+        ON c.userNumber = u.userNumber
+        WHERE feedNumber = #{feedNumber}
+    </select>
+<!-- 다른 조인문 and 5개 씩 -->
+
+    <delete id="deleteComment" parameterType="Long">
+        DELETE
+        FROM Comment
+        WHERE commentNumber = #{commentNumber}
+    </delete>
+
+</mapper>
