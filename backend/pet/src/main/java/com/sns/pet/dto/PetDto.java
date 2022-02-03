@@ -12,7 +12,7 @@ public class PetDto {
     @ApiModelProperty(value = "반려인 회원번호")
     private Long userNumber;
     @ApiModelProperty(value = "반려동물 번호")
-    private int petNumber;
+    private Long petNumber;
     @ApiModelProperty(value = "반려동물 종류")
     private int animalNumber;
     @ApiModelProperty(value = "반려동물 이름", example = "초코")

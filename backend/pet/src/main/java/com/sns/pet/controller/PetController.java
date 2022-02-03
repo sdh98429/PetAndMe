@@ -40,7 +40,7 @@ public class PetController {
     @GetMapping("/{userNumber}/{petNumber}")
     public ResponseEntity<PetDto> petDetails(
             @ApiParam(value = "반려인 회원번호", required = true) @PathVariable("userNumber") Long userNumber,
-            @ApiParam(value = "반려동물번호", required = true) @PathVariable("petNumber") int petNumber)
+            @ApiParam(value = "반려동물번호", required = true) @PathVariable("petNumber") Long petNumber)
             throws Exception {
 
         logger.info("petDetails 호출");
@@ -62,6 +62,7 @@ public class PetController {
         // 중복되는 경우
         return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
     }
+
     // 반려동물 정보 추가
     @ApiOperation(value = "현재 회원의 반려동물 정보 추가", notes = "반려동물객체를 활용하여 생성합니다.")
     @PostMapping
@@ -95,7 +96,7 @@ public class PetController {
     @DeleteMapping("/{userNumber}/{petNumber}")
     public ResponseEntity<String> petRemove(
             @ApiParam(value = "반려인 회원번호", required = true) @PathVariable("userNumber") Long userNumber,
-            @ApiParam(value = "반려동물번호", required = true) @PathVariable("petNumber") int petNumber)
+            @ApiParam(value = "반려동물번호", required = true) @PathVariable("petNumber") Long petNumber)
             throws Exception {
 
         logger.info("petRemove 호출");

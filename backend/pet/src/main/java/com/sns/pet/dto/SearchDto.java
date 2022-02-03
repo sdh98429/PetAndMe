@@ -1,22 +1,20 @@
 package com.sns.pet.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@ApiModel(value = "검색관련 정보")
 public class SearchDto {
-    private int userNumber;
+    @ApiModelProperty(value = "검색번호")
+    private int searchNumber;
+    @ApiModelProperty(value = "회원번호")
+    private Long userNumber;
+    @ApiModelProperty(value = "검색어")
     private String searchWord;
-
-    public int getUserNumber() {
-        return userNumber;
-    }
-
-    public void setUserNumber(int userNumber) {
-        this.userNumber = userNumber;
-    }
-
-    public String getSearchWord() {
-        return searchWord;
-    }
-
-    public void setSearchWord(String searchWord) {
-        this.searchWord = searchWord;
-    }
+    @ApiModelProperty(value = "검색날짜")
+    private String searchDate;
 }

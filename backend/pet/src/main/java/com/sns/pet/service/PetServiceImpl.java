@@ -20,7 +20,7 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public PetDto findPet(Long userNumber, int petNumber) throws Exception {
+    public PetDto findPet(Long userNumber, Long petNumber) throws Exception {
         return sqlSession.getMapper(PetDao.class).selectPet(userNumber, petNumber);
     }
 
@@ -45,7 +45,7 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public boolean removePet(Long userNumber, int petNumber) throws Exception {
+    public boolean removePet(Long userNumber, Long petNumber) throws Exception {
         return sqlSession.getMapper(PetDao.class).deletePet(userNumber, petNumber) == 1;
     }
 }
