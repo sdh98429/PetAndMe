@@ -2,6 +2,7 @@ package com.sns.pet.service;
 
 import com.sns.pet.dao.UserDao;
 import com.sns.pet.dto.UserDto;
+import com.sns.pet.dto.UserPetDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List selectUserInfo(Long userNumber) throws Exception {
+    public UserPetDto findUserInfo(Long userNumber) throws Exception {
         return sqlSession.getMapper(UserDao.class).selectUserInfo(userNumber);
     }
+
 }
