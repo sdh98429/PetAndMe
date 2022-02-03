@@ -17,20 +17,18 @@ public class AnimalServiceImpl implements AnimalService{
     private final SqlSession sqlSession;
 
     @Override
-    public boolean addAnimal(AnimalLikeDto animalLikeDto) throws Exception {
-        if(animalLikeDto == null){
+    public boolean addAnimal(List<AnimalLikeDto> animalLikeDtoList) throws Exception {
+        if(animalLikeDtoList == null){
             throw new Exception();
         }
-        return sqlSession.getMapper(AnimalDao.class).insertAnimal(animalLikeDto) == 1;
+        return sqlSession.getMapper(AnimalDao.class).insertAnimal(animalLikeDtoList) == animalLikeDtoList.size();
     }
 
     @Override
     @Transactional
-    public boolean modifyAnimal(AnimalLikeDto animalLikeDto) throws Exception {
-        //sqlSession.getMapper(AnimalDao.class).deleteAnimal(userNumber);
-
-
-        return true;
+    public boolean modifyAnimal(List<AnimalLikeDto> animalLikeDtoList) throws Exception {
+        sqlSession.getMapper(AnimalDao.class).deleteAnimal(animalLikeDtoList.get(0).getUserNumber());
+        return sqlSession.getMapper(AnimalDao.class).insertAnimal(animalLikeDtoList) == animalLikeDtoList.size();
     }
 
     @Override

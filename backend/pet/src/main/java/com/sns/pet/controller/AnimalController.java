@@ -44,9 +44,9 @@ public class AnimalController {
 
     @ApiOperation(value = "선호동물 등록", notes = "선호동물을 등록한다. DB 성공 여부에 따라 SUCCESS, FAIL 반환", response = String.class)
     @PostMapping
-    public ResponseEntity<String> favAnimalAdd(@RequestBody @ApiParam(value = "등록할 선호동물", required = true) AnimalLikeDto animalLikeDto) throws Exception {
+    public ResponseEntity<String> favAnimalAdd(@RequestBody @ApiParam(value = "등록할 선호동물", required = true) List<AnimalLikeDto> animalLikeDtoList) throws Exception {
         logger.info("favAnimalAdd 호출");
-        if (animalService.addAnimal(animalLikeDto)) {
+        if (animalService.addAnimal(animalLikeDtoList)) {
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }
         return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
@@ -54,9 +54,9 @@ public class AnimalController {
 
     @ApiOperation(value = "선호동물 수정", notes = "선호동물을 수정한다. DB 성공 여부에 따라 SUCCESS, FAIL 반환", response = String.class)
     @PutMapping
-    public ResponseEntity<String> favAnimalModify(@RequestBody @ApiParam(value = "수정할 선호동물") AnimalLikeDto animalLikeDto) throws Exception{
+    public ResponseEntity<String> favAnimalModify(@RequestBody @ApiParam(value = "수정할 선호동물")List<AnimalLikeDto> animalLikeDtoList) throws Exception{
         logger.info("favAnaimalModify 호출");
-        if(animalService.modifyAnimal(animalLikeDto)){
+        if(animalService.modifyAnimal(animalLikeDtoList)){
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }
             return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);

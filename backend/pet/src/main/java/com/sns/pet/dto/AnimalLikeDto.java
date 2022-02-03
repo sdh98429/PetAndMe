@@ -14,6 +14,8 @@ public class AnimalLikeDto {
     @ApiModelProperty(value = "회원 번호")
     private Long userNumber;
 
+    public AnimalLikeDto(){}
+
     public AnimalLikeDto(int animalNumber, Long userNumber) {
         this.animalNumber = animalNumber;
         this.userNumber = userNumber;

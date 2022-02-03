@@ -9,7 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface AnimalDao {
-    int insertAnimal(AnimalLikeDto animalLikeDto) throws Exception;
+    int insertAnimal(List<AnimalLikeDto> animalLikeDtoList) throws Exception;
     int updateAnimal(AnimalLikeDto animalLikeDto) throws Exception;
     int deleteAnimal(@Param("userNumber") Long userNumber) throws Exception;
 

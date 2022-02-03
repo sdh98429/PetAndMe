@@ -3,18 +3,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sns.pet.dao.AnimalDao">
-<!--    <insert id="insertAnimal" parameterType="animalLikeDto">-->
-<!--        INSERT INTO animallike(userNumber, animalNumber)-->
-<!--        VALUES-->
-<!--        <foreach collection="animalLikeDto" item="animalLikeDto" separator=" , ">-->
-<!--        (#{userNumber}, #{animalNumber})-->
-<!--        </foreach>-->
-<!--    </insert>-->
-
-     <insert id="insertAnimal" parameterType="java.util.Map">
+     <insert id="insertAnimal" parameterType="java.util.List">
         INSERT INTO animallike(userNumber, animalNumber)
         VALUES
-        <foreach collection="getFavAnimal" item="item" separator=" , ">
+        <foreach collection="list" item="item" separator=" , ">
         (#{item.userNumber}, #{item.animalNumber})
         </foreach>
     </insert>
