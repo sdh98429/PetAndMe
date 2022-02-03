@@ -7,6 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService{
@@ -34,5 +36,10 @@ public class UserServiceImpl implements UserService{
     @Override
     public boolean removeUser(Long userNumber) throws Exception {
         return sqlSession.getMapper(UserDao.class).deleteUser(userNumber) == 1;
+    }
+
+    @Override
+    public List selectUserInfo(Long userNumber) throws Exception {
+        return sqlSession.getMapper(UserDao.class).selectUserInfo(userNumber);
     }
 }

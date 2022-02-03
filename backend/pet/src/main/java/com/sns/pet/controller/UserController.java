@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Api("User 컨트롤러")
 @RequiredArgsConstructor
 @RestController
@@ -68,4 +70,12 @@ public class UserController {
         return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
     }
 
+    @ApiOperation(value = "회원 정보 전송", notes = "회원 정보 전송, DB 성공 여부에 따라 SUCCESS, FAIL 반환", response = String.class)
+    @GetMapping("/info/{userNumber}")
+    public ResponseEntity<List> sendInfo(Long userNumber) throws Exception{
+        logger.info("sendInfo 호출");
+        List sendInfoList = userService.selectUserInfo(userNumber);
+        return new ResponseEntity<List>(sendInfoList, HttpStatus.OK);
+
+    }
 }

@@ -5,24 +5,42 @@
 <mapper namespace="com.sns.pet.dao.UserDao">
     <insert id="insertUser" parameterType="userDto">
         insert into user(userID, userPW, userName, userNickName, userEmail, petCheck, userProfilePicture, userProfileContent, userType)
-        values(#{userID},#{userPW},#{userName},#{userNickName},#{userEmail},#{petCheck},#{userProfilePicture},#{userProfileContent},#{userType});
+        values(#{userID},#{userPW},#{userName},#{userNickName},#{userEmail},#{petCheck},#{userProfilePicture},#{userProfileContent},#{userType})
     </insert>
 
     <select id="selectUser" parameterType="Long" resultType="userDto">
         select userID, userPW, userName, userNickName, userEmail, petCheck, userProfilePicture, userProfileContent, userType
         from user
-        where userNumber=#{userNumber};
+        where userNumber=#{userNumber}
     </select>
 
     <update id="updateUser" parameterType="userDto">
         update user
-        set userPW=#{userPW}, userNickName=#{userNickName}, petCheck=#{petCheck}, userProfilePicture=#{userProfilePicture}
-        where userNumber=#{userNumber};
+        set userPW=#{userPW}, userNickName=#{userNickName}, petCheck=#{petCheck}, userProfilePicture=#{userProfilePicture}, userProfileContent=#{userProfileContent}
+        where userNumber=#{userNumber}
     </update>
 
     <delete id="deleteUser" parameterType="Long">
         delete from user
         where userNumber=#{userNumber}
     </delete>
-    
+
+    <select id="selectUserInfo" parameterType="Long" resultMap="userInfoResult">
+        SELECT u.userProfilePicture, u.userNickName, u.userID, p.petName, p.animalNumber, p.petBirth
+        FROM user u JOIN pet p
+        WHERE u.userNumber=#{userNumber}
+    </select>
+
+    <resultMap id="userInfoResult" type="userDto">
+        <result column="userProfilePicture" property="userProfilePicture"/>
+        <result column="userNickName" property="userNickName"/>
+        <result column="userID" property="userID"/>
+        <association property="pet" column="userNumber" javaType="pet" resultMap="petInfoResult"/>
+    </resultMap>
+
+    <resultMap id="petInfoResult" type="petDto">
+        <result column="petName" property="petName"/>
+        <result column="animalNumber" property="animalNumber"/>
+        <result column="petBirth" property="petBirth"/>
+    </resultMap>
 </mapper>
