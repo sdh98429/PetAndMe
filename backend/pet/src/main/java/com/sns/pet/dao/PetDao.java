@@ -12,7 +12,7 @@ public interface PetDao {
     // 모든 반려동물 목록 조회
     List<PetDto> selectAllPets(@Param("userNumber") Long userNumber) throws SQLException;
     // 특정 반려동물 상세조회
-    PetDto selectPet(@Param("userNumber") Long userNumber, @Param("petNumber") int petNumber) throws SQLException;
+    PetDto selectPet(@Param("userNumber") Long userNumber, @Param("petNumber") Long petNumber) throws SQLException;
     // 유저의 반려동물 이름 중복 체크
     int selectPetName(@Param("userNumber") Long userNumber, @Param("petName") String petName) throws SQLException;
     // 반려동물 정보 저장
@@ -20,5 +20,5 @@ public interface PetDao {
     // 반려동물 정보 수정
     int updatePet(PetDto petDto) throws SQLException;
     // 반려동물 정보 삭제
-    int deletePet(@Param("userNumber") Long userNumber, @Param("petNumber") int petNumber) throws SQLException;
+    int deletePet(@Param("userNumber") Long userNumber, @Param("petNumber") Long petNumber) throws SQLException;
 }
