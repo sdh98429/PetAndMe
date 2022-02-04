@@ -2,10 +2,13 @@ package com.sns.pet.service;
 
 import com.sns.pet.dao.UserDao;
 import com.sns.pet.dto.UserDto;
+import com.sns.pet.dto.UserPetDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -35,4 +38,10 @@ public class UserServiceImpl implements UserService{
     public boolean removeUser(Long userNumber) throws Exception {
         return sqlSession.getMapper(UserDao.class).deleteUser(userNumber) == 1;
     }
+
+    @Override
+    public UserPetDto findUserInfo(Long userNumber) throws Exception {
+        return sqlSession.getMapper(UserDao.class).selectUserInfo(userNumber);
+    }
+
 }

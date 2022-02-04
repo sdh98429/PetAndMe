@@ -1,6 +1,7 @@
 package com.sns.pet.controller;
 
 import com.sns.pet.dto.UserDto;
+import com.sns.pet.dto.UserPetDto;
 import com.sns.pet.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Api("User 컨트롤러")
 @RequiredArgsConstructor
@@ -25,47 +28,57 @@ public class UserController {
 
     private final UserService userService;
 
-    @ApiOperation(value = "회원가입", notes = "회원가입을 한다. DB 성공 여부에 따라 SUCCESS, FAIL 반환",response = String.class)
+    @ApiOperation(value = "회원가입", notes = "회원가입을 한다. DB 성공 여부에 따라 SUCCESS, FAIL 반환", response = String.class)
     @PostMapping
-    public ResponseEntity<String> join(@RequestBody @ApiParam(value = "회원정보", required = true)UserDto userDto) throws Exception{
+    public ResponseEntity<String> join(@RequestBody @ApiParam(value = "회원정보", required = true) UserDto userDto) throws Exception {
         logger.info("join - 호출");
-        if(userService.addUser(userDto)){
-            return new ResponseEntity<String>(SUCCESS,HttpStatus.OK);
+        if (userService.addUser(userDto)) {
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }
-        return new ResponseEntity<String>(FAIL,HttpStatus.NO_CONTENT);
+        return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 
     }
 
     @ApiOperation(value = "회원정보 조회", notes = "회원정보를 조회한다.", response = String.class)
     @GetMapping("/{userNumber}")
-    public ResponseEntity<UserDto> userDetails(@PathVariable("userNumber") @ApiParam(value = "조회할 회원번호") Long userNumber) throws Exception{
+    public ResponseEntity<UserDto> userDetails(@PathVariable("userNumber") @ApiParam(value = "조회할 회원번호") Long userNumber) throws Exception {
         logger.info("userDetails 호출");
         UserDto userDto = userService.findUser(userNumber);
-        if(userDto != null){
+        if (userDto != null) {
             return new ResponseEntity<UserDto>(userDto, HttpStatus.OK);
         }
         return new ResponseEntity<UserDto>(userDto, HttpStatus.NO_CONTENT);
     }
 
 
-    @ApiOperation(value = "회원정보 수정", notes ="회원정보를 수정 한다. DB 성공 여부에 따라 SUCCESS, FAIL 반환", response = String.class)
+    @ApiOperation(value = "회원정보 수정", notes = "회원정보를 수정 한다. DB 성공 여부에 따라 SUCCESS, FAIL 반환", response = String.class)
     @PutMapping
-    public ResponseEntity<String> userModify(@RequestBody @ApiParam(value = "수정할 회원정보") UserDto userDto) throws Exception{
+    public ResponseEntity<String> userModify(@RequestBody @ApiParam(value = "수정할 회원정보") UserDto userDto) throws Exception {
         logger.info("userModify 호출");
-        if(userService.modifyUser(userDto)){
+        if (userService.modifyUser(userDto)) {
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }
         return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
     }
 
-    @ApiOperation(value = "회원 탈퇴", notes ="회원 탈퇴, DB 성공 여부에 따라 SUCCESS, FAIL 반환", response = String.class)
+    @ApiOperation(value = "회원 탈퇴", notes = "회원 탈퇴, DB 성공 여부에 따라 SUCCESS, FAIL 반환", response = String.class)
     @DeleteMapping("/{userNumber}")
-    public ResponseEntity<String> userRemove(@PathVariable("userNumber") @ApiParam(value = "탈퇴할 회원번호") Long userNumber) throws Exception{
+    public ResponseEntity<String> userRemove(@PathVariable("userNumber") @ApiParam(value = "탈퇴할 회원번호") Long userNumber) throws Exception {
         logger.info("userRemove 호출 ");
-        if(userService.removeUser(userNumber)){
+        if (userService.removeUser(userNumber)) {
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }
         return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
     }
 
+    @ApiOperation(value = "회원 정보 전송", notes = "회원 정보 전송")
+    @GetMapping("/info/{userNumber}")
+    public ResponseEntity<UserPetDto> sendInfo(@PathVariable("userNumber") @ApiParam("전송할 회원번호") Long userNumber) throws Exception {
+        logger.info("sendInfo 호출");
+        UserPetDto userPetDto = userService.findUserInfo(userNumber);
+        if (userPetDto != null) {
+            return new ResponseEntity<UserPetDto>(userPetDto, HttpStatus.OK);
+        }
+        return  new ResponseEntity<UserPetDto>(userPetDto,HttpStatus.NO_CONTENT);
+    }
 }
