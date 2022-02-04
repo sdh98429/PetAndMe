@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <h2> 피드 작성 페이지 </h2>
     <img :src="`data:image/png;base64,${fileInfoDtoList[0].photo}`" />
     <ul> 
@@ -57,11 +57,9 @@ export default {
     },
 
     createFeed: function (){ // createBtn 버튼 누름
-      // console.log('신호 도착!')
       this.isCreate = true
     },
     createFeedContent: function (inputData){ // ContentsForm 에서 내용 도착
-      // console.log("내용 도착")
       this.feedContent = inputData
       this.isArrive = this.isArrive + 1
     },
@@ -87,7 +85,7 @@ export default {
               formData.append('feedPhoto', fileInput[step]);
 
             }
-            // // formData.append("document", documentJson); instead of this, use the line below.
+
             formData.append("feedContent", JSON.stringify(this.feedContent));
             formData.append("userNumber", JSON.stringify(2));
 

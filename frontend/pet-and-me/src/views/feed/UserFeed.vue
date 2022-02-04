@@ -1,10 +1,6 @@
 <template>
   <div class="container">
     <h2>유저 피드</h2>
-    <div><Profile
-      :userNumber="userNumber"
-      />
-    </div>
     <div>팔로우하기 버튼</div>
     <br>
     <div>follower, following 표시</div>
@@ -18,7 +14,7 @@
 </template>
 
 <script>
-import Profile from '@/components/feed/Profile'
+
 import UserFeedList from '@/components/feed/UserFeedList'
 
 
@@ -30,7 +26,7 @@ export default {
     }
   },
   components: {
-    Profile,
+
     UserFeedList,
 
   },
