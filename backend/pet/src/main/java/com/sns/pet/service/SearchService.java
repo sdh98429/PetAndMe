@@ -9,9 +9,11 @@ public interface SearchService {
 
     // 최근 검색 기록 10개 가져오기
     List<String> findPastSearch(Long userNumber) throws Exception;
-    // 유저 관련 연관 검색어 가져오기
-    List<UserDto> findSearchAboutUser(String searchWord) throws Exception;
-//    // 태그 관련 연관 검색어 가져오기
+    // 유저 관련 연관 검색어 userID로 조회
+    List<UserDto> findUserKeywordByUserID(String searchWord) throws Exception;
+    // 유저 관련 연관 검색어 NincName or Name으로 조회
+    List<UserDto> findUserKeywordByName(String searchWord) throws Exception;
+    //    // 태그 관련 연관 검색어 가져오기
 //    List<String> findSearchAboutTag(String searchWord) throws Exception;
 //    // 태그 검색 결과 모두 가져오기
 //    List<SearchDto> findResultTag(String searchWord) throws Exception;

@@ -36,19 +36,29 @@ public class SearchController {
         return new ResponseEntity<List<String>>(searchService.findPastSearch(userNumber), HttpStatus.OK);
     }
 
-    // 실시간 유저 연관 검색어 조회
-    @ApiOperation(value = "실시간 유저관련 연관 검색어 조회", notes = "회원의 검색 내용이 유저관련이면 연관 유저가 나옵니다.")
-    @GetMapping("/realtime/user/{searchWord}")
-    public ResponseEntity<List<UserDto>> searchUserList(
+    // 실시간 userID관련 연관 검색어 조회
+    @ApiOperation(value = "실시간 userID관련 연관 검색어 조회", notes = "회원의 검색 내용이 userID와 관련된 연관 유저가 나옵니다.")
+    @GetMapping("/rt/userid/{searchWord}")
+    public ResponseEntity<List<UserDto>> searchUserIDList(
             @ApiParam(value = "검색어") @PathVariable("searchWord") String searchWord) throws Exception {
 
-        logger.info("searchUserList 호출");
-        return new ResponseEntity<List<UserDto>>(searchService.findSearchAboutUser(searchWord), HttpStatus.OK);
+        logger.info("searchUserIDList 호출");
+        return new ResponseEntity<List<UserDto>>(searchService.findUserKeywordByUserID(searchWord), HttpStatus.OK);
+    }
+
+    // 실시간 userName/NickName관련 연관 검색어 조회
+    @ApiOperation(value = "실시간 userName/NickName관련 연관 검색어 조회", notes = "회원의 검색 내용이 userName/NickName과 관련된 연관 유저가 나옵니다.")
+    @GetMapping("/rt/userName/{searchWord}")
+    public ResponseEntity<List<UserDto>> searchUserNameList(
+            @ApiParam(value = "검색어") @PathVariable("searchWord") String searchWord) throws Exception {
+
+        logger.info("searchUserNameList 호출");
+        return new ResponseEntity<List<UserDto>>(searchService.findUserKeywordByName(searchWord), HttpStatus.OK);
     }
 
 //    // 실시간 태그 연관 검색어 조회
 //    @ApiOperation(value = "실시간 태그관련 연관 검색어 조회", notes = "회원의 검색 내용이 태그관련이면 연관 유저가 나옵니다.")
-//    @GetMapping("/realtime/hashtag/{searchWord}")
+//    @GetMapping("/rt/hashtag/{searchWord}")
 //    public ResponseEntity<List<String>> searchTagList(
 //            @ApiParam(value = "검색어") @PathVariable("searchWord") String searchWord) throws Exception {
 //
