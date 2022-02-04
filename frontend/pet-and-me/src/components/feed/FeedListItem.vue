@@ -1,25 +1,29 @@
 <template>
-  <div>뉴스피드
-    <div>
-      <FeedListItem
-      />
-    </div>
+  <div style="border: 1px solid;">뉴스피드리스트아이템
   </div>
 </template>
 
 <script>
-import FeedListItem from '@/components/feed/FeedListItem'
-import axios from "axios"
+import axios from 'axios'
+
+
 
 export default {
-  name: 'NewsFeed',
+  name: 'FeedListItem',
   data: function () {
     return {
-
+      userNumber: null,
+      newsFeeds: [
+        {},
+        {},
+        {},
+        {},
+        {},
+      ],
     }
   },
   components: {
-    FeedListItem,
+
   },
   props: {
 
@@ -43,7 +47,7 @@ export default {
   created: function () {
     // 로그인 확인
     this.getNewsFeeds()
-  },
+  }
 }
 </script>
 

@@ -10,6 +10,7 @@ import Search from '../views/search/Search'
 import FeedCreate from '../views/feed/FeedCreate'
 import NewsFeed from '../views/feed/NewsFeed'
 import UserFeed from '../views/feed/UserFeed'
+import FeedDetail from '../views/feed/FeedDetail'
 
 
 Vue.use(VueRouter)
@@ -65,6 +66,11 @@ const routes = [
     path: '/feed/userfeed',
     name: 'UserFeed',
     component: UserFeed,
+  },
+  {
+    path: '/feed/:feedNumber',
+    name: 'FeedDetail',
+    component: FeedDetail,
   },
 ]
 
