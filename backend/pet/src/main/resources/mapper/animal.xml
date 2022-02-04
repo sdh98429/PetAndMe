@@ -11,29 +11,19 @@
         </foreach>
     </insert>
 
-    <delete id="deleteAnimal" parameterType="map">
+    <delete id="deleteAnimal" parameterType="Long">
         DELETE FROM animallike
         WHERE userNumber=#{userNumber}
     </delete>
     
-    <select id="selectFavAnimal" parameterType="Long" resultMap="getFavAnimal">
+    <select id="selectFavAnimal" parameterType="Long" resultType="AnimalLikeDto">
         SELECT userNumber, animalNumber
         FROM animallike
         where userNumber=#{userNumber}
     </select>
 
-    <select id="selectAnimal" resultMap="getAnimal">
-        SELECT *
+    <select id="selectAnimal" resultType="AnimalDto">
+        SELECT animalNumber, animalName
         FROM animal
     </select>
-
-    <resultMap id="getAnimal" type="AnimalDto">
-        <result column="animalNumber" property="animalNumber"/>
-        <result column="animalName" property="animalName"/>
-    </resultMap>
-
-    <resultMap id="getFavAnimal" type="AnimalLikeDto">
-        <result column="userNumber" property="userNumber"/>
-        <result column="animalNumber" property="animalNumber"/>
-    </resultMap>
 </mapper>
