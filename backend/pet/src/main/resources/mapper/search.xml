@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sns.pet.dao.SearchDao">
+
+    <!-- 최근 검색 기록 조회 (최대 10개까지) -->
+    <select id="searchPastKeyword" parameterType="Long" resultType="String">
+        SELECT searchWord
+        FROM SearchRecord
+        WHERE userNumber = #{userNumber}
+        ORDER BY searchDate desc LIMIT 10;
+    </select>
+
+    <!-- 유저 관련 연관 검색어 모두 조회 -->
+    <select id="searchKeywordAboutUser" parameterType="String" resultType="userDto">
+        SELECT userNumber, userNickName, userName, userProfilePicture
+        FROM User
+        WHERE userName LIKE CONCAT('%', #{searchWord}, '%') OR userNickName LIKE CONCAT('%', #{searchWord}, '%')
+    </select>
+
+    <!-- 태그 관련 연관 검색어 모두 조회 -->
+<!--    <select id="searchKeywordAboutTag" parameterType="String" resultType="String">-->
+<!--        SELECT tagContent, COUNT(tagContent)-->
+<!--        FROM FeedHashTag-->
+<!--        WHERE tagContent LIKE CONCAT(#{searchWord}, '%')-->
+<!--        GROUP BY tagContent-->
+<!--    </select>-->
+
+    <!-- 태그 검색 결과 피드 목록 모두 조회 -->
+    <!-- FeedHashTag 테이블과 Feed 테이블 조인 -->
+<!--    <select id="searchResultTag" parameterType="String" resultType="SearchDto">-->
+<!--        SELECT feedNumber-->
+<!--        FROM FeedHashTag AS tag-->
+<!--        WHERE tagContent LIKE #{searchWord}-->
+<!--    </select>-->
+
+    <!-- 검색어 저장: 날짜는 자동으로 검색날짜로 저장 -->
+    <insert id="insertKeyword" parameterType="SearchDto">
+        INSERT IGNORE INTO SearchRecord (userNumber, searchWord)
+        VALUE (#{userNumber}, #{searchWord})
+        ON DUPLICATE KEY UPDATE searchDate = now()
+    </insert>
+</mapper>
