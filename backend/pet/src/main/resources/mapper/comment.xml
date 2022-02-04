@@ -8,11 +8,14 @@
 
     <select id="selectCommentList" parameterType="Long" resultType="CommentDto">
         SELECT c.feedNumber, c.commentNumber, c.commentContent, c.commentDate, u.userID, u.userName, u.userNickName, u.userProfileContent
-        FROM Comment c INNER JOIN User u
-        ON c.userNumber = u.userNumber
-        WHERE feedNumber = #{feedNumber}
+        FROM User AS u INNER JOIN (
+            SELECT feedNumber, userNumber, commentNumber, commentContent, commentDate
+            FROM Comment
+            WHERE feedNumber = #{feedNumber}
+            ) AS c
+        ON u.userNumber = c.userNumber
     </select>
-<!-- 다른 조인문 and 5개 씩 -->
+<!-- 5개 씩 -->
 
     <delete id="deleteComment" parameterType="Long">
         DELETE
