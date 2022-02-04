@@ -24,7 +24,7 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public boolean addFeed(FeedDto feedDto) throws Exception {
         if (sqlSession.getMapper(FeedDao.class).insertFeed(feedDto) == 1) {
             if (feedDto.getFeedPhotoDtoList() != null)
@@ -47,7 +47,7 @@ public class FeedServiceImpl implements FeedService {
 //    }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public boolean removeFeed(Long feedNumber) throws Exception {
         List<FeedPhotoDto> fileInfoDtoList = sqlSession.getMapper(FeedDao.class).selectFeedPhotoByFeedNumber(feedNumber);
         sqlSession.getMapper(FeedDao.class).deletePhotos(feedNumber);
