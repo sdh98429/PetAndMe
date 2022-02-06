@@ -7,10 +7,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@ApiModel(value = "동물정보")
-public class AnimalDto {
-    @ApiModelProperty(value = "동물 번호")
+@ApiModel(value = "선호동물")
+public class FavAnimalDto {
+    @ApiModelProperty(value = "회원 번호")
+    private Long userNumber;
+    @ApiModelProperty(value = "선호동물 번호")
     private int animalNumber;
-    @ApiModelProperty(value = "동물 이름")
-    private String animalName;
 }
