@@ -18,7 +18,7 @@
     </insert>
 
     <select id="selectFeed" parameterType="Long" resultMap="getFeed">
-        SELECT feedNumber, feedContent, feedDate
+        SELECT userNumber, feedNumber, feedContent, feedDate
         FROM Feed
         WHERE feedNumber = #{feedNumber}
     </select>
