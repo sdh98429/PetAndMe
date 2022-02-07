@@ -59,6 +59,7 @@ public class UserController {
         UserDto userDto = userService.findUser(userNumber);
         
         // 이미지 반환
+        System.out.println(userDto.getSaveFolder() + userDto.getUserPhotoName());
         InputStream imageStream = new FileInputStream(userDto.getSaveFolder() + userDto.getUserPhotoName());
         userDto.setUserProfilePhoto(IOUtils.toByteArray(imageStream));
 
@@ -94,12 +95,13 @@ public class UserController {
 
         if (image != null) {
             logger.info("file 확인");
-            String today = new SimpleDateFormat("yyMMdd").format(new Date());
-            String UPLOAD_PATH = "C:" + File.separator + "PJT" + File.separator + "test";
             String originName, fileExtension, saveFileName, saveFolder;
 
-            logger.info("저장경로 확인 : {}", UPLOAD_PATH);
-            saveFolder = UPLOAD_PATH + File.separator + today + File.separator;
+//            saveFolder = File.separator + "Users" + File.separator + "leejuhyeong" + File.separator + "test" + File.separator + "profile" + File.separator; // 맥용
+//            saveFolder = "C:" + File.separator + "PJT" + File.separator + "test" + File.separator;                              // 윈도우용
+            saveFolder = File.separator + "home" + File.separator + "test" + File.separator + "profile" + File.separator;       // ec2 서버용
+
+            logger.info("저장경로 확인 : {}", saveFolder);
             userDto.setSaveFolder(saveFolder);
             File folder = new File(saveFolder);
             if (!folder.exists()) {
