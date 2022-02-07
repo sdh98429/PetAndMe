@@ -1,10 +1,9 @@
 <template>
   <div>
     <h2> 피드 작성 페이지 </h2>
-    <img :src="`data:image/png;base64,${fileInfoDtoList[0].photo}`" />
     <ul> 
       <li>
-      <input multiple @change='onInputImage()' ref="Images" type="file">
+      <input multiple @change='onInputImage()' accept="image/*" ref="image" type="file">
       </li> 
     </ul>
 
@@ -36,10 +35,12 @@ export default {
     return {
       feedContent: null, 
 
+      myUserNumber : 2,
+
       isCreate: false, // createBtn 눌렀는지
-      isArrive: 1, // Picture, ContentsForm 신호 도착 개수
+      isArrive: 0, // Picture, ContentsForm 신호 도착 개수
       files: [],
-      fileInfoDtoList : [{"photo" : null,}],
+
 
     }
   },
@@ -52,8 +53,23 @@ export default {
 
   },
   methods: {
-    onInputImage: function(){
-      this.files = this.$refs.Images.files
+    onInputImage: function(){ // 이미지 추가
+      this.files = this.$refs.image.files
+      
+      if (this.$refs.image.files.length >=5){
+        this.files = []
+        this.$refs.image.value = ''
+        alert('이미지는 최대 5장까지 가능합니다.')
+      } else {
+        var step;
+        for (step = 0; step < this.files.length; step++) {
+          if (this.files[step].size/(1024*1024) > 5){
+            this.files = []
+            this.$refs.image.value = ''
+            alert('이미지 파일은 최대 5MB까지 가능합니다.')
+          }
+        }
+      }
     },
 
     createFeed: function (){ // createBtn 버튼 누름
@@ -70,26 +86,23 @@ export default {
   
   watch: {
     isArrive: function(){ // 사진, 내용 도착
-      console.log(this.files)
       var fileInput = this.files;
-      console.log("fileInput")
-      console.log(fileInput)
 
-      if (this.isArrive == 2){ // 사진, 내용 둘 다 도착 시 back으로 보내주기
+      if (this.isArrive == 1){ // 사진, 내용 둘 다 도착 시 back으로 보내주기
         if (this.feedContent) {
-          console.log(fileInput)
-          if (fileInput != []) {
+
+          if (fileInput.length) {
             var formData = new FormData();
             var step;
-            for (step = 0; step < this.$refs.Images.files.length; step++){
+            for (step = 0; step < this.$refs.image.files.length; step++){
               formData.append('feedPhoto', fileInput[step]);
 
             }
 
             formData.append("feedContent", JSON.stringify(this.feedContent));
-            formData.append("userNumber", JSON.stringify(2));
+            formData.append("userNumber", JSON.stringify(this.myUserNumber));
 
-            console.log(formData)
+
             axios({
                 method: 'post',
                 url: 'http://i6b106.p.ssafy.io:8080/main/feed',
@@ -99,20 +112,11 @@ export default {
                           'Content-Type': 'multipart/form-data',
                         },
             })
-            .then(function (response) {
-                console.log(response);
-                axios({
-                  method: 'get',
-                  url: 'http://i6b106.p.ssafy.io:8080/main/feed/16'
-                })
-                .then(function (response){
-                  this.fileInfoDtoList = response.fileInfoDtoList
-                })
-                .catch(function (err) {
-                  console.log(err);
-                })
+            .then(() => {
+                console.log("생성 완료");
+                this.$router.push('NewsFeed')
             })
-            .catch(function (err) {
+            .catch( (err) => {
                 console.log(err);
             });
           }
@@ -123,8 +127,8 @@ export default {
           alert("피드 내용을 넣어주세요")
         }
         this.isCreate = false // 초기화
-        this.isArrive = 1
       }
+      this.isArrive = 0
     }
   }
 }

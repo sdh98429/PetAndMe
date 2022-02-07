@@ -1,50 +1,36 @@
 <template>
   <div style="border: 1px solid;" class="file-preview-container">유저 피드리스트
 
-    <UserFeedListItem 
-    v-for="userFeed in userFeeds" 
-    :key="userFeed.feedNumber"
-    :userFeed="userFeed" 
-    class="file-preview-wrapper"
-    />
+    <div v-for="userFeed in userFeeds" :key="userFeed.feedNumber">
+      <img class="file-preview-wrapper" @click="goToFeedDetail(userFeed)" :src="`data:image/png;base64,${userFeed.feedThumbnail}`" />
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 
-import UserFeedListItem from '@/components/feed/UserFeedListItem'
-
 
 export default {
-  name: 'FeedList',
+  name: 'UserFeedList',
   data: function () {
     return {
-      userNumber: null,
+      yourUserNumber: null,
       userFeeds: [
-        {},
-        {},
-        {},
-        {}, 
-        {},
-        {},
-        {},
-        {}, 
       ],
     }
   },
   components: {
-    UserFeedListItem,
+
   },
   props: {
 
   },
   methods: {
-    getUserFeeds: function () {
+    getUserFeeds: function () { // 유저 피드 리스트 가져오기
       axios({
         method: 'get',
-        // url: `http://i6b106.p.ssafy.io/feed/list/${userNumber}`, // 요청 보내야 할 URL
-        url: `http://i6b106.p.ssafy.io/feed/list/{userNumber}`, // 임시 URL
+        url: `http://i6b106.p.ssafy.io:8080/main/feed/list/` + this.$route.params.yourUserNumber, // 임시 URL
       })
         .then(res => {
           console.log(res.data)
@@ -53,6 +39,10 @@ export default {
         .catch(err => {
           console.log(err)
         })
+    },
+
+    goToFeedDetail(userFeed){ // 상세 피드로 이동
+      this.$router.push({path: `/feed/${userFeed.feedNumber}`})
     },
   },
   created: function () {
@@ -71,7 +61,6 @@ export default {
 
   .file-preview-wrapper {
     padding: 10px;
-    /* width: (100/3)%; */
     position: relative;
   }
 </style>

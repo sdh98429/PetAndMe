@@ -19,7 +19,7 @@ export default {
 
   },
   methods: {
-    createClick: function() {
+    createClick: function() { // 버튼 눌리면 FeedCreate로 신호 보냄
       this.$emit('create-click')
     }
   }
