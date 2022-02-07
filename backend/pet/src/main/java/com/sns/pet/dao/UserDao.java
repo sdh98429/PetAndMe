@@ -20,4 +20,6 @@ public interface UserDao {
     int deleteUser(Long userNumber) throws SQLException;
     // 회원정보 전송
     UserPetDto selectUserInfo(Long userNumber) throws SQLException;
+    // 회원번호 조회
+    UserDto selectUserNumber(String userID) throws SQLException;
 }

@@ -18,5 +18,6 @@ public interface UserService {
     boolean removeUser(Long userNumber) throws Exception;
     // 회원정보 전송
     UserPetDto findUserInfo(Long userNumber) throws Exception;
-
+    // 회원번호 전송
+    UserDto findUserNumber(String userID) throws Exception;
 }

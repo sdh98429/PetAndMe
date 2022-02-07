@@ -32,6 +32,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = {"*"}, maxAge = 6000)
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -148,5 +149,14 @@ public class UserController {
             return new ResponseEntity<UserPetDto>(userPetDto, HttpStatus.OK);
         }
         return new ResponseEntity<UserPetDto>(userPetDto, HttpStatus.NO_CONTENT);
+    }
+
+    @ApiOperation(value = "회원 ID로 회원번호 조회")
+    @GetMapping("/number/{userID}")
+    public ResponseEntity<Long> sendNumber(@PathVariable("userID") @ApiParam("전송할 회원 ID") String userID) throws Exception{
+        logger.info("sendNumber 호출");
+        UserDto userDto = userService.findUserNumber(userID);
+        Long userNumber = userDto.getUserNumber();
+        return new ResponseEntity<Long>(userNumber, HttpStatus.OK);
     }
 }
