@@ -57,4 +57,11 @@
         AND u.userNumber = p.userNumber
         AND a.animalNumber = p.animalNumber;
     </select>
+
+    <!-- 회원번호 전송 -->
+    <select id="selectUserNumber" parameterType="String" resultType="UserDto">
+        SELECT userNumber
+        FROM User
+        WHERE userID = #{userID}
+    </select>
 </mapper>

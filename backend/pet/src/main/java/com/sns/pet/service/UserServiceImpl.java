@@ -57,5 +57,10 @@ public class UserServiceImpl implements UserService {
     public UserPetDto findUserInfo(Long userNumber) throws Exception {
         return sqlSession.getMapper(UserDao.class).selectUserInfo(userNumber);
     }
+
+    @Override
+    public UserDto findUserNumber(String userID) throws Exception {
+        return sqlSession.getMapper(UserDao.class).selectUserNumber(userID);
+    }
 }
 
