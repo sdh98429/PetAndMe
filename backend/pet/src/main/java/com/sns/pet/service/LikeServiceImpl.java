@@ -1,9 +1,12 @@
 package com.sns.pet.service;
 
 import com.sns.pet.dao.LikeDao;
+import com.sns.pet.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,8 +25,8 @@ public class LikeServiceImpl implements LikeService{
     }
 
     @Override
-    public boolean findLikeList(Long userNumber, Long feedNumber) throws Exception {
-        return false;
+    public List<UserDto> findLikeList(Long feedNumber) throws Exception {
+        return sqlSession.getMapper(LikeDao.class).selectLikeList(feedNumber);
     }
 
 

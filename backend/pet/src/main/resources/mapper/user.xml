@@ -14,30 +14,46 @@
 
     <!--  회원 조회  -->
     <select id="selectUser" parameterType="Long" resultType="userDto">
-        SELECT userNumber, userID, userPW, userNickName, userEmail, petCheck, saveFolder, userPhotoName,userProfilePhoto
-        userProfileContent, userType
+        SELECT userNumber,
+               userID,
+               userPW,
+               userNickName,
+               userEmail,
+               petCheck,
+               saveFolder,
+               userPhotoName,
+               userProfileContent,
+               userType
         FROM User
-        WHERE userNumber=#{userNumber}
+        WHERE userNumber = #{userNumber}
     </select>
 
     <!--  회원정보 수정  -->
     <update id="updateUser" parameterType="userDto">
         UPDATE User
-        SET userPW=#{userPW}, userNickName=#{userNickName}, petCheck=#{petCheck}, saveFolder=#{saveFolder},
-        userPhotoName=#{userPhotoName}, userProfileContent=#{userProfileContent}
-        WHERE userNumber=#{userNumber}
+        SET userPW=#{userPW},
+            userNickName=#{userNickName},
+            petCheck=#{petCheck},
+            saveFolder=#{saveFolder},
+            userPhotoName=#{userPhotoName},
+            userProfileContent=#{userProfileContent}
+        WHERE userNumber = #{userNumber}
     </update>
 
     <!--  회원탈퇴  -->
     <delete id="deleteUser" parameterType="Long">
-        DELETE FROM User
-        WHERE userNumber=#{userNumber}
+        DELETE
+        FROM User
+        WHERE userNumber = #{userNumber}
     </delete>
 
     <!--  회원정보 전송  -->
     <select id="selectUserInfo" parameterType="Long" resultType="UserPetDto">
         SELECT DISTINCT u.userPhotoName, u.userNickName, u.userID, p.petName, p.petGender, p.petBirth, a.animalName
-        FROM User u JOIN Pet p JOIN Animal a
-        WHERE u.userNumber=#{userNumber} AND a.animalNumber = p.animalNumber
+        FROM User u
+                 JOIN Pet p
+                 JOIN Animal a
+        WHERE u.userNumber = #{userNumber}
+          AND a.animalNumber = p.animalNumber
     </select>
 </mapper>

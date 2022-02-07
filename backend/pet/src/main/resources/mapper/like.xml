@@ -13,4 +13,14 @@
         WHERE userNumber = #{userNumber} AND feedNumber = #{feedNumber}
     </delete>
 
+    <select id="selectLikeList" parameterType="Long" resultType="UserDto">
+        SELECT u.userNumber, u.userNickName, u.UserID, u.saveFolder, u.userPhotoName
+        FROM User AS u INNER JOIN (
+            SELECT userNumber
+            FROM Likes
+            WHERE feedNumber = #{feedNumber}
+            ) AS l
+        ON u.userNumber = l.userNumber
+    </select>
+
 </mapper>

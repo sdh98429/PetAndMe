@@ -1,15 +1,19 @@
 package com.sns.pet.controller;
 
 import com.sns.pet.dto.FeedDto;
+import com.sns.pet.dto.UserDto;
 import com.sns.pet.service.LikeService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.List;
 
 @RestController
@@ -42,10 +46,16 @@ public class LikeController {
         return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
     }
 
-//    @ApiOperation(value = "userNumber 사용자가 feedNumber에 좋아요 누름", response = FeedDto.class)
-//    @GetMapping("/{feedNumber}")
-//    public ResponseEntity<List<LikeDto>> likeList(@PathVariable("feedNumber") Long feedNumber) throws Exception {
-//        return new ResponseEntity<>()
-//    }
+    @ApiOperation(value = "feedNumber 피드를 좋아요 누른 사람들 리스트", response = FeedDto.class)
+    @GetMapping("/{feedNumber}")
+    public ResponseEntity<List<UserDto>> likeList(@PathVariable("feedNumber") Long feedNumber) throws Exception {
+        InputStream imageStream;
+        List<UserDto> likeList = likeService.findLikeList(feedNumber);
+        for (UserDto userDto : likeList) {
+            imageStream = new FileInputStream(userDto.getSaveFolder() + userDto.getUserPhotoName());
+            userDto.setUserProfilePhoto(IOUtils.toByteArray(imageStream));
+        }
+        return new ResponseEntity<>(likeList, HttpStatus.OK);
+    }
 
 }
