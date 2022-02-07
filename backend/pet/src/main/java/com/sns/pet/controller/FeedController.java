@@ -1,5 +1,6 @@
 package com.sns.pet.controller;
 
+import com.sns.pet.dto.CommentDto;
 import com.sns.pet.dto.FeedDto;
 import com.sns.pet.dto.FeedPhotoDto;
 import com.sns.pet.service.FeedService;

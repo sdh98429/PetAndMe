@@ -49,14 +49,16 @@ public class FeedServiceImpl implements FeedService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean removeFeed(Long feedNumber) throws Exception {
-        List<FeedPhotoDto> fileInfoDtoList = sqlSession.getMapper(FeedDao.class).selectFeedPhotoByFeedNumber(feedNumber);
-        sqlSession.getMapper(FeedDao.class).deletePhotos(feedNumber);
-        sqlSession.getMapper(FeedDao.class).deleteFeed(feedNumber);
-
-        // 파일 삭제
-        for (FeedPhotoDto feedPhotoDto : fileInfoDtoList) {
-            Files.delete(Paths.get(feedPhotoDto.getSaveFolder() + feedPhotoDto.getPhotoName()));
-        }
-        return true;
+        List<FeedPhotoDto> FeedPhotoDtoList = sqlSession.getMapper(FeedDao.class).selectFeedPhotoByFeedNumber(feedNumber);
+        if (sqlSession.getMapper(FeedDao.class).deletePhotos(feedNumber) == FeedPhotoDtoList.size() && sqlSession.getMapper(FeedDao.class).deleteFeed(feedNumber) == 1) {
+            // 파일 삭제
+            for (FeedPhotoDto feedPhotoDto : FeedPhotoDtoList) {
+                Files.delete(Paths.get(feedPhotoDto.getSaveFolder() + feedPhotoDto.getPhotoName()));
+            }
+            return true;
+        } else
+            return false;
     }
+
+
 }

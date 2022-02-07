@@ -5,6 +5,7 @@ import com.sns.pet.dao.PetDao;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -36,6 +37,7 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean modifyPet(PetDto petDto) throws Exception {
         // 이름이 중복되지 않는 경우 수정 가능
         if(sqlSession.getMapper(PetDao.class).selectPetName(petDto.getUserNumber(), petDto.getPetName()) == 0) {

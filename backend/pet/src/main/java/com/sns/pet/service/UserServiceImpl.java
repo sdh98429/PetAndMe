@@ -1,27 +1,41 @@
 package com.sns.pet.service;
 
+import com.sns.pet.dao.FavAnimalDao;
+import com.sns.pet.dao.PetDao;
 import com.sns.pet.dao.UserDao;
+import com.sns.pet.dto.JoinDto;
 import com.sns.pet.dto.UserDto;
 import com.sns.pet.dto.UserPetDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final SqlSession sqlSession;
-
     @Override
-    public boolean addUser(UserDto userDto) throws Exception {
-        if(userDto == null){
-            throw new Exception();
+    @Transactional(rollbackFor = Exception.class)
+    public boolean addUser(JoinDto joinDto) throws Exception {
+        sqlSession.getMapper(UserDao.class).insertUser(joinDto);
+        System.out.println(joinDto.toString());
+        if (joinDto.getUserPreference() != null) {
+            for (int i = 0; i < joinDto.getUserPreference().size(); i++) {
+                joinDto.getUserPreference().get(i).setUserNumber(joinDto.getUserNumber());
+            }
+            sqlSession.getMapper(FavAnimalDao.class).insertFavAnimal(joinDto.getUserPreference());
         }
-        return sqlSession.getMapper(UserDao.class).insertUser(userDto) == 1;
+        if (joinDto.isPetCheck()) {
+            for (int i = 0; i < joinDto.getUserPet().size(); i++) {
+                joinDto.getUserPet().get(i).setUserNumber(joinDto.getUserNumber());
+            }
+            return sqlSession.getMapper(PetDao.class).insertJoinPet(joinDto.getUserPet()) == joinDto.getUserPet().size();
+        } else {
+            return true;
+        }
+
     }
 
     @Override
@@ -43,5 +57,5 @@ public class UserServiceImpl implements UserService{
     public UserPetDto findUserInfo(Long userNumber) throws Exception {
         return sqlSession.getMapper(UserDao.class).selectUserInfo(userNumber);
     }
-
 }
+

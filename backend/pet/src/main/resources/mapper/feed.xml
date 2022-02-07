@@ -43,13 +43,20 @@
         WHERE userNumber = #{userNumber}
     </select>
 
-    <delete id="deleteFeed" parameterType="Long" >
-        DELETE FROM Feed
+    <delete id="deleteFeed" parameterType="Long">
+        DELETE
+        FROM Feed
         WHERE feedNumber = #{feedNumber}
     </delete>
 
-    <delete id="deletePhotos" parameterType="Long" >
-        DELETE FROM FeedPhoto
+    <delete id="deletePhotos" parameterType="Long">
+        DELETE
+        FROM FeedPhoto
         WHERE feedNumber = #{feedNumber}
     </delete>
+
+    <select id="insertComment" parameterType="CommentDto">
+        INSERT INTO Comment (commentContent, commentDate, userNumber, feedNumber)
+        VALUES (#{commentContent}, now(), #{userNumber}, #{feedNumber})
+    </select>
 </mapper>

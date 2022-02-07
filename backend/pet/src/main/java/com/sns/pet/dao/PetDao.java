@@ -21,4 +21,6 @@ public interface PetDao {
     int updatePet(PetDto petDto) throws SQLException;
     // 반려동물 정보 삭제
     int deletePet(@Param("userNumber") Long userNumber, @Param("petNumber") Long petNumber) throws SQLException;
+    // 회원가입 반려동물 정보 저장
+    int insertJoinPet(List<PetDto> petDtoList) throws SQLException;
 }
