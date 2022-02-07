@@ -15,7 +15,7 @@ public interface FeedDao {
 
     int insertImages(FeedDto feedDto) throws SQLException;
 
-    FeedDto selectFeed(Long feedNumber) throws SQLException;
+    FeedDto selectFeed(Long userNumber, Long feedNumber) throws SQLException;
     List<FeedPhotoDto> selectFeedPhotoByFeedNumber(Long feedNumber) throws SQLException;
 //    int updateFeed(FeedDto feedDto) throws SQLException;
     int deleteFeed(Long feedNumber) throws SQLException;

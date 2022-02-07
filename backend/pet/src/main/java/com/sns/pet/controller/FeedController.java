@@ -29,7 +29,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = { "*" }, maxAge = 6000)
+@CrossOrigin(origins = {"*"}, maxAge = 6000)
 @RequestMapping("/main")
 public class FeedController {
 
@@ -48,7 +48,7 @@ public class FeedController {
 
     @ApiOperation(value = "userNumber에 해당하는 내 피드 목록 반환", response = FeedDto.class)
     @GetMapping("/feed/list/{userNumber}")
-    public ResponseEntity<List<FeedDto>> myFeedList(@PathVariable("userNumber") Long userNumber) throws Exception{
+    public ResponseEntity<List<FeedDto>> myFeedList(@PathVariable("userNumber") Long userNumber) throws Exception {
         logger.info("내 피드 목록 - 호출" + userNumber);
         List<FeedDto> feedDtoList = feedService.findMyFeedList(userNumber);
 
@@ -122,10 +122,12 @@ public class FeedController {
     }
 
     @ApiOperation(value = "feedNumber에 해당하는 피드 반환", response = FeedDto.class)
-    @GetMapping("/feed/{feedNumber}")
-    public ResponseEntity<FeedDto> feedDetails(@PathVariable("feedNumber") Long feedNumber) throws Exception{
+    @GetMapping("/feed/{userNumber}/{feedNumber}")
+    public ResponseEntity<FeedDto> feedDetails(
+            @ApiParam(value = "로그인 유저번호", required = true) @PathVariable("userNumber") Long userNumber,
+            @ApiParam(value = "피드 번호", required = true) @PathVariable("feedNumber") Long feedNumber) throws Exception {
         logger.info("feedDetails - 호출" + feedNumber);
-        FeedDto feedDto = feedService.findFeed(feedNumber);
+        FeedDto feedDto = feedService.findFeed(userNumber, feedNumber);
 
         // 이미지 변환
         InputStream imageStream;
@@ -138,7 +140,7 @@ public class FeedController {
 
     @ApiOperation(value = "image 경로에 따른 이미지 반환", response = FeedDto.class)
     @GetMapping("/image/{file}")
-    public ResponseEntity<byte[]> imageDetails(@PathVariable("file") String image) throws Exception{
+    public ResponseEntity<byte[]> imageDetails(@PathVariable("file") String image) throws Exception {
         logger.info("imageDetails - 호출" + image);
         InputStream in = new FileInputStream(image);
         HttpHeaders headers = new HttpHeaders();
@@ -148,9 +150,9 @@ public class FeedController {
 
     @ApiOperation(value = "feedNumber에 해당하는 피드 삭제, DB입력 성공 여부에 따라 success, fail 반환")
     @DeleteMapping("/feed/{feedNumber}")
-    public ResponseEntity<String> feedRemove(@PathVariable("feedNumber") Long feedNumber) throws Exception{
+    public ResponseEntity<String> feedRemove(@PathVariable("feedNumber") Long feedNumber) throws Exception {
         logger.info("feedRemove - 호출");
-        if(feedService.removeFeed(feedNumber)){
+        if (feedService.removeFeed(feedNumber)) {
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
         }
         return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
