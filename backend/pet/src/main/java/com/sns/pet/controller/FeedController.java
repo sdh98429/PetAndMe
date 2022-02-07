@@ -77,8 +77,8 @@ public class FeedController {
         if (upImages != null && !upImages.isEmpty()) {
             logger.info("file 확인");
             String today = new SimpleDateFormat("yyMMdd").format(new Date());
-            String UPLOAD_PATH = File.separator + "Users" + File.separator + "leejuhyeong" + File.separator + "test";
-//            String UPLOAD_PATH = File.separator + "home" + File.separator + "test" + File.separator + "images";           // ec2 서버용
+//            String UPLOAD_PATH = File.separator + "Users" + File.separator + "leejuhyeong" + File.separator + "test";
+            String UPLOAD_PATH = File.separator + "home" + File.separator + "test" + File.separator + "images";           // ec2 서버용
             String originName, fileExtension, saveFileName, saveFolder;
 
             logger.info("저장경로 확인 : {}", UPLOAD_PATH);

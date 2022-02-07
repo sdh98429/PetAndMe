@@ -7,7 +7,7 @@
     </insert>
 
     <select id="selectCommentList" parameterType="Long" resultType="CommentDto">
-        SELECT c.feedNumber, c.commentNumber, c.commentContent, c.commentDate, u.userID, u.userName, u.userNickName, u.userProfileContent
+        SELECT c.feedNumber, c.commentNumber, c.commentContent, c.commentDate, u.userID, u.userNickName, u.saveFolder, u.userPhotoName
         FROM User AS u INNER JOIN (
             SELECT feedNumber, userNumber, commentNumber, commentContent, commentDate
             FROM Comment
