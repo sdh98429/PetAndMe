@@ -11,7 +11,7 @@ public interface SearchService {
     List<String> findPastSearch(Long userNumber) throws Exception;
     // 유저 관련 연관 검색어 userID로 조회
     List<UserDto> findUserKeywordByUserID(String searchWord) throws Exception;
-    // 유저 관련 연관 검색어 NincName or Name으로 조회
+    // 유저 관련 연관 검색어 NickName으로 조회
     List<UserDto> findUserKeywordByName(String searchWord) throws Exception;
     //    // 태그 관련 연관 검색어 가져오기
 //    List<String> findSearchAboutTag(String searchWord) throws Exception;

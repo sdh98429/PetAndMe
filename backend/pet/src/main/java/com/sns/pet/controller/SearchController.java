@@ -46,8 +46,8 @@ public class SearchController {
         return new ResponseEntity<List<UserDto>>(searchService.findUserKeywordByUserID(searchWord), HttpStatus.OK);
     }
 
-    // 실시간 userName/NickName관련 연관 검색어 조회
-    @ApiOperation(value = "실시간 userName/NickName관련 연관 검색어 조회", notes = "회원의 검색 내용이 userName/NickName과 관련된 연관 유저가 나옵니다.")
+    // 실시간 NickName관련 연관 검색어 조회
+    @ApiOperation(value = "실시간 NickName관련 연관 검색어 조회", notes = "회원의 검색 내용이 NickName과 관련된 연관 유저가 나옵니다.")
     @GetMapping("/rt/userName/{searchWord}")
     public ResponseEntity<List<UserDto>> searchUserNameList(
             @ApiParam(value = "검색어") @PathVariable("searchWord") String searchWord) throws Exception {

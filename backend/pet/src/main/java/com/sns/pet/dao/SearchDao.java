@@ -14,7 +14,7 @@ public interface SearchDao {
     List<String> selectPastKeyword(Long userNumber) throws SQLException;
     // 유저 관련 연관 검색어 userID로 조회
     List<UserDto> selectUserKeywordByUserID(String searchWord) throws SQLException;
-    // 유저 관련 연관 검색어 NincName or Name으로 조회
+    // 유저 관련 연관 검색어 NickName으로 조회
     List<UserDto> selectUserKeywordByName(String searchWord) throws SQLException;
     //    // 태그 관련 연관 검색어 가져오기
 //    List<String> selectKeywordAboutTag(String searchWord) throws SQLException;

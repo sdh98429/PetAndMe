@@ -14,16 +14,16 @@
 
     <!-- 유저 관련 연관 검색어 userID로 조회 -->
     <select id="selectUserKeywordByUserID" parameterType="String" resultType="userDto">
-        SELECT userNumber, userNickName, userName, userProfilePicture
+        SELECT userNumber, userNickName, userProfilePicture
         FROM User
         WHERE userID LIKE CONCAT('%', #{searchWord}, '%')
     </select>
 
-    <!-- 유저 관련 연관 검색어 NincName or Name으로 조회 -->
+    <!-- 유저 관련 연관 검색어 NickName으로 조회 -->
     <select id="selectUserKeywordByName" parameterType="String" resultType="userDto">
-        SELECT userNumber, userNickName, userName, userProfilePicture
+        SELECT userNumber, userNickName, userProfilePicture
         FROM User
-        WHERE userName LIKE CONCAT('%', #{searchWord}, '%') OR userNickName LIKE CONCAT('%', #{searchWord}, '%')
+        WHERE userNickName LIKE CONCAT('%', #{searchWord}, '%')
     </select>
 
     <!-- 태그 관련 연관 검색어 모두 조회 -->
