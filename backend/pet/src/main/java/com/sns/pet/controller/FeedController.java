@@ -9,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -131,6 +133,16 @@ public class FeedController {
             feedPhotoDto.setPhoto(IOUtils.toByteArray(imageStream));
         }
         return new ResponseEntity<>(feedDto, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "image 경로에 따른 이미지 반환", response = FeedDto.class)
+    @GetMapping("/image/{file}")
+    public ResponseEntity<byte[]> imageDetails(@PathVariable("file") String image) throws Exception{
+        logger.info("imageDetails - 호출" + image);
+        InputStream in = new FileInputStream(image);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        return new ResponseEntity<>(IOUtils.toByteArray(in), headers, HttpStatus.OK);
     }
 
     @ApiOperation(value = "feedNumber에 해당하는 피드 삭제, DB입력 성공 여부에 따라 success, fail 반환")
