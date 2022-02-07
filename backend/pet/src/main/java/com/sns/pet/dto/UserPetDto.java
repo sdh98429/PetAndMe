@@ -1,6 +1,7 @@
 package com.sns.pet.dto;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,10 +9,18 @@ import lombok.Setter;
 @Setter
 @ApiModel(value = "user pet join dto")
 public class UserPetDto {
-    private String userProfilePicture;
-    private String userNickName;
+    @ApiModelProperty(value = "회원 아이디")
     private String userID;
+    @ApiModelProperty(value = "회원 닉네임")
+    private String userNickName;
+    @ApiModelProperty(value = "회원 프로필 사진")
+    private String userPhotoName;
+    @ApiModelProperty(value = "반려동물 이름")
     private String petName;
-    private int animalNumber;
+    @ApiModelProperty(value = "반려동물 성별")
+    private String petGender;
+    @ApiModelProperty(value = "반려동물 생일")
     private String petBirth;
+    @ApiModelProperty(value = "동물 이름")
+    private String animalName;
 }

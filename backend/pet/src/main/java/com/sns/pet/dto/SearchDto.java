@@ -9,8 +9,6 @@ import lombok.Setter;
 @Setter
 @ApiModel(value = "검색관련 정보")
 public class SearchDto {
-    @ApiModelProperty(value = "검색번호")
-    private int searchNumber;
     @ApiModelProperty(value = "회원번호")
     private Long userNumber;
     @ApiModelProperty(value = "검색어")
