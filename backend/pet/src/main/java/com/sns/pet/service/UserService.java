@@ -20,4 +20,12 @@ public interface UserService {
     UserPetDto findUserInfo(Long userNumber) throws Exception;
     // 회원번호 전송
     UserDto findUserNumber(String userID) throws Exception;
+    // 팔로우
+    boolean addFollow(Long fromUserNumber, Long toUserNumber) throws Exception;
+    // 언팔로우
+    boolean removeFollow(Long fromUserNumber, Long toUserNumber) throws Exception;
+    // 팔로우 리스트 조회
+    List<UserDto> findFollowList(Long userNumber) throws SQLException;
+    // 팔로잉 리스트 조회
+    List<UserDto> findFollowingList(Long userNumber) throws SQLException;
 }

@@ -11,6 +11,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
@@ -62,5 +65,27 @@ public class UserServiceImpl implements UserService {
     public UserDto findUserNumber(String userID) throws Exception {
         return sqlSession.getMapper(UserDao.class).selectUserNumber(userID);
     }
+
+    @Override
+    public boolean addFollow(Long fromUserNumber, Long toUserNumber) throws Exception {
+        return sqlSession.getMapper(UserDao.class).insertFollow(fromUserNumber, toUserNumber) == 1;
+    }
+
+    @Override
+    public boolean removeFollow(Long fromUserNumber, Long toUserNumber) throws Exception {
+        return sqlSession.getMapper(UserDao.class).deleteFollow(fromUserNumber, toUserNumber) == 1;
+    }
+
+    @Override
+    public List<UserDto> findFollowList(Long userNumber) throws SQLException {
+        return sqlSession.getMapper(UserDao.class).selectFollowList(userNumber);
+    }
+
+    @Override
+    public List<UserDto> findFollowingList(Long userNumber) throws SQLException {
+        return sqlSession.getMapper(UserDao.class).selectFollowingList(userNumber);
+    }
+
+
 }
 
