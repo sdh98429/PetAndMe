@@ -3,31 +3,41 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sns.pet.dao.UserDao">
-    <insert id="insertUser" parameterType="userDto">
-        INSERT INTO User(userID, userPW, userName, userNickName, userEmail, petCheck, userProfilePicture, userProfileContent, userType)
-        VALUES(#{userID},#{userPW},#{userName},#{userNickName},#{userEmail},#{petCheck},#{userProfilePicture},#{userProfileContent},#{userType})
+    <!--  회원가입  -->
+    <insert id="insertUser" parameterType="JoinDto">
+        INSERT INTO User(userID, userPW, userEmail, petCheck)
+        VALUES(#{userID},#{userPW},#{userEmail}, #{petCheck})
+        <selectKey resultType="Long" keyProperty="userNumber" order="AFTER">
+            select last_insert_id()
+        </selectKey>
     </insert>
 
+    <!--  회원 조회  -->
     <select id="selectUser" parameterType="Long" resultType="userDto">
-        SELECT userNumber, userID, userPW, userName, userNickName, userEmail, petCheck, userProfilePicture, userProfileContent, userType
+        SELECT userNumber, userID, userPW, userNickName, userEmail, petCheck, saveFolder, userPhotoName,userProfilePhoto
+        userProfileContent, userType
         FROM User
         WHERE userNumber=#{userNumber}
     </select>
 
+    <!--  회원정보 수정  -->
     <update id="updateUser" parameterType="userDto">
         UPDATE User
-        SET userPW=#{userPW}, userNickName=#{userNickName}, petCheck=#{petCheck}, userProfilePicture=#{userProfilePicture}, userProfileContent=#{userProfileContent}
+        SET userPW=#{userPW}, userNickName=#{userNickName}, petCheck=#{petCheck}, saveFolder=#{saveFolder},
+        userPhotoName=#{userPhotoName}, userProfileContent=#{userProfileContent}
         WHERE userNumber=#{userNumber}
     </update>
 
+    <!--  회원탈퇴  -->
     <delete id="deleteUser" parameterType="Long">
         DELETE FROM User
         WHERE userNumber=#{userNumber}
     </delete>
 
+    <!--  회원정보 전송  -->
     <select id="selectUserInfo" parameterType="Long" resultType="UserPetDto">
-        SELECT u.userProfilePicture, u.userNickName, u.userID, p.petName, p.animalNumber, p.petBirth
-        FROM User u JOIN Pet p
-        WHERE u.userNumber=#{userNumber}
+        SELECT DISTINCT u.userPhotoName, u.userNickName, u.userID, p.petName, p.petGender, p.petBirth, a.animalName
+        FROM User u JOIN Pet p JOIN Animal a
+        WHERE u.userNumber=#{userNumber} AND a.animalNumber = p.animalNumber
     </select>
 </mapper>
