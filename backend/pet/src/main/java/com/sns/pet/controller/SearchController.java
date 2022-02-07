@@ -1,17 +1,21 @@
 package com.sns.pet.controller;
 
+import com.sns.pet.dto.FeedPhotoDto;
 import com.sns.pet.dto.SearchDto;
 import com.sns.pet.dto.UserDto;
 import com.sns.pet.service.SearchService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.List;
 
 @RestController
@@ -43,7 +47,15 @@ public class SearchController {
             @ApiParam(value = "검색어") @PathVariable("searchWord") String searchWord) throws Exception {
 
         logger.info("searchUserIDList 호출");
-        return new ResponseEntity<List<UserDto>>(searchService.findUserKeywordByUserID(searchWord), HttpStatus.OK);
+        List<UserDto> userDtoList = searchService.findUserKeywordByUserID(searchWord);
+
+        // 이미지 반환
+        InputStream imageStream;
+        for (UserDto userDto : userDtoList) {
+            imageStream = new FileInputStream(userDto.getSaveFolder() + userDto.getUserPhotoName());
+            userDto.setUserProfilePhoto(IOUtils.toByteArray(imageStream));
+        }
+        return new ResponseEntity<List<UserDto>>(userDtoList, HttpStatus.OK);
     }
 
     // 실시간 NickName관련 연관 검색어 조회
@@ -53,6 +65,14 @@ public class SearchController {
             @ApiParam(value = "검색어") @PathVariable("searchWord") String searchWord) throws Exception {
 
         logger.info("searchUserNameList 호출");
+        List<UserDto> userDtoList = searchService.findUserKeywordByUserID(searchWord);
+
+        // 이미지 반환
+        InputStream imageStream;
+        for (UserDto userDto : userDtoList) {
+            imageStream = new FileInputStream(userDto.getSaveFolder() + userDto.getUserPhotoName());
+            userDto.setUserProfilePhoto(IOUtils.toByteArray(imageStream));
+        }
         return new ResponseEntity<List<UserDto>>(searchService.findUserKeywordByName(searchWord), HttpStatus.OK);
     }
 
