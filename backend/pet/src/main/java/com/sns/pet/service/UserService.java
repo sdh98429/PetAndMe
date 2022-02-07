@@ -25,7 +25,7 @@ public interface UserService {
     // 언팔로우
     boolean removeFollow(Long fromUserNumber, Long toUserNumber) throws Exception;
     // 팔로우 리스트 조회
-    List<UserDto> findFollowList(Long userNumber) throws SQLException;
+    List<UserDto> findFollowList(Long userNumber) throws Exception;
     // 팔로잉 리스트 조회
-    List<UserDto> findFollowingList(Long userNumber) throws SQLException;
+    List<UserDto> findFollowingList(Long userNumber) throws Exception;
 }
