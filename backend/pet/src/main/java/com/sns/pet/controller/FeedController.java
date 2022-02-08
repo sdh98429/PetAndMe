@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,6 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -139,13 +144,13 @@ public class FeedController {
     }
 
     @ApiOperation(value = "image 경로에 따른 이미지 반환", response = FeedDto.class)
-    @GetMapping("/image/{file}")
-    public ResponseEntity<byte[]> imageDetails(@PathVariable("file") String image) throws Exception {
+    @GetMapping("/image")
+    public ResponseEntity<Resource> imageDetails(@RequestParam("file") String image) throws Exception {
         logger.info("imageDetails - 호출" + image);
-        InputStream in = new FileInputStream(image);
+        Resource resource = new FileSystemResource(image);
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        return new ResponseEntity<>(IOUtils.toByteArray(in), headers, HttpStatus.OK);
+        headers.add("Content-Type", Files.probeContentType(Paths.get(image)));
+        return new ResponseEntity<>(resource, headers, HttpStatus.OK);
     }
 
     @ApiOperation(value = "feedNumber에 해당하는 피드 삭제, DB입력 성공 여부에 따라 success, fail 반환")
