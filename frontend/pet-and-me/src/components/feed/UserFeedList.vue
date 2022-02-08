@@ -15,7 +15,7 @@ export default {
   name: 'UserFeedList',
   data: function () {
     return {
-      yourUserNumber: null,
+      // yourUserNumber: null,
       userFeeds: [
       ],
     }
@@ -24,13 +24,13 @@ export default {
 
   },
   props: {
-
+    yourUserNumber : Number,
   },
   methods: {
     getUserFeeds: function () { // 유저 피드 리스트 가져오기
       axios({
         method: 'get',
-        url: `http://i6b106.p.ssafy.io:8080/main/feed/list/` + this.$route.params.yourUserNumber, // 임시 URL
+        url: `http://i6b106.p.ssafy.io:8080/main/feed/list/` + this.yourUserNumber, // 임시 URL
       })
         .then(res => {
           console.log(res.data)
@@ -47,7 +47,12 @@ export default {
   },
   created: function () {
     // 로그인 확인
-    this.getUserFeeds()
+    // this.getUserFeeds()
+  },
+  watch: {
+    yourUserNumber: function(){
+      this.getUserFeeds()
+    }
   }
 }
 </script>

@@ -69,7 +69,7 @@ const routes = [
     component: NewsFeed,
   },
   {
-    path: '/feed/userfeed/:yourUserNumber',
+    path: '/feed/userfeed/:yourUserId',
     name: 'UserFeed',
     component: UserFeed,
   },

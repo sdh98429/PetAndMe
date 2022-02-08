@@ -102,7 +102,7 @@ export default {
             formData.append("feedContent", JSON.stringify(this.feedContent));
             formData.append("userNumber", JSON.stringify(this.myUserNumber));
 
-
+            console.log(formData);
             axios({
                 method: 'post',
                 url: 'http://i6b106.p.ssafy.io:8080/main/feed',
