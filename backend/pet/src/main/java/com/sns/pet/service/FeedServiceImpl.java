@@ -37,8 +37,8 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
-    public FeedDto findFeed(Long feedNumber) throws Exception {
-        return sqlSession.getMapper(FeedDao.class).selectFeed(feedNumber);
+    public FeedDto findFeed(Long userNumber, Long feedNumber) throws Exception {
+        return sqlSession.getMapper(FeedDao.class).selectFeed(userNumber, feedNumber);
     }
 
 //    @Override

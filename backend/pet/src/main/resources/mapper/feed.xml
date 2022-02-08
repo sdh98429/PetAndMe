@@ -17,16 +17,31 @@
         </foreach>
     </insert>
 
+<!--    <select id="selectFeed" parameterType="Long" resultMap="getFeed">-->
+<!--        SELECT feedNumber, feedContent, feedDate-->
+<!--        FROM Feed-->
+<!--        WHERE feedNumber = #{feedNumber}-->
+<!--    </select>-->
+
     <select id="selectFeed" parameterType="Long" resultMap="getFeed">
-        SELECT feedNumber, feedContent, feedDate
-        FROM Feed
-        WHERE feedNumber = #{feedNumber}
+        SELECT f.feedNumber, f.feedContent, f.feedDate, u.userNumber,
+               IF(userNumber
+                      IN (SELECT feedNumber FROM Likes WHERE userNumber=#{userNumber}), 1, 0) AS checkLike,
+               (SELECT COUNT(userNumber) FROM Likes WHERE Likes.feedNumber = f.feedNumber) AS cntLike,
+               (SELECT COUNT(userNumber) FROM Comment WHERE Comment.feedNumber = f.feedNumber) AS cntComment
+        FROM Feed AS f INNER JOIN User AS u
+        USING(userNumber)
+        WHERE feedNumber = #{feedNumber};
     </select>
 
     <resultMap id="getFeed" type="FeedDto">
         <result column="feedNumber" property="feedNumber"/>
         <result column="feedContent" property="feedContent"/>
         <result column="feedDate" property="feedDate"/>
+        <result column="userNumber" property="userNumber"/>
+        <result column="checkLike" property="checkLike"/>
+        <result column="cntLike" property="cntLike"/>
+        <result column="cntComment" property="cntComment"/>
         <collection property="feedPhotoDtoList" column="feedNumber=feedNumber" javaType="list" ofType="FeedPhotoDto"
                     select="selectFeedPhotoByFeedNumber"/>
     </resultMap>
