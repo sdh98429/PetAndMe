@@ -24,7 +24,7 @@ public class DecoWordController {
 
     @ApiOperation(value = "닉네임 추천", notes = "임의의 닉네임을 만들어준다.")
     @GetMapping("/{animalName}")
-    public ResponseEntity<String> NickNameMake (
+    public ResponseEntity<String> nickNameMake (
             @ApiParam(value = "영어로된 동물이름") @PathVariable("animalName") String animalName_en) throws Exception{
         logger.info("recommendNickName 호출");
         return new ResponseEntity<String>(decoWordService.makeNickName(animalName_en), HttpStatus.OK);
