@@ -63,10 +63,10 @@ export default {
       } else {
         var step;
         for (step = 0; step < this.files.length; step++) {
-          if (this.files[step].size/(1024*1024) > 5){
+          if (this.files[step].size/(1024*1024) > 3){
             this.files = []
             this.$refs.image.value = ''
-            alert('이미지 파일은 최대 5MB까지 가능합니다.')
+            alert('이미지 파일은 최대 3MB까지 가능합니다.')
           }
         }
       }

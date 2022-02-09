@@ -23,6 +23,9 @@ export default {
     goToSearchResult: function(searchWord){ // 검색 결과 페이지로 이동
       console.log('이동')
       this.$router.push({path: `/search/${searchWord}`})
+    },
+    search: function(){
+      console.log(this.searchWord)
     }
   }
 }

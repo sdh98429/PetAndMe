@@ -123,14 +123,15 @@ export default {
     },
 
     likeFeed: function(){
-      this.checkLike = !this.checkLike
-      if (this.checkLike){
+      
+      if (!this.checkLike){
         axios({
           method: 'post',
           url: 'http://i6b106.p.ssafy.io:8080/like/' + this.myUserNumber + '/' + this.$route.params.feedNumber,
         })
         .then(() =>{
           this.cntLike += 1
+          this.checkLike = !this.checkLike
         })
         .catch((err)=> {
           console.log(err)
@@ -142,6 +143,7 @@ export default {
         })
         .then(() =>{
           this.cntLike -= 1
+          this.checkLike = !this.checkLike
         })
         .catch((err)=> {
           console.log(err)
@@ -204,6 +206,7 @@ export default {
         .then(() => {
           this.getComments()
           this.getFeed()
+          this.commentContent = null // 댓글 초기화
         })
         .catch(err => {
           console.log(err)

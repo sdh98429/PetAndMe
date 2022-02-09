@@ -1,38 +1,43 @@
 <template>
   <div>
-    <h2>유저 피드</h2>
-    <button v-if="(myUserNumber == yourUserNumber)" @click="toUserFeedUpdate">유저 피드 업데이트</button>
-    <div>프로필</div>
-    <div>{{profile}}</div>
-    <div v-if="profile">
-      <img :src="'http://i6b106.p.ssafy.io:8080/main/image?file=' + profile.saveFolder + profile.userPhotoName" alt="프로필 사진">
-      <div>유저 닉네임 : {{profile.userNickName}}</div>
-      <div>유저 아이디 : @{{profile.userID}}</div>
+    <div v-if="yourUserNumber = myUserNumber">
+      <h2>유저 피드 업데이트</h2>
+      <div>프로필</div>
+      <div>{{profile}}</div>
+      <div v-if="profile">
+        <img :src="'http://i6b106.p.ssafy.io:8080/main/image?file=' + profile.saveFolder + profile.userPhotoName" alt="프로필 사진">
+        <div>유저 닉네임 : {{profile.userNickName}}</div>
+        <div>유저 아이디 : @{{profile.userID}}</div>
 
-      <div>반려동물 이름 : {{profile.petName}}</div>
-      <div>반려동물 성별 : {{profile.petGender}}</div>
-      <div>반려동물 생일 : {{profile.petBirth}}</div>
-      <div>반려동물 종류 : {{profile.animalName}}</div>
+        <div>반려동물 이름 : {{profile.petName}}</div>
+        <div>반려동물 성별 : {{profile.petGender}}</div>
+        <div>반려동물 생일 : {{profile.petBirth}}</div>
+        <div>반려동물 종류 : {{profile.animalName}}</div>
+      </div>
+      <br>
+      <div>팔로우하기 버튼</div>
+      <br>
+      <div>follower, following 표시</div>
+      <div>유저 피드 주인 : {{yourUserNumber}}</div>
+      <div>로그인한 유저 :{{myUserNumber}}</div>
+      <div>{{yourUserNumber}}</div>
+      <div>{{myUserNumber}}</div>
+      <div>{{isFollow}}</div>
+      <div v-if="yourUserNumber != myUserNumber">
+        <button v-if="!isFollow" @click="followUser">팔로우하기</button>
+        <button v-if="isFollow" @click="unfollowUser">언팔로우하기</button>
+      </div>
+      <div>영상 썸네일, 영상 제목, 영상 내용</div>
+      <div>영상 만드는 버튼</div>
+      <br>
+      <div><UserFeedList
+        :your-user-number="yourUserNumber"
+        />
+      </div>
+
     </div>
-    <br>
-    <div>팔로우하기 버튼</div>
-    <br>
-    <div>follower, following 표시</div>
-    <div>유저 피드 주인 : {{yourUserNumber}}</div>
-    <div>로그인한 유저 :{{myUserNumber}}</div>
-    <div>{{yourUserNumber}}</div>
-    <div>{{myUserNumber}}</div>
-    <div>{{isFollow}}</div>
-    <div v-if="yourUserNumber != myUserNumber">
-      <button v-if="!isFollow" @click="followUser">팔로우하기</button>
-      <button v-if="isFollow" @click="unfollowUser">언팔로우하기</button>
-    </div>
-    <div>영상 썸네일, 영상 제목, 영상 내용</div>
-    <div>영상 만드는 버튼</div>
-    <br>
-    <div><UserFeedList
-      :your-user-number="yourUserNumber"
-      />
+    <div v-else>
+      내 유저 피드 페이지만 업데이트할 수 있습니다.
     </div>
   </div>
 </template>
@@ -43,7 +48,7 @@ import UserFeedList from '@/components/feed/UserFeedList'
 
 
 export default {
-  name: 'UserFeed',
+  name: 'UserFeedUpdate',
   data: function () {
     return {
       profile : null,
@@ -137,10 +142,6 @@ export default {
       .catch(err => {
         console.log(err)
       })
-    },
-
-    toUserFeedUpdate: function(){
-      this.$router.push({name: `UserFeedUpdate`, yourUserId: this.yourUserId})
     }
   },
   created: function(){

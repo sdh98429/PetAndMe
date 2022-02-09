@@ -5,7 +5,6 @@
       <div v-for="(feed, idx) in NewsFeedList" :key="idx">
         <NewsFeedListItem
         :feed="feed"
-        @click="goToFeedDetail(feed)"
         />
       </div>
     </div>
@@ -21,6 +20,8 @@ export default {
   data: function () {
     return {
       NewsFeedList: [],
+      myUserNumber: 2,
+      cursor: '',
     }
   },
   components: {
@@ -33,7 +34,7 @@ export default {
     getNewsFeeds: function () { // 뉴스피드 가져오기
       axios({
         method: 'get',
-        url: `http://i6b106.p.ssafy.io:8080/main/newsfeed`, 
+        url: `http://i6b106.p.ssafy.io:8080/main/newsfeed?userNumber=` + this.myUserNumber + `&cursor=` + this.cursor, 
       })
         .then(res => {
           console.log(res.data)
@@ -44,9 +45,7 @@ export default {
         })
     },
 
-    goToFeedDetail(feed){ // 상세 피드로 이동
-      this.$router.push({path: `/feed/${feed.feedNumber}`})
-    },
+    
   },
   created: function () {
     // 로그인 확인 함수 넣을 곳
