@@ -84,24 +84,10 @@
         VALUES(#{userEmail}, #{authKey})
     </insert>
 
-    <!-- 인증키 업데이트 -->
-    <update id="updateAuthKey" parameterType="String">
-        UPDATE AuthKey
-        SET authKey = "pass"
-        WHERE userEmail = #{userEmail}
-    </update>
-
     <!-- 인증키 조회 -->
     <select id="selectAuthKey" parameterType="String" resultType="String">
         SELECT authKey
         FROM AuthKey
-        WHERE userEmail = #{userEmail}
-    </select>
-
-    <!-- 이메일 중복 여부 -->
-    <select id="selectUserByEmail" parameterType="String" resultType="String">
-        SELECT userID
-        FROM User
         WHERE userEmail = #{userEmail}
     </select>
 </mapper>
