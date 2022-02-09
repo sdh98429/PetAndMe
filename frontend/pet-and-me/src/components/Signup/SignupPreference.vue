@@ -29,13 +29,14 @@ export default {
     };
   },
   computed: {},
-  created() {},
   methods: {
     saveData() {
-      // console.log(this.credentials)
-      this.$emit("preference-update", this.credentials)
+      if (this.credentials.selected.length < 1) {
+          alert('선호동물 미선택')
+        } else {
+          this.$emit("preference-update", this.credentials)
+        } 
     },
-
   },
 };
 </script>

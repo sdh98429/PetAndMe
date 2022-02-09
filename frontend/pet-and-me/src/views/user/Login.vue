@@ -38,30 +38,26 @@ export default {
   },
 
   methods: {
-    isValid: function () {
-      if (this.credentials.username === '') {
+    login: function () {
+      if (this.credentials.userId === '') {
         alert('아이디 미입력')
       } else if (this.credentials.password === '') {
         alert('패스워드 미입력')
-      } else {
-        this.login()
       }
-    },
-    login: function () {
-      axios({
-      method: 'post',
-      url: 'http://127.0.0.1:8000/user/login',
-      data: this.credentials
-      })
-      .then(res => {
-        localStorage.setItem('jwt', res.data.token)
-        this.$emit('login')
-        console.log('userid', this.userid)
-        this.$router.push({ name: 'home' })
-      })
-      .catch(err => {
-        console.log(err)
-      })
+        axios({
+        method: 'post',
+        url: 'http://127.0.0.1:8000/user/login',
+        data: this.credentials
+        })
+        .then(res => {
+          localStorage.setItem('jwt', res.data.token)
+          this.$emit('login')
+          console.log('userid', this.userid)
+          this.$router.push({ name: 'home' })
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
     // google
     onSignIn(googleUser){
