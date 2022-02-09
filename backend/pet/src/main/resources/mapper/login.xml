@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sns.pet.dao.LoginDao">
+    <!-- 로그인 시도 후 해당 유저 정보 모두 가져오기 -->
+    <select id="selectByIdAndPw" parameterType="map" resultType="userDto">
+        SELECT *
+        FROM User
+        WHERE userID=#{userID} AND userPW=#{userPW}
+    </select>
+
+    <!-- 가입한 id인지 확인 -->
+    <select id="selectById" parameterType="String" resultType="userDto">
+        SELECT *
+        FROM User
+        WHERE userId=#{userId}
+    </select>
+
+</mapper>
