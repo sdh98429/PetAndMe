@@ -19,12 +19,28 @@ public class FeedServiceImpl implements FeedService {
     private final SqlSession sqlSession;
 
     @Override
+    public List<FeedDto> findNewsFeedList(Long userNumber, String cursor) throws Exception {
+        return sqlSession.getMapper(FeedDao.class).selectNewsFeedList(userNumber, cursor);
+    }
+
+    @Override
+    public List<FeedDto> findFavFeedList(Long userNumber, String cursor) throws Exception {
+        return sqlSession.getMapper(FeedDao.class).selectFavFeedList(userNumber, cursor);
+    }
+
+    @Override
+    public List<FeedDto> findFollowFeedList(Long userNumber, String cursor) throws Exception {
+        return sqlSession.getMapper(FeedDao.class).selectFollowList(userNumber, cursor);
+    }
+
+
+    @Override
     public List<FeedDto> findMyFeedList(Long userNumber) throws Exception {
         return sqlSession.getMapper(FeedDao.class).selectMyFeedList(userNumber);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public boolean addFeed(FeedDto feedDto) throws Exception {
         if (sqlSession.getMapper(FeedDao.class).insertFeed(feedDto) == 1) {
             if (feedDto.getFeedPhotoDtoList() != null)
@@ -37,8 +53,8 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
-    public FeedDto findFeed(Long feedNumber) throws Exception {
-        return sqlSession.getMapper(FeedDao.class).selectFeed(feedNumber);
+    public FeedDto findFeed(Long userNumber, Long feedNumber) throws Exception {
+        return sqlSession.getMapper(FeedDao.class).selectFeed(userNumber, feedNumber);
     }
 
 //    @Override
@@ -47,7 +63,7 @@ public class FeedServiceImpl implements FeedService {
 //    }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public boolean removeFeed(Long feedNumber) throws Exception {
         List<FeedPhotoDto> FeedPhotoDtoList = sqlSession.getMapper(FeedDao.class).selectFeedPhotoByFeedNumber(feedNumber);
         if (sqlSession.getMapper(FeedDao.class).deletePhotos(feedNumber) == FeedPhotoDtoList.size() && sqlSession.getMapper(FeedDao.class).deleteFeed(feedNumber) == 1) {

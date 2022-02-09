@@ -11,11 +11,15 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
 
     private final SqlSession sqlSession;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean addUser(JoinDto joinDto) throws Exception {
@@ -35,7 +39,6 @@ public class UserServiceImpl implements UserService {
         } else {
             return true;
         }
-
     }
 
     @Override
@@ -56,6 +59,31 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserPetDto findUserInfo(Long userNumber) throws Exception {
         return sqlSession.getMapper(UserDao.class).selectUserInfo(userNumber);
+    }
+
+    @Override
+    public UserDto findUserNumber(String userID) throws Exception {
+        return sqlSession.getMapper(UserDao.class).selectUserNumber(userID);
+    }
+
+    @Override
+    public boolean addFollow(Long fromUserNumber, Long toUserNumber) throws Exception {
+        return sqlSession.getMapper(UserDao.class).insertFollow(fromUserNumber, toUserNumber) == 1;
+    }
+
+    @Override
+    public boolean removeFollow(Long fromUserNumber, Long toUserNumber) throws Exception {
+        return sqlSession.getMapper(UserDao.class).deleteFollow(fromUserNumber, toUserNumber) == 1;
+    }
+
+    @Override
+    public List<UserDto> findFollowList(Long userNumber) throws SQLException {
+        return sqlSession.getMapper(UserDao.class).selectFollowList(userNumber);
+    }
+
+    @Override
+    public List<UserDto> findFollowingList(Long userNumber) throws SQLException {
+        return sqlSession.getMapper(UserDao.class).selectFollowingList(userNumber);
     }
 }
 
