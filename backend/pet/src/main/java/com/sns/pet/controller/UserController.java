@@ -199,7 +199,7 @@ public class UserController {
 
     @ApiOperation(value = "회원가입 인증메일 보내기", notes = "메일을 보내고, 인증키를 반환한다.")
     @PostMapping("/emailConfirm/{userEmail}")
-    public ResponseEntity<String> sendEmail(@PathVariable("userEmail") @ApiParam(value = "이메일 주소") String userEmail) throws Exception {
+    public ResponseEntity<String> emailConfirm(@PathVariable("userEmail") @ApiParam(value = "이메일 주소") String userEmail) throws Exception {
         logger.info("sendEmail 호출");
         String authKey = emailService.sendSimpleMessage(userEmail);
         System.out.println(authKey);
