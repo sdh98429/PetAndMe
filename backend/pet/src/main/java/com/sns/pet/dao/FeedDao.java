@@ -9,6 +9,12 @@ import java.util.List;
 
 @Mapper
 public interface FeedDao {
+    List<FeedDto> selectNewsFeedList(Long userNumber, String cursor) throws SQLException;
+
+    List<FeedDto> selectFavFeedList(Long userNumber, String cursor) throws SQLException;
+
+    List<FeedDto> selectFollowList(Long userNumber, String cursor) throws SQLException;
+
     List<FeedDto> selectMyFeedList(Long userNumber) throws SQLException;
 
     int insertFeed(FeedDto feedDto) throws SQLException;
@@ -16,8 +22,11 @@ public interface FeedDao {
     int insertImages(FeedDto feedDto) throws SQLException;
 
     FeedDto selectFeed(Long userNumber, Long feedNumber) throws SQLException;
+
     List<FeedPhotoDto> selectFeedPhotoByFeedNumber(Long feedNumber) throws SQLException;
-//    int updateFeed(FeedDto feedDto) throws SQLException;
+
+    //    int updateFeed(FeedDto feedDto) throws SQLException;
     int deleteFeed(Long feedNumber) throws SQLException;
+
     int deletePhotos(Long feedNumber) throws SQLException;
 }

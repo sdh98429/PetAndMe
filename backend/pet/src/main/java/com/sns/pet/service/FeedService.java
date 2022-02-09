@@ -6,9 +6,12 @@ import com.sns.pet.dto.FeedDto;
 import java.util.List;
 
 public interface FeedService {
-    public List<FeedDto> findMyFeedList(Long userNumber) throws Exception;
-    public boolean addFeed(FeedDto feedDto) throws Exception;
-    public FeedDto findFeed(Long userNumber, Long feedNumber) throws Exception;
-//    public boolean modifyFeed(FeedDto feedDto) throws Exception;
-    public boolean removeFeed(Long feedNumber) throws Exception;
+    List<FeedDto> findNewsFeedList(Long userNumber, String cursor) throws Exception;
+    List<FeedDto> findFavFeedList(Long userNumber, String cursor) throws Exception;
+    List<FeedDto> findFollowFeedList(Long userNumber, String cursor) throws Exception;
+    List<FeedDto> findMyFeedList(Long userNumber) throws Exception;
+    boolean addFeed(FeedDto feedDto) throws Exception;
+    FeedDto findFeed(Long userNumber, Long feedNumber) throws Exception;
+//    boolean modifyFeed(FeedDto feedDto) throws Exception;
+    boolean removeFeed(Long feedNumber) throws Exception;
 }

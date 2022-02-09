@@ -14,8 +14,16 @@
             WHERE feedNumber = #{feedNumber}
             ) AS c
         ON u.userNumber = c.userNumber
+        ORDER BY c.commentNumber desc
     </select>
-<!-- 5개 씩 -->
+
+<!--    <select id="selectCommentList" parameterType="Long" resultType="CommentDto">-->
+<!--        SELECT c.feedNumber, c.commentNumber, c.commentContent, c.commentDate, c.userNumber, u.userID, u.userNickName, u.saveFolder, u.userPhotoName-->
+<!--        FROM Comment AS c INNER JOIN User AS u USING(userNumber)-->
+<!--        WHERE c.feedNumber = 3 AND commentDate < now()-->
+<!--        ORDER BY commentNumber desc-->
+<!--        LIMIT 10;-->
+<!--    </select>-->
 
     <delete id="deleteComment" parameterType="Long">
         DELETE
