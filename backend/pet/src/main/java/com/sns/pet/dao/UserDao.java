@@ -3,6 +3,7 @@ package com.sns.pet.dao;
 import com.sns.pet.dto.JoinDto;
 import com.sns.pet.dto.UserDto;
 import com.sns.pet.dto.UserPetDto;
+import io.swagger.annotations.ApiParam;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -31,4 +32,8 @@ public interface UserDao {
     List<UserDto> selectFollowList(Long userNumber) throws SQLException;
     // 팔로잉 리스트 조회
     List<UserDto> selectFollowingList(Long userNumber) throws SQLException;
+    // 이메일, 인증키 추가
+    int insertAutKey(@Param("userEmail") String userEmail, @Param("authKey") String authKey) throws SQLException;
+    // 인증키 조회
+    String selectAuthKey(String userEmail) throws SQLException;
 }

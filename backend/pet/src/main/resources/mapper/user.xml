@@ -77,4 +77,17 @@
         FROM Follow f join User u ON u.userNumber = f.toUserNumber
         WHERE f.fromUserNumber = #{userNumber};
     </select>
+
+    <!-- 인증키 추가 -->
+    <insert id="insertAutKey" parameterType="String">
+        INSERT INTO AuthKey(userEmail, authKey)
+        VALUES(#{userEmail}, #{authKey})
+    </insert>
+
+    <!-- 인증키 조회 -->
+    <select id="selectAuthKey" parameterType="String" resultType="String">
+        SELECT authKey
+        FROM AuthKey
+        WHERE userEmail = #{userEmail}
+    </select>
 </mapper>
