@@ -85,6 +85,7 @@ public class EmailServiceImpl implements EmailService {
             emailSender.send(message);
         } catch (MailException es) {
             es.printStackTrace();
+            authKey = "error";
             throw new IllegalArgumentException();
         }
         return authKey;

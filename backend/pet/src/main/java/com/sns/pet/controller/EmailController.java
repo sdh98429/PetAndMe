@@ -36,6 +36,9 @@ public class EmailController {
             return new ResponseEntity<String>(DUPLICATE, HttpStatus.OK);
         } else {
             authKey = emailService.sendSimpleMessage(userEmail);
+            if(authKey.equals("error")){
+             return new ResponseEntity<String>("email error", HttpStatus.OK);
+            }
             emailService.addAuthKey(userEmail, authKey);
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }
