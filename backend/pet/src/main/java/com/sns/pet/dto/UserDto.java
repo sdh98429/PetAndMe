@@ -31,5 +31,9 @@ public class UserDto {
     private String userProfileContent;
     @ApiModelProperty(value = "회원 탈퇴여부")
     private boolean userType;
+    @ApiModelProperty(value = "팔로워 수 : 나를 팔로우한 사람들 수")
+    private int followerCnt;
+    @ApiModelProperty(value = "팔로잉 수 : 내가 팔로우한 사람들 수")
+    private int followingCnt;
 
 }

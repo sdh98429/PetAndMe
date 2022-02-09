@@ -14,10 +14,12 @@
 
     <!--  회원 조회  -->
     <select id="selectUser" parameterType="Long" resultType="userDto">
-        SELECT userNumber, userID, userPW, userNickName, userEmail, petCheck, saveFolder, userPhotoName,userProfilePhoto
-        userProfileContent, userType
+        SELECT userNumber, userID, userPW, userNickName, userEmail, petCheck, saveFolder, userPhotoName,
+        userProfileContent, userType,
+        (SELECT count(fromUserNumber) FROM Follow WHERE toUserNumber = #{userNumber}) as followerCnt,
+        (SELECT count(toUserNumber) FROM Follow WHERE fromUserNumber = #{userNumber}) as followingCnt
         FROM User
-        WHERE userNumber=#{userNumber}
+        WHERE userNumber = #{userNumber}
     </select>
 
     <!--  회원정보 수정  -->
@@ -25,19 +27,67 @@
         UPDATE User
         SET userPW=#{userPW}, userNickName=#{userNickName}, petCheck=#{petCheck}, saveFolder=#{saveFolder},
         userPhotoName=#{userPhotoName}, userProfileContent=#{userProfileContent}
-        WHERE userNumber=#{userNumber}
+        WHERE userNumber = #{userNumber}
     </update>
 
     <!--  회원탈퇴  -->
     <delete id="deleteUser" parameterType="Long">
-        DELETE FROM User
-        WHERE userNumber=#{userNumber}
+        DELETE
+        FROM User
+        WHERE userNumber = #{userNumber}
     </delete>
 
     <!--  회원정보 전송  -->
     <select id="selectUserInfo" parameterType="Long" resultType="UserPetDto">
-        SELECT DISTINCT u.userPhotoName, u.userNickName, u.userID, p.petName, p.petGender, p.petBirth, a.animalName
-        FROM User u JOIN Pet p JOIN Animal a
-        WHERE u.userNumber=#{userNumber} AND a.animalNumber = p.animalNumber
+        SELECT u.saveFolder, u.userPhotoName, u.userNickName, u.userID, p.petName, p.petGender, p.petBirth, a.animalName
+        FROM User u JOIN Pet p ON u.userNumber = p.userNumber
+        JOIN Animal a ON a.animalNumber = p.animalNumber
+        WHERE u.userNumber = #{userNumber}
+    </select>
+
+    <!-- 회원번호 전송 -->
+    <select id="selectUserNumber" parameterType="String" resultType="UserDto">
+        SELECT userNumber
+        FROM User
+        WHERE userID = #{userID}
+    </select>
+
+    <!-- 팔로우 -->
+    <insert id="insertFollow" parameterType="Long">
+        INSERT INTO Follow(fromUserNumber, toUserNumber)
+        VALUES(#{fromUserNumber}, #{toUserNumber})
+    </insert>
+
+    <!-- 언팔로우 -->
+    <delete id="deleteFollow" parameterType="Long">
+        DELETE FROM Follow
+        WHERE fromUserNumber = #{fromUserNumber} AND toUserNumber = #{toUserNumber}
+    </delete>
+
+    <!-- 팔로우 리스트 조회 -->
+    <select id="selectFollowList" parameterType="Long" resultType="UserDto">
+        SELECT f.fromUserNumber, u.userNumber, u.userID, u.userNickName, u.saveFolder, u.userPhotoName
+        FROM Follow f join User u ON u.userNumber = f.fromUserNumber
+        WHERE f.toUserNumber = #{userNumber};
+    </select>
+
+    <!-- 팔로잉 리스트 조회 -->
+    <select id="selectFollowingList" parameterType="Long" resultType="UserDto">
+        SELECT f.toUserNumber, u.userNumber, u.userID, u.userNickName, u.saveFolder, u.userPhotoName
+        FROM Follow f join User u ON u.userNumber = f.toUserNumber
+        WHERE f.fromUserNumber = #{userNumber};
+    </select>
+
+    <!-- 인증키 추가 -->
+    <insert id="insertAutKey" parameterType="String">
+        INSERT INTO AuthKey(userEmail, authKey)
+        VALUES(#{userEmail}, #{authKey})
+    </insert>
+
+    <!-- 인증키 조회 -->
+    <select id="selectAuthKey" parameterType="String" resultType="String">
+        SELECT authKey
+        FROM AuthKey
+        WHERE userEmail = #{userEmail}
     </select>
 </mapper>
