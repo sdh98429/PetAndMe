@@ -44,12 +44,14 @@ public class FeedController {
 
     private final FeedService feedService;
 
-//    @ApiOperation(value = "뉴스 피드 목록 반환", response = FeedDto.class)
-//    @GetMapping("/newsfeed")
-//    public ResponseEntity<List<FeedDto>> newsFeedList(@PathVariable("userNumber") int userNumber) throws Exception{
-//        logger.info("뉴스 피드 목록 - 호출");
-//        return null;
-//    }
+    @ApiOperation(value = "뉴스 피드 목록 반환", response = List.class)
+    @GetMapping("/newsfeed")
+    public ResponseEntity<List<FeedDto>> newsFeedList(
+            @ApiParam(value = "피드 사진들", required = true) @RequestParam("userNumber") Long userNumber,
+            @ApiParam(value = "피드 사진들", required = false) @RequestParam("cursor") String cursor) throws Exception{
+        logger.info("뉴스 피드 목록 - 호출");
+        return new ResponseEntity<>(feedService.findNewsFeedList(userNumber, cursor), HttpStatus.OK);
+    }
 
     @ApiOperation(value = "userNumber에 해당하는 내 피드 목록 반환", response = FeedDto.class)
     @GetMapping("/feed/list/{userNumber}")
