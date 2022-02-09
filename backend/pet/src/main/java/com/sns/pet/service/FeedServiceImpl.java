@@ -28,6 +28,11 @@ public class FeedServiceImpl implements FeedService {
         return sqlSession.getMapper(FeedDao.class).selectFavFeedList(userNumber, cursor);
     }
 
+    @Override
+    public List<FeedDto> findFollowFeedList(Long userNumber, String cursor) throws Exception {
+        return sqlSession.getMapper(FeedDao.class).selectFollowList(userNumber, cursor);
+    }
+
 
     @Override
     public List<FeedDto> findMyFeedList(Long userNumber) throws Exception {

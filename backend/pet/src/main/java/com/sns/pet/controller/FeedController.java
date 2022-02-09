@@ -61,6 +61,15 @@ public class FeedController {
         return new ResponseEntity<>(feedService.findFavFeedList(userNumber, cursor), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "팔로우 피드 목록 반환", response = List.class)
+    @GetMapping("/followfeed")
+    public ResponseEntity<List<FeedDto>> followFeedList(
+            @ApiParam(value = "로그인 유저 번호", required = true) @RequestParam("userNumber") Long userNumber,
+            @ApiParam(value = "default 빈문자열, 마지막 피드의 생성일", required = false) @RequestParam("cursor") String cursor) throws Exception{
+        logger.info("팔로우 피드 목록 - 호출");
+        return new ResponseEntity<>(feedService.findFollowFeedList(userNumber, cursor), HttpStatus.OK);
+    }
+
     @ApiOperation(value = "userNumber에 해당하는 내 피드 목록 반환", response = FeedDto.class)
     @GetMapping("/feed/list/{userNumber}")
     public ResponseEntity<List<FeedDto>> myFeedList(@PathVariable("userNumber") Long userNumber) throws Exception {

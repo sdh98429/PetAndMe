@@ -34,6 +34,23 @@
         LIMIT 10
     </select>
 
+    <select id="selectFollowList" parameterType="Map" resultMap="getFeed">
+        SELECT f.feedNumber, f.feedContent, f.feedDate, u.userNumber, u.userID, u.userNickName,
+        IF(f.feedNumber IN (SELECT Likes.feedNumber From Likes WHERE Likes.userNumber = #{userNumber}), 1, 0) AS checklike,
+        (SELECT COUNT(userNumber) FROM Likes WHERE Likes.feedNumber = f.feedNumber) AS cntLike,
+        (SELECT COUNT(userNumber) FROM Comment WHERE Comment.feedNumber = f.feedNumber) AS cntComment
+        FROM Feed AS f INNER JOIN User AS u USING(userNumber)
+        where u.userNumber IN (select toUserNumber from Follow where fromUserNumber = #{userNumber}) AND
+        <if test='cursor.equals("")'>
+            feedDate <![CDATA[<]]> now()
+        </if>
+        <if test='!cursor.equals("")'>
+            feedDate <![CDATA[<]]> #{cursor}
+        </if>
+        ORDER BY feedNumber desc
+        LIMIT 10;
+    </select>
+
     <insert id="insertFeed" parameterType="FeedDto">
         INSERT INTO Feed (userNumber, feedContent, feedDate, feedThumbnailFolder, feedThumbnailName)
         VALUES (#{userNumber}, #{feedContent}, now(), #{feedThumbnailFolder}, #{feedThumbnailName})
