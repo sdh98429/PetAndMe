@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface FeedService {
     List<FeedDto> findNewsFeedList(Long userNumber, String cursor) throws Exception;
+    List<FeedDto> findFavFeedList(Long userNumber, String cursor) throws Exception;
     List<FeedDto> findMyFeedList(Long userNumber) throws Exception;
     boolean addFeed(FeedDto feedDto) throws Exception;
     FeedDto findFeed(Long userNumber, Long feedNumber) throws Exception;

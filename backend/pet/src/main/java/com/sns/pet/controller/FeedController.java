@@ -23,7 +23,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,6 +46,15 @@ public class FeedController {
     @ApiOperation(value = "뉴스 피드 목록 반환", response = List.class)
     @GetMapping("/newsfeed")
     public ResponseEntity<List<FeedDto>> newsFeedList(
+            @ApiParam(value = "피드 사진들", required = true) @RequestParam("userNumber") Long userNumber,
+            @ApiParam(value = "피드 사진들", required = false) @RequestParam("cursor") String cursor) throws Exception{
+        logger.info("뉴스 피드 목록 - 호출");
+        return new ResponseEntity<>(feedService.findNewsFeedList(userNumber, cursor), HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "뉴스 피드 목록 반환", response = List.class)
+    @GetMapping("/favfeed")
+    public ResponseEntity<List<FeedDto>> favAnimalFeedList(
             @ApiParam(value = "피드 사진들", required = true) @RequestParam("userNumber") Long userNumber,
             @ApiParam(value = "피드 사진들", required = false) @RequestParam("cursor") String cursor) throws Exception{
         logger.info("뉴스 피드 목록 - 호출");

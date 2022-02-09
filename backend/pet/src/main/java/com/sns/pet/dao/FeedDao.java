@@ -11,6 +11,8 @@ import java.util.List;
 public interface FeedDao {
     List<FeedDto> selectNewsFeedList(Long userNumber, String cursor) throws SQLException;
 
+    List<FeedDto> selectFavFeedList(Long userNumber, String cursor) throws SQLException;
+
     List<FeedDto> selectMyFeedList(Long userNumber) throws SQLException;
 
     int insertFeed(FeedDto feedDto) throws SQLException;
