@@ -6,6 +6,7 @@ import javax.mail.Message.RecipientType;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import com.sns.pet.dao.EmailDao;
 import com.sns.pet.dao.UserDao;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
@@ -80,7 +81,7 @@ public class EmailServiceImpl implements EmailService {
     public String sendSimpleMessage(String userEmail) throws Exception {
         authKey = createKey();
         MimeMessage message = createMessage(userEmail);
-        try {//예외처리
+        try {
             emailSender.send(message);
         } catch (MailException es) {
             es.printStackTrace();
@@ -91,11 +92,17 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public boolean addAuthKey(String userEmail, String authKey) throws Exception {
-        return sqlSession.getMapper(UserDao.class).insertAutKey(userEmail, authKey) == 1;
+        return sqlSession.getMapper(EmailDao.class).insertAuthKey(userEmail, authKey) == 1;
+    }
+
+    @Override
+    public boolean updateAuthKey(String userEmail) throws Exception {
+        return sqlSession.getMapper(EmailDao.class).updateAuthKey(userEmail) == 1;
     }
 
     @Override
     public String findAuthKey(String userEmail) throws Exception {
-        return sqlSession.getMapper(UserDao.class).selectAuthKey(userEmail);
+        return sqlSession.getMapper(EmailDao.class).selectAuthKey(userEmail);
     }
+
 }
