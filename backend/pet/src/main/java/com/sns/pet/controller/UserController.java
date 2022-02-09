@@ -36,7 +36,6 @@ public class UserController {
     private static final String FAIL = "fail";
 
     private final UserService userService;
-    private final EmailService emailService;
 
     @ApiOperation(value = "회원가입", notes = "회원가입을 한다. DB 성공 여부에 따라 SUCCESS, FAIL 반환", response = String.class)
     @PostMapping
@@ -196,31 +195,5 @@ public class UserController {
         logger.info("followingList 호출");
         List<UserDto> userDtoList = userService.findFollowingList(userNumber);
         return new ResponseEntity<List<UserDto>>(userDtoList, HttpStatus.OK);
-    }
-
-    @ApiOperation(value = "회원가입 인증메일 보내기", notes = "메일을 보내고, DB에 인증키 정보를 저장한다. 성공시 SUCCESS, 실패시 FAIL 반환")
-    @PostMapping("/sendEmail/{userEmail}")
-    public ResponseEntity<String> sendEmail(@PathVariable("userEmail") @ApiParam(value = "이메일 주소") String userEmail) throws Exception {
-        logger.info("sendEmail 호출");
-        String authKey = emailService.sendSimpleMessage(userEmail);
-        System.out.println(authKey);
-        if(emailService.addAuthKey(userEmail, authKey)){
-            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-        }else {
-            return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
-        }
-    }
-
-    @ApiOperation(value = "이메일 인증", notes = "입력한 인증키와 저장된 인증키가 같은지 비교 후, 같다면 SUCCESS, 다르면 FAIL 반환")
-    @PostMapping("/emailConfirm")
-    public ResponseEntity<String> emailConfirm(@RequestBody EmailDto emailDto) throws Exception {
-        logger.info("emailConfirm 호출");
-        String userEmail = emailDto.getUserEmail();
-        String authKey = emailDto.getAuthKey();
-        if(authKey.equals(emailService.findAuthKey(userEmail))){
-            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
-        }
     }
 }
