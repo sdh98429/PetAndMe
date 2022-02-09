@@ -46,19 +46,19 @@ public class FeedController {
     @ApiOperation(value = "뉴스 피드 목록 반환", response = List.class)
     @GetMapping("/newsfeed")
     public ResponseEntity<List<FeedDto>> newsFeedList(
-            @ApiParam(value = "피드 사진들", required = true) @RequestParam("userNumber") Long userNumber,
-            @ApiParam(value = "피드 사진들", required = false) @RequestParam("cursor") String cursor) throws Exception{
+            @ApiParam(value = "로그인 유저 번호", required = true) @RequestParam("userNumber") Long userNumber,
+            @ApiParam(value = "default 빈문자열, 마지막 피드의 생성일", required = false) @RequestParam("cursor") String cursor) throws Exception{
         logger.info("뉴스 피드 목록 - 호출");
         return new ResponseEntity<>(feedService.findNewsFeedList(userNumber, cursor), HttpStatus.OK);
     }
 
-    @ApiOperation(value = "뉴스 피드 목록 반환", response = List.class)
+    @ApiOperation(value = "선호 동물 피드 목록 반환", response = List.class)
     @GetMapping("/favfeed")
     public ResponseEntity<List<FeedDto>> favAnimalFeedList(
-            @ApiParam(value = "피드 사진들", required = true) @RequestParam("userNumber") Long userNumber,
-            @ApiParam(value = "피드 사진들", required = false) @RequestParam("cursor") String cursor) throws Exception{
-        logger.info("뉴스 피드 목록 - 호출");
-        return new ResponseEntity<>(feedService.findNewsFeedList(userNumber, cursor), HttpStatus.OK);
+            @ApiParam(value = "로그인 유저 번호", required = true) @RequestParam("userNumber") Long userNumber,
+            @ApiParam(value = "default 빈문자열, 마지막 피드의 생성일", required = false) @RequestParam("cursor") String cursor) throws Exception{
+        logger.info("선호 동물 피드 목록 - 호출");
+        return new ResponseEntity<>(feedService.findFavFeedList(userNumber, cursor), HttpStatus.OK);
     }
 
     @ApiOperation(value = "userNumber에 해당하는 내 피드 목록 반환", response = FeedDto.class)
