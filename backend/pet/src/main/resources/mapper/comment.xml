@@ -14,6 +14,7 @@
             WHERE feedNumber = #{feedNumber}
             ) AS c
         ON u.userNumber = c.userNumber
+        ORDER BY c.commentNumber desc
     </select>
 
 <!--    <select id="selectCommentList" parameterType="Long" resultType="CommentDto">-->
