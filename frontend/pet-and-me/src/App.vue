@@ -15,7 +15,7 @@ export default {
 </script>
 
 <style>
-html,
+/* html,
 body {
   margin: 0px;
   padding: 0px;
@@ -23,6 +23,6 @@ body {
   font-family: "Quicksand", sans-serif;
   font-size: 62.5%;
   font-size: 10px;
-}
+} */
 
 </style>

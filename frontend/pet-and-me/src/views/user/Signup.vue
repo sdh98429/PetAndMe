@@ -27,15 +27,6 @@
     <hr>
     <SignupNext v-if="level == 0" @levelEvent="updateLevel"></SignupNext>
 
-    <h3> 지금까지 쌓인 데이터 목록 </h3>
-    <p>아이디 : {{ credentials.userId }}</p>
-    <p>이름 : {{ credentials.userName }}</p>
-    <password>패스워드 : {{ credentials.password }}</password>
-    <p>패스워드 확인 : {{ credentials.passwordConfirmation }}</p>
-    <p>이메일 : {{ credentials.userEmail }}</p>
-    <p>유저 애완동물 : (boolean + list) {{ credentials.petCheck }} {{ credentials.userPet }}</p>
-    <p>유저 선호동물 : {{ credentials.userPreference }}</p>
-
   </div>
 </template>
 
@@ -55,19 +46,20 @@ export default {
     return {
       level: 0,
       credentials: {
-        userId: null,
-        userName: null,
-        password: null,
+        userID: null,
+        userPW: null,
         passwordConfirmation: null,
         userEmail: null,
         petCheck: false,
-        userPet: {
+        userPet: [
+          {
           petName: null,
           petBirth: null,
           petGender: null,
-          petType: null,
-        },
-        userPreference: null,
+          animalNumber: null,
+          }
+        ],
+        userPreference: [],
       }
     }
   },
@@ -84,9 +76,8 @@ export default {
       this.level++
     },
     infoSave: function(res) {
-      this.credentials.userId = res.userId
-      this.credentials.userName = res.userName
-      this.credentials.password = res.password
+      this.credentials.userID = res.userId
+      this.credentials.userPW = res.password
       this.credentials.passwordConfirmation = res.passwordConfirmation
       this.level++
     },
@@ -99,22 +90,26 @@ export default {
       this.credentials.userPet.petName = res.petName
       this.credentials.userPet.petBirth = res.petBirth
       this.credentials.userPet.petGender = res.petGender
-      this.credentials.userPet.petType = res.petType
+      this.credentials.userPet.animalNumber = res.petType*1
       this.level++
     },
     preferenceSave: function(res) {
       this.credentials.userPreference = res.selected
-      axios({
-        method: 'post',
-        url: 'http://i6b106.p.ssafy.io:8080/user/',
-        data: this.credentials
-      })
-        .then(() => {
-          this.$router.push({ name: 'Login'})
+      for (var step=0; step < res.selected.length; step++) {
+        this.credentials.userPreference[step] = {'AnimalNumber' : res.selected[step]*=1}
+      }
+      console.log(this.credentials.userPreference)
+        axios({
+          method: 'post',
+          url: 'http://i6b106.p.ssafy.io:8080/user',
+          data: this.credentials
         })
-        .catch(err => {
-          console.log(err.response)
-        })
+          .then(() => {
+            this.$router.push({ name: 'Login' })
+          })
+          .catch(err => {
+            console.log(err.response)
+          })
     }
   }
 }

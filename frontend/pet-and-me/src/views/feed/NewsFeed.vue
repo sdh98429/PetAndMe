@@ -33,7 +33,7 @@ export default {
     getNewsFeeds: function () { // 뉴스피드 가져오기
       axios({
         method: 'get',
-        url: `http://i6b106.p.ssafy.io/main/newsfeed`, 
+        url: 'http://i6b106.p.ssafy.io:8080/main/newsfeed', 
       })
         .then(res => {
           console.log(res.data)
