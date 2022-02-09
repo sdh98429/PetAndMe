@@ -142,7 +142,7 @@ public class FeedController {
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
         }
         logger.info("DB 저장 실패");
-        return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(FAIL, HttpStatus.OK);
     }
 
     @ApiOperation(value = "feedNumber에 해당하는 피드 반환", response = FeedDto.class)
@@ -179,7 +179,7 @@ public class FeedController {
         if (feedService.removeFeed(feedNumber)) {
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
         }
-        return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(FAIL, HttpStatus.OK);
     }
 
 //    @ApiOperation(value = "feedNumber에 해당하는 피드 수정, 내용만 수정 가능. DB입력 성공 여부에 따라 success, fail 반환")
