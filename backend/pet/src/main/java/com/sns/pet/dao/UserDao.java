@@ -3,6 +3,7 @@ package com.sns.pet.dao;
 import com.sns.pet.dto.JoinDto;
 import com.sns.pet.dto.UserDto;
 import com.sns.pet.dto.UserPetDto;
+import io.swagger.annotations.ApiParam;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

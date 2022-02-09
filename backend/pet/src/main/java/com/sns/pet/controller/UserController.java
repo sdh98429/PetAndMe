@@ -3,16 +3,15 @@ package com.sns.pet.controller;
 import com.sns.pet.dto.JoinDto;
 import com.sns.pet.dto.UserDto;
 import com.sns.pet.dto.UserPetDto;
+import com.sns.pet.service.EmailService;
 import com.sns.pet.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.nio.file.LinkPermission;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @Api("User 컨트롤러")
@@ -40,6 +35,7 @@ public class UserController {
     private static final String FAIL = "fail";
 
     private final UserService userService;
+    private final EmailService emailService;
 
     @ApiOperation(value = "회원가입", notes = "회원가입을 한다. DB 성공 여부에 따라 SUCCESS, FAIL 반환", response = String.class)
     @PostMapping
@@ -50,7 +46,6 @@ public class UserController {
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }
         return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
-
     }
 
     @ApiOperation(value = "회원정보 조회", notes = "회원정보를 조회한다.", response = UserDto.class)
@@ -99,8 +94,8 @@ public class UserController {
             String originName, fileExtension, saveFileName, saveFolder;
 
 //            saveFolder = File.separator + "Users" + File.separator + "leejuhyeong" + File.separator + "test" + File.separator + "profile" + File.separator; // 맥용
-//            saveFolder = "C:" + File.separator + "PJT" + File.separator + "test" + File.separator;                              // 윈도우용
-            saveFolder = File.separator + "home" + File.separator + "test" + File.separator + "profile" + File.separator;       // ec2 서버용
+            saveFolder = "C:" + File.separator + "PJT" + File.separator + "test" + File.separator;                              // 윈도우용
+            //saveFolder = File.separator + "home" + File.separator + "test" + File.separator + "profile" + File.separator;       // ec2 서버용
 
             logger.info("저장경로 확인 : {}", saveFolder);
             userDto.setSaveFolder(saveFolder);
@@ -188,7 +183,7 @@ public class UserController {
 
     @ApiOperation(value = "팔로워 리스트 조회", notes = "나를 팔로우하고 있는 사람들의 목록 조회")
     @GetMapping("/follower/{userNumber}")
-    public ResponseEntity<List<UserDto>> followerList(@PathVariable("userNumber") @ApiParam("팔로워 리스트를 조회할 회원번호") Long userNumber) throws Exception{
+    public ResponseEntity<List<UserDto>> followerList(@PathVariable("userNumber") @ApiParam("팔로워 리스트를 조회할 회원번호") Long userNumber) throws Exception {
         logger.info("followerList 호출");
         List<UserDto> userDtoList = userService.findFollowList(userNumber);
         return new ResponseEntity<List<UserDto>>(userDtoList, HttpStatus.OK);
@@ -196,9 +191,18 @@ public class UserController {
 
     @ApiOperation(value = "팔로잉 리스트 조회", notes = "내가 팔로우 하고 있는 사람들의 목록 조회")
     @GetMapping("/following/{userNumber}")
-    public ResponseEntity<List<UserDto>> followingList(@PathVariable("userNumber") @ApiParam("팔로워 리스트를 조회할 회원번호") Long userNumber) throws Exception{
+    public ResponseEntity<List<UserDto>> followingList(@PathVariable("userNumber") @ApiParam("팔로워 리스트를 조회할 회원번호") Long userNumber) throws Exception {
         logger.info("followingList 호출");
         List<UserDto> userDtoList = userService.findFollowingList(userNumber);
         return new ResponseEntity<List<UserDto>>(userDtoList, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "회원가입 인증메일 보내기", notes = "메일을 보내고, 인증키를 반환한다.")
+    @PostMapping("/emailConfirm/{userEmail}")
+    public ResponseEntity<String> sendEmail(@PathVariable("userEmail") @ApiParam(value = "이메일 주소") String userEmail) throws Exception {
+        logger.info("sendEmail 호출");
+        String authKey = emailService.sendSimpleMessage(userEmail);
+        System.out.println(authKey);
+        return new ResponseEntity<String>(authKey, HttpStatus.OK);
     }
 }

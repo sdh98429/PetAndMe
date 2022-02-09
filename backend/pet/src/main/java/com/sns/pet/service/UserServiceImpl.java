@@ -19,6 +19,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final SqlSession sqlSession;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean addUser(JoinDto joinDto) throws Exception {
@@ -38,7 +39,6 @@ public class UserServiceImpl implements UserService {
         } else {
             return true;
         }
-
     }
 
     @Override
