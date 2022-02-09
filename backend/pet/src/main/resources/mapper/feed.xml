@@ -13,7 +13,7 @@
         <if test='!cursor.equals("")'>
             WHERE feedDate <![CDATA[<]]> #{cursor}
         </if>
-        ORDER BY feedNumber DESC
+        ORDER BY feedDate DESC
         LIMIT 10
     </select>
 
@@ -30,7 +30,7 @@
         <if test='!cursor.equals("")'>
             feedDate <![CDATA[<]]> #{cursor}
         </if>
-        ORDER BY feedNumber desc
+        ORDER BY feedDate desc
         LIMIT 10
     </select>
 
@@ -47,7 +47,7 @@
         <if test='!cursor.equals("")'>
             feedDate <![CDATA[<]]> #{cursor}
         </if>
-        ORDER BY feedNumber desc
+        ORDER BY feedDate desc
         LIMIT 10;
     </select>
 
