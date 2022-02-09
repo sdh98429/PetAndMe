@@ -1,5 +1,6 @@
 package com.sns.pet.controller;
 
+import com.sns.pet.dto.EmailDto;
 import com.sns.pet.dto.JoinDto;
 import com.sns.pet.dto.UserDto;
 import com.sns.pet.dto.UserPetDto;
@@ -94,8 +95,8 @@ public class UserController {
             String originName, fileExtension, saveFileName, saveFolder;
 
 //            saveFolder = File.separator + "Users" + File.separator + "leejuhyeong" + File.separator + "test" + File.separator + "profile" + File.separator; // 맥용
-            saveFolder = "C:" + File.separator + "PJT" + File.separator + "test" + File.separator;                              // 윈도우용
-            //saveFolder = File.separator + "home" + File.separator + "test" + File.separator + "profile" + File.separator;       // ec2 서버용
+//            saveFolder = "C:" + File.separator + "PJT" + File.separator + "test" + File.separator;                              // 윈도우용
+            saveFolder = File.separator + "home" + File.separator + "test" + File.separator + "profile" + File.separator;       // ec2 서버용
 
             logger.info("저장경로 확인 : {}", saveFolder);
             userDto.setSaveFolder(saveFolder);
@@ -200,9 +201,26 @@ public class UserController {
     @ApiOperation(value = "회원가입 인증메일 보내기", notes = "메일을 보내고, 인증키를 반환한다.")
     @PostMapping("/emailConfirm/{userEmail}")
     public ResponseEntity<String> emailConfirm(@PathVariable("userEmail") @ApiParam(value = "이메일 주소") String userEmail) throws Exception {
-        logger.info("sendEmail 호출");
+        logger.info("emailConfirm 호출");
         String authKey = emailService.sendSimpleMessage(userEmail);
         System.out.println(authKey);
-        return new ResponseEntity<String>(authKey, HttpStatus.OK);
+        if(emailService.addAuthKey(userEmail, authKey)){
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @ApiOperation(value = "이메일 인증")
+    @PostMapping("/emailConfirm")
+    public ResponseEntity<String> emailConfirm(@RequestBody EmailDto emailDto) throws Exception {
+        logger.info("emailConfirm 호출");
+        String userEmail = emailDto.getUserEmail();
+        String authKey = emailDto.getAuthKey();
+        if(authKey.equals(emailService.findAuthKey(userEmail))){
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+        }
     }
 }

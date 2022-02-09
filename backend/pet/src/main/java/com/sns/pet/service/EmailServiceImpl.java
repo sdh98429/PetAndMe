@@ -21,7 +21,7 @@ public class EmailServiceImpl implements EmailService {
     private final JavaMailSender emailSender;
     private final SqlSession sqlSession;
 
-    public static final String authKey = createKey();
+    public static String authKey;
 
     private MimeMessage createMessage(String userEmail) throws Exception {
         System.out.println("보내는 대상 : " + userEmail);
@@ -73,13 +73,12 @@ public class EmailServiceImpl implements EmailService {
                     break;
             }
         }
-
         return authKey.toString();
     }
 
     @Override
     public String sendSimpleMessage(String userEmail) throws Exception {
-        // TODO Auto-generated method stub
+        authKey = createKey();
         MimeMessage message = createMessage(userEmail);
         try {//예외처리
             emailSender.send(message);
@@ -88,5 +87,15 @@ public class EmailServiceImpl implements EmailService {
             throw new IllegalArgumentException();
         }
         return authKey;
+    }
+
+    @Override
+    public boolean addAuthKey(String userEmail, String authKey) throws Exception {
+        return sqlSession.getMapper(UserDao.class).insertAutKey(userEmail, authKey) == 1;
+    }
+
+    @Override
+    public String findAuthKey(String userEmail) throws Exception {
+        return sqlSession.getMapper(UserDao.class).selectAuthKey(userEmail);
     }
 }

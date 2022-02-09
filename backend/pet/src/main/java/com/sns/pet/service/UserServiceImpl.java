@@ -85,7 +85,5 @@ public class UserServiceImpl implements UserService {
     public List<UserDto> findFollowingList(Long userNumber) throws SQLException {
         return sqlSession.getMapper(UserDao.class).selectFollowingList(userNumber);
     }
-
-
 }
 
