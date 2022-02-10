@@ -37,20 +37,21 @@ public class LoginController {
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
         try {
-            UserDto loginUser = loginService.findByIdAndPw(user);
+            Long loginUserNumber = loginService.findByIdAndPw(user);
 
-            if (loginUser != null) {
+            if (loginUserNumber != null) {
                 // 토큰 생성
-                String token = jwtService.create("userid", loginUser.getUserID(), "access-token");// key, data, subject
+                String token = jwtService.create("userNumber", loginUserNumber, "access-token");// key, data, subject
                 logger.debug("로그인 토큰정보 : {}", token);
                 resultMap.put("access-token", token);
                 resultMap.put("message", SUCCESS);
             } else { // 아이디 또는 비번을 틀림
-                loginUser = loginService.findById(user.get("userID")); // 아이디로 회원 찾기
-                if(loginUser != null) {
+                loginUserNumber = loginService.findById(user.get("userID")); // 아이디로 회원 찾기
+                if(loginUserNumber != null) {
                     resultMap.put("message", "로그인 실패 : 비밀번호가 틀렸습니다.");
+                } else {
+                    resultMap.put("message", "로그인 실패 : 가입하지 않은 아이디입니다.");
                 }
-                resultMap.put("message", "로그인 실패 : 가입하지 않은 아이디입니다.");
             }
             status = HttpStatus.ACCEPTED; // 202. 요청 수신 but, 응하여 행동할 수 없음
         } catch (Exception e) {

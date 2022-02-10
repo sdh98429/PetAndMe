@@ -5,6 +5,6 @@ import com.sns.pet.dto.UserDto;
 import java.util.Map;
 
 public interface LoginService {
-    UserDto findByIdAndPw(Map<String, String> user) throws Exception;
-    UserDto findById(String userID) throws Exception;
+    Long findByIdAndPw(Map<String, String> user) throws Exception;
+    Long findById(String userID) throws Exception;
 }

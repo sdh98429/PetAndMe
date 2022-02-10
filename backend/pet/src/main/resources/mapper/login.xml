@@ -4,17 +4,17 @@
 
 <mapper namespace="com.sns.pet.dao.LoginDao">
     <!-- 로그인 시도 후 해당 유저 정보 모두 가져오기 -->
-    <select id="selectByIdAndPw" parameterType="map" resultType="userDto">
-        SELECT *
+    <select id="selectByIdAndPw" parameterType="map" resultType="Long">
+        SELECT userNumber
         FROM User
         WHERE userID=#{userID} AND userPW=#{userPW}
     </select>
 
     <!-- 가입한 id인지 확인 -->
-    <select id="selectById" parameterType="String" resultType="userDto">
-        SELECT *
+    <select id="selectById" parameterType="String" resultType="Long">
+        SELECT userNumber
         FROM User
-        WHERE userId=#{userId}
+        WHERE userID=#{userID}
     </select>
 
 </mapper>
