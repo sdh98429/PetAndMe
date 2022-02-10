@@ -43,7 +43,7 @@ body {
   padding: 0px;
   font-family: "Quicksand", sans-serif;
   font-size: 10px;
-}
+} */
 
 /* Mobile Web*/
 @media screen and (max-width:768px){

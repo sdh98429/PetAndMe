@@ -22,7 +22,9 @@
     "lodash": "^4.17.21",
     "node-sass": "^6.0.1",
     "sass-loader": "^10.2.1",
+    "vee-validate": "^3.4.14",
     "vue": "^2.6.11",
+    "vue-infinite-loading": "^2.4.5",
     "vue-moment": "^4.1.0",
     "vue-router": "^3.2.0",
     "vuejs-datepicker": "^1.6.2",
@@ -50,7 +52,9 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+      "no-mixed-spaces-and-tabs": 0
+    }
   },
   "browserslist": [
     "> 1%",

@@ -1,6 +1,6 @@
 <template>
   <div style="border: 1px solid;">
-    <h3>댓글 작성</h3>
+    <h3>내용 작성</h3>
     <textarea 
       id="textarea"
       v-model.trim = "content"

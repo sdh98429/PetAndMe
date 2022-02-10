@@ -11,8 +11,8 @@ public class CommentDto {
     private String commentDate;
     private Long userNumber;
     private String userID;
-    private String userName;
     private String userNickName;
-    private String userProfileContent;
-
+    private String userPhotoName;
+    private String saveFolder;
+    private byte[] userProfilePhoto;
 }

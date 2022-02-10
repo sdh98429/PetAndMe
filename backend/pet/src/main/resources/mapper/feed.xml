@@ -1,6 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sns.pet.dao.FeedDao">
+    <select id="selectNewsFeedList" parameterType="Map" resultMap="getFeed">
+        SELECT f.feedNumber, f.feedContent, f.feedDate, u.userNumber,
+               IF(f.feedNumber IN (SELECT Likes.feedNumber From Likes WHERE Likes.userNumber = #{userNumber}), 1, 0) AS checkLike,
+               (SELECT COUNT(userNumber) FROM Likes WHERE Likes.feedNumber = f.feedNumber) AS cntLike,
+               (SELECT COUNT(userNumber) FROM Comment WHERE Comment.feedNumber = f.feedNumber) AS cntComment
+        FROM Feed AS f INNER JOIN User AS u USING(userNumber)
+        <if test='cursor.equals("")'>
+            WHERE feedDate <![CDATA[<]]> now()
+        </if>
+        <if test='!cursor.equals("")'>
+            WHERE feedDate <![CDATA[<]]> #{cursor}
+        </if>
+        ORDER BY feedDate DESC
+        LIMIT 10
+    </select>
+
+    <select id="selectFavFeedList" parameterType="Map" resultMap="getFeed">
+        SELECT f.feedNumber, f.feedContent, f.feedDate, u.userNumber, u.userID, u.userNickName,
+        IF(f.feedNumber IN (SELECT Likes.feedNumber From Likes WHERE Likes.userNumber = #{userNumber}), 1, 0) AS checklike,
+        (SELECT COUNT(userNumber) FROM Likes WHERE Likes.feedNumber = f.feedNumber) AS cntLike,
+        (SELECT COUNT(userNumber) FROM Comment WHERE Comment.feedNumber = f.feedNumber) AS cntComment
+        FROM Feed AS f INNER JOIN User AS u USING(userNumber) INNER JOIN Pet AS p USING(userNUmber)
+        where p.animalNumber IN (select animalNumber from FavAnimal INNER JOIN User USING (userNumber) where userNumber = #{userNumber}) AND
+        <if test='cursor.equals("")'>
+            feedDate <![CDATA[<]]> now()
+        </if>
+        <if test='!cursor.equals("")'>
+            feedDate <![CDATA[<]]> #{cursor}
+        </if>
+        ORDER BY feedDate desc
+        LIMIT 10
+    </select>
+
+    <select id="selectFollowList" parameterType="Map" resultMap="getFeed">
+        SELECT f.feedNumber, f.feedContent, f.feedDate, u.userNumber, u.userID, u.userNickName,
+        IF(f.feedNumber IN (SELECT Likes.feedNumber From Likes WHERE Likes.userNumber = #{userNumber}), 1, 0) AS checklike,
+        (SELECT COUNT(userNumber) FROM Likes WHERE Likes.feedNumber = f.feedNumber) AS cntLike,
+        (SELECT COUNT(userNumber) FROM Comment WHERE Comment.feedNumber = f.feedNumber) AS cntComment
+        FROM Feed AS f INNER JOIN User AS u USING(userNumber)
+        where u.userNumber IN (select toUserNumber from Follow where fromUserNumber = #{userNumber}) AND
+        <if test='cursor.equals("")'>
+            feedDate <![CDATA[<]]> now()
+        </if>
+        <if test='!cursor.equals("")'>
+            feedDate <![CDATA[<]]> #{cursor}
+        </if>
+        ORDER BY feedDate desc
+        LIMIT 10;
+    </select>
+
     <insert id="insertFeed" parameterType="FeedDto">
         INSERT INTO Feed (userNumber, feedContent, feedDate, feedThumbnailFolder, feedThumbnailName)
         VALUES (#{userNumber}, #{feedContent}, now(), #{feedThumbnailFolder}, #{feedThumbnailName})
@@ -18,8 +68,13 @@
     </insert>
 
     <select id="selectFeed" parameterType="Long" resultMap="getFeed">
-        SELECT feedNumber, feedContent, feedDate
-        FROM Feed
+        SELECT f.feedNumber, f.feedContent, f.feedDate, u.userNumber,
+               IF(feedNumber
+                      IN (SELECT feedNumber FROM Likes WHERE userNumber=#{userNumber}), 1, 0) AS checkLike,
+               (SELECT COUNT(userNumber) FROM Likes WHERE Likes.feedNumber = f.feedNumber) AS cntLike,
+               (SELECT COUNT(userNumber) FROM Comment WHERE Comment.feedNumber = f.feedNumber) AS cntComment
+        FROM Feed AS f INNER JOIN User AS u
+        USING(userNumber)
         WHERE feedNumber = #{feedNumber}
     </select>
 
@@ -27,6 +82,10 @@
         <result column="feedNumber" property="feedNumber"/>
         <result column="feedContent" property="feedContent"/>
         <result column="feedDate" property="feedDate"/>
+        <result column="userNumber" property="userNumber"/>
+        <result column="checkLike" property="checkLike"/>
+        <result column="cntLike" property="cntLike"/>
+        <result column="cntComment" property="cntComment"/>
         <collection property="feedPhotoDtoList" column="feedNumber=feedNumber" javaType="list" ofType="FeedPhotoDto"
                     select="selectFeedPhotoByFeedNumber"/>
     </resultMap>
