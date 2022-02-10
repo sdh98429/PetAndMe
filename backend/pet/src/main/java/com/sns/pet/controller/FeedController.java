@@ -1,6 +1,5 @@
 package com.sns.pet.controller;
 
-import com.sns.pet.dto.CommentDto;
 import com.sns.pet.dto.FeedDto;
 import com.sns.pet.dto.FeedPhotoDto;
 import com.sns.pet.service.FeedService;
@@ -14,7 +13,6 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,7 +42,7 @@ public class FeedController {
     @GetMapping("/newsfeed")
     public ResponseEntity<List<FeedDto>> newsFeedList(
             @ApiParam(value = "로그인 유저 번호", required = true) @RequestParam("userNumber") Long userNumber,
-            @ApiParam(value = "default 빈문자열, 마지막 피드의 생성일", required = false) @RequestParam("cursor") String cursor) throws Exception{
+            @ApiParam(value = "default 빈문자열, 마지막 피드의 생성일", required = false) @RequestParam("cursor") String cursor) throws Exception {
         logger.info("뉴스 피드 목록 - 호출");
         return new ResponseEntity<>(feedService.findNewsFeedList(userNumber, cursor), HttpStatus.OK);
     }
