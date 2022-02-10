@@ -14,13 +14,17 @@
     "@teachablemachine/image": "^0.8.5",
     "@tensorflow/tfjs": "^3.13.0",
     "@toast-ui/editor": "^3.1.2",
+    "@wyhaya/vue-slide": "^1.0.2",
     "axios": "^0.25.0",
     "core-js": "^3.6.5",
+    "gsap": "^3.9.1",
     "jquery": "^3.6.0",
     "lodash": "^4.17.21",
     "node-sass": "^6.0.1",
     "sass-loader": "^10.2.1",
+    "vee-validate": "^3.4.14",
     "vue": "^2.6.11",
+    "vue-infinite-loading": "^2.4.5",
     "vue-moment": "^4.1.0",
     "vue-router": "^3.2.0",
     "vuejs-datepicker": "^1.6.2",
@@ -48,7 +52,9 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+      "no-mixed-spaces-and-tabs": 0
+    }
   },
   "browserslist": [
     "> 1%",

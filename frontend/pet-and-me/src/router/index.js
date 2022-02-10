@@ -11,6 +11,7 @@ import SearchResult from '../views/search/SearchResult'
 import FeedCreate from '../views/feed/FeedCreate'
 import NewsFeed from '../views/feed/NewsFeed'
 import UserFeed from '../views/feed/UserFeed'
+import UserFeedUpdate from '../views/feed/UserFeedUpdate'
 import FeedDetail from '../views/feed/FeedDetail'
 
 
@@ -69,9 +70,14 @@ const routes = [
     component: NewsFeed,
   },
   {
-    path: '/feed/userfeed/:yourUserNumber',
+    path: '/feed/userfeed/:yourUserId',
     name: 'UserFeed',
     component: UserFeed,
+  },
+  {
+    path: '/feed/userfeed/:yourUserId/update',
+    name: 'UserFeedUpdate',
+    component: UserFeedUpdate,
   },
   {
     path: '/feed/:feedNumber',

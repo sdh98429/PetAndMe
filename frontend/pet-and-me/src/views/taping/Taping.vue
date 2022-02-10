@@ -1,10 +1,17 @@
 <template>
-  <div></div>
+  <div>
+    <h2>Taping test용 페이지</h2>
+    <Taping></Taping>
+  </div>
 </template>
 
 <script>
-export default {
+import Taping from '../../components/taping/Taping'
 
+export default {
+  components: {
+    Taping
+  },
 }
 </script>
 

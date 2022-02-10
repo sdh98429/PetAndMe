@@ -68,33 +68,29 @@ export default {
     return {
       credentials: {
         petCheck: false,
-        petName: null,
-        petBirth: null,
-        petGender: null,
-        petType: null,
+        petName: '',
+        petBirth: '',
+        petGender: '',
+        petType: '',
       },
       checkFlag: false,
       genderList: [
         {
-          value: "Male",
+          value: "M",
           text: "남아",
         },
         {
-          value: "FeMale",
+          value: "F",
           text: "여아",
         },
       ],
     };
   },
   computed: {
-    idValid() {
-      return /^[A-Za-z0-9]+$/.test(this.email);
-    },
+
   },
   watch: {
-    onlyNum() {
-      this.onlyNum = this.onlyNum.replace(/[^0-9]/g, "");
-    },
+
   },
   methods: {
     isYes () {
@@ -107,7 +103,21 @@ export default {
       this.credentials.petBirth = datePickerString
     },
     saveData() {
-      this.$emit("pet-update", this.credentials)
+      if (this.credentials.petCheck){
+        if (!this.credentials.petName) {
+          alert('반려동물 이름 미입력')
+        } else if (!this.credentials.petBirth) {
+          alert('반려동물 생일 미입력')
+        } else if (!this.credentials.petGender) {
+          alert('반려동물 성별 미입력')
+        } else if (!this.credentials.petType) {
+          alert('반려동물 종류 미입력')
+        } else {
+          this.$emit("pet-update", this.credentials)
+        } 
+      } else{
+        this.$emit("pet-update", this.credentials)
+      }
     },
 
     // 데이터 empty 체크

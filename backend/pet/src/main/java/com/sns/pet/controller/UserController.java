@@ -1,18 +1,18 @@
 package com.sns.pet.controller;
 
+import com.sns.pet.dto.EmailDto;
 import com.sns.pet.dto.JoinDto;
 import com.sns.pet.dto.UserDto;
 import com.sns.pet.dto.UserPetDto;
+import com.sns.pet.service.EmailService;
 import com.sns.pet.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,17 +21,14 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.nio.file.LinkPermission;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @Api("User 컨트롤러")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = {"*"}, maxAge = 6000)
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -49,7 +46,6 @@ public class UserController {
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }
         return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
-
     }
 
     @ApiOperation(value = "회원정보 조회", notes = "회원정보를 조회한다.", response = UserDto.class)
@@ -57,7 +53,7 @@ public class UserController {
     public ResponseEntity<UserDto> userDetails(@PathVariable("userNumber") @ApiParam(value = "조회할 회원번호") Long userNumber) throws Exception {
         logger.info("userDetails 호출");
         UserDto userDto = userService.findUser(userNumber);
-        
+
         // 이미지 반환
         System.out.println(userDto.getSaveFolder() + userDto.getUserPhotoName());
         InputStream imageStream = new FileInputStream(userDto.getSaveFolder() + userDto.getUserPhotoName());
@@ -148,5 +144,56 @@ public class UserController {
             return new ResponseEntity<UserPetDto>(userPetDto, HttpStatus.OK);
         }
         return new ResponseEntity<UserPetDto>(userPetDto, HttpStatus.NO_CONTENT);
+    }
+
+    @ApiOperation(value = "회원 ID로 회원번호 조회")
+    @GetMapping("/number/{userID}")
+    public ResponseEntity<Long> sendNumber(@PathVariable("userID") @ApiParam("전송할 회원 ID") String userID) throws Exception {
+        logger.info("sendNumber 호출");
+        UserDto userDto = userService.findUserNumber(userID);
+        Long userNumber = userDto.getUserNumber();
+        return new ResponseEntity<Long>(userNumber, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "회원 팔로우하기", notes = "팔로우한 사람을 DB에 저장한다. 성공시 success, 실패시 fail 반환")
+    @PostMapping("/follow/{fromUserNumber}/{toUserNumber}")
+    public ResponseEntity<String> followAdd(@PathVariable(value = "fromUserNumber") @ApiParam("팔로우를 보내는 회원") Long fromUserNumber,
+                                            @PathVariable(value = "toUserNumber") @ApiParam("팔로우를 당하는 회원") Long toUserNumber) throws Exception {
+        logger.info("followAdd 호출");
+        if (fromUserNumber.equals(toUserNumber)) return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+        if (userService.addFollow(fromUserNumber, toUserNumber)) {
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @ApiOperation(value = "회원 언팔로우하기", notes = "팔로우한 사람을 DB에 저장한다. 성공시 success, 실패시 fail 반환")
+    @DeleteMapping("/follow/{fromUserNumber}/{toUserNumber}")
+    public ResponseEntity<String> followRemove(@PathVariable(value = "fromUserNumber") @ApiParam("언팔로우를 보내는 회원") Long fromUserNumber,
+                                               @PathVariable(value = "toUserNumber") @ApiParam("언팔로우를 당하는 회원") Long toUserNumber) throws Exception {
+        logger.info("followRemove 호출");
+        if (fromUserNumber.equals(toUserNumber)) return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+        if (userService.removeFollow(fromUserNumber, toUserNumber)) {
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @ApiOperation(value = "팔로워 리스트 조회", notes = "나를 팔로우하고 있는 사람들의 목록 조회")
+    @GetMapping("/follower/{userNumber}")
+    public ResponseEntity<List<UserDto>> followerList(@PathVariable("userNumber") @ApiParam("팔로워 리스트를 조회할 회원번호") Long userNumber) throws Exception {
+        logger.info("followerList 호출");
+        List<UserDto> userDtoList = userService.findFollowList(userNumber);
+        return new ResponseEntity<List<UserDto>>(userDtoList, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "팔로잉 리스트 조회", notes = "내가 팔로우 하고 있는 사람들의 목록 조회")
+    @GetMapping("/following/{userNumber}")
+    public ResponseEntity<List<UserDto>> followingList(@PathVariable("userNumber") @ApiParam("팔로워 리스트를 조회할 회원번호") Long userNumber) throws Exception {
+        logger.info("followingList 호출");
+        List<UserDto> userDtoList = userService.findFollowingList(userNumber);
+        return new ResponseEntity<List<UserDto>>(userDtoList, HttpStatus.OK);
     }
 }

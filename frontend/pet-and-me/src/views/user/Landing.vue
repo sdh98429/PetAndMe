@@ -32,13 +32,22 @@
 </template>
 
 <script>
+// import $ from 'jquery'
 export default {
-
+  // mounted(){
+  //   $('.my-nav').removeClass('affix')
+  //   $(window).scroll(function() {
+  //     if ($(document).scrollTop() > 200) {
+  //       $('.my-nav').addClass('affix');
+  //     } else {
+  //       $('.my-nav').removeClass('affix');
+  //     }
+  //   });
+  // }
 }
 </script>
 
 <style lang="scss" scoped>
-
 .home {
   width: 100%;
   height: 130vh;
@@ -56,9 +65,8 @@ export default {
   text-align: justify;
   padding-left: 15%;
   padding-right: 15%;
-  font-size: 20px;
+  font-size: 20px; 
 }
-
 @media all and (max-width:700px) {
   .myP {
     padding: 2%;

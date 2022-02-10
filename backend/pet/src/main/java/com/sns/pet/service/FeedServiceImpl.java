@@ -19,6 +19,22 @@ public class FeedServiceImpl implements FeedService {
     private final SqlSession sqlSession;
 
     @Override
+    public List<FeedDto> findNewsFeedList(Long userNumber, String cursor) throws Exception {
+        return sqlSession.getMapper(FeedDao.class).selectNewsFeedList(userNumber, cursor);
+    }
+
+    @Override
+    public List<FeedDto> findFavFeedList(Long userNumber, String cursor) throws Exception {
+        return sqlSession.getMapper(FeedDao.class).selectFavFeedList(userNumber, cursor);
+    }
+
+    @Override
+    public List<FeedDto> findFollowFeedList(Long userNumber, String cursor) throws Exception {
+        return sqlSession.getMapper(FeedDao.class).selectFollowList(userNumber, cursor);
+    }
+
+
+    @Override
     public List<FeedDto> findMyFeedList(Long userNumber) throws Exception {
         return sqlSession.getMapper(FeedDao.class).selectMyFeedList(userNumber);
     }
@@ -37,8 +53,8 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
-    public FeedDto findFeed(Long feedNumber) throws Exception {
-        return sqlSession.getMapper(FeedDao.class).selectFeed(feedNumber);
+    public FeedDto findFeed(Long userNumber, Long feedNumber) throws Exception {
+        return sqlSession.getMapper(FeedDao.class).selectFeed(userNumber, feedNumber);
     }
 
 //    @Override
