@@ -10,6 +10,8 @@ import java.util.List;
 public interface UserService {
     // 회원가입
     boolean addUser (JoinDto joinDto) throws Exception;
+    // 회원 아이디 중복체크
+    boolean checkUserID(String userID) throws Exception;
     // 회원조회
     UserDto findUser(Long userNumber) throws Exception;
     // 회원수정
