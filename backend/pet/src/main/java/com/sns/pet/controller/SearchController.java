@@ -100,10 +100,14 @@ public class SearchController {
     @ApiOperation(value = "검색 기록 저장 및 검색날짜 갱신", notes = "검색어가 저장되며, 과거 검색한 적이 있다면 검색날짜가 갱신됩니다.")
     @PostMapping
     public ResponseEntity<String> searchAdd(
-            @ApiParam(value = "검색 객체", required = true) SearchDto searchDto) throws Exception {
+            @ApiParam(value = "검색 객체", required = true) @RequestBody SearchDto searchDto) throws Exception {
 
         logger.info("searchAdd 호출");
-        searchService.addSearch(searchDto);
-        return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        logger.info("searchDto {}, {}", searchDto.getUserNumber(), searchDto.getSearchWord());
+        if(searchService.addSearch(searchDto)) {
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }
+        // 잘못된 요청을 보냄
+        return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST); // 400
     }
 }
