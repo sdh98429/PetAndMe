@@ -4,66 +4,87 @@
     <h1>회원가입 - 이메일</h1>
     <div>
       <h3>이메일 인증</h3>
-        <input type="text" v-model="credentials.userEmail" placeholder="이메일을 입력해주세요" @focus="checkFlag = false"/>
+        <input type="email" v-model="credentials.userEmail" placeholder="이메일을 입력해주세요" @focus="checkFlag = false"/>
       <span v-if="checkFlag && !credentials.userEmail">이메일을 입력해주세요</span>
       <button @click="certi"> 인증번호 전송 </button>
     </div>
 
     <div v-show="certiFlag">
-      <input type="text" placeholder="인증번호를 입력해주세요"/>
-      <button> 인증 </button>
+      <input type="text" v-model="credentials.authKey" placeholder="인증번호를 입력해주세요">
+      <button @click="certificateEmail"> 인증 </button>
     </div>
     <!-- emit -->
     <button @click="saveData"> 다음 </button>
-
-    <!-- next button -->
 
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
-  filters: {
-    comma(val) {
-      return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    },
-  },
   data() {
     return {
       checkFlag: false,
       certiFlag: false,
+      certificate: false,
       credentials: {
-        userEmail: "",
+        userEmail: '',
+        authKey: '',
       },
     };
   },
-  computed: {
-    idValid() {
-      return /^[A-Za-z0-9]+$/.test(this.email);
-    },
-    nextPageDisabledFlag() {
-      let flag = true;
-      if (this.email !== "") {
-        flag = false;
-      }
-      return flag;
-    },
-  },
   methods: {
     saveData() {
-      this.$emit("email-update", this.credentials)
-    },
-    // 데이터 empty 체크
-    isEmpty(data) {
-      if (data === "" || data === null || data === undefined) {
-        return true;
+      if (this.certificate){
+        this.$emit("email-update", this.credentials)
       } else {
-        return false;
+        alert('이메일 인증 절차를 완료해주세요')
       }
     },
     certi() {
-      this.certiFlag = true;
+      var checkEmail = /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/
+      if (!this.credentials.userEmail){
+        alert('이메일을 입력해주세요')
+      } else if(!checkEmail.test(this.credentials.userEmail)) {
+        alert('올바른 이메일 형식이 아닙니다')
+      } else{
+        alert('인증번호 전송에 성공했습니다. 전송 후 약 30초 정도 시간이 소요됩니다. 잠시 기다려주세요')
+          axios({
+            method: 'post',
+            url: 'http://i6b106.p.ssafy.io:8080/user/sendEmail/'+ this.credentials.userEmail ,
+            data: this.credentials
+            })
+              .then(() => {
+                this.certiFlag = true;
+              })
+              .catch(err => {
+                console.log(err.response)
+              })
+      }
+      
     },
+    certificateEmail() {
+        axios({
+          method: 'post',
+          url: 'http://i6b106.p.ssafy.io:8080/user/emailConfirm',
+          data: this.credentials
+        })
+          .then((res) => {
+            if (res.data == 'success'){
+              console.log(res.data)
+              alert('인증을 성공했습니다.')
+              this.certificate = true
+            } else if (res.data == 'fail'){
+              console.log(res.data)
+              alert('인증번호를 다시 확인해주세요')
+              this.credentials.authKey = ''
+            }
+            })
+            .catch(err => {
+              console.log(err.response) 
+            })
+    }
   },
 };
 </script>
