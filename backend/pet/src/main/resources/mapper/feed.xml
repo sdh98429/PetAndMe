@@ -10,10 +10,10 @@
         where (p.animalNumber IN (select animalNumber from FavAnimal INNER JOIN User USING (userNumber) where userNumber = #{userNumber})
         OR u.userNumber IN (select toUserNumber from Follow where fromUserNumber = #{userNumber})) AND
         <if test='cursor.equals("")'>
-            WHERE feedDate <![CDATA[<]]> now()
+            feedDate <![CDATA[<]]> now()
         </if>
         <if test='!cursor.equals("")'>
-            WHERE feedDate <![CDATA[<]]> #{cursor}
+            feedDate <![CDATA[<]]> #{cursor}
         </if>
         ORDER BY feedDate DESC
         LIMIT 10
