@@ -8,6 +8,9 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faUserCircle, faUser, faSearch, faBell)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
+// import VeeValidate, { Validator } from 'vee-validate'
+// Vue.use(VeeValidate, {})
+
 Vue.config.productionTip = false
 
 new Vue({

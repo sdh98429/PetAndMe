@@ -2,11 +2,9 @@
   <div>
     <h1>signup info</h1>
       <div>아이디</div>
-        <input type="text" name="userId" id="userId" v-model="credentials.userId" placeholder="5~15자 이내" required />
-      <div>이름</div>
-        <input type="text" name="userName" id="userName" v-model="credentials.userName" placeholder="한글 10자 이내">
+        <input type="text" name="userId" id="userId" v-model="credentials.userId" placeholder="6~16자 이내" required />
       <div>비밀번호</div>
-        <input type="password" name="password" id="password" v-model="credentials.password" placeholder="비밀번호는 영문 대소문자 8~15자 이내로 생성 가능합니다.">
+        <input type="password" name="password" id="password" v-model="credentials.password" placeholder="영문 숫자를 포함한 8~16자 이내">
       <div>비밀번호 확인</div>
         <input type="password" name="passwordConfirmation" id="passwordConfirmation" v-model="credentials.passwordConfirmation" placeholder="비밀번호를 확인합니다">
     <!-- emit -->
@@ -19,17 +17,29 @@ export default {
   data: function () {
     return {
       credentials: {
-        userId: null,
-        userName: null,
-        password: null,
-        passwordConfirmation: null,
+        userId: '',
+        password: '',
+        passwordConfirmation: '',
       }
     }
   },
   methods: {
     saveData() {
-      // console.log(this.credentials)
-      this.$emit("info-update", this.credentials)
+      if (!this.credentials.userId) {
+        alert('아이디 미입력')
+      } else if(this.credentials.userId.length < 6 || this.credentials.userId.length > 16) {
+        alert('아이디 형식 미충족')
+      } else if (!this.credentials.password || !this.credentials.passwordConfirmation) {
+        alert('패스워드 미입력')
+      } else if (this.credentials.password.length < 8 || this.credentials.password.length > 16) {
+        alert('패스워드 양식 미충족')
+      } else if(!/^(?=.*[a-z])(?=.*[0-9]).{8,16}$/.test(this.credentials.password)) {
+        alert('패스워드는 영문과 숫자를 포함해야 합니다.')  
+      } else if (this.credentials.password != this.credentials.passwordConfirmation) {
+        alert('패스워드와 패스워드 확인이 다릅니다. 확인하시기 바랍니다.')
+      } else {
+        this.$emit("info-update", this.credentials)
+      } 
     },
   },
   computed: {
