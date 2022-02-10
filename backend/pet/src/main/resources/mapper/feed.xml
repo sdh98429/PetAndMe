@@ -6,7 +6,9 @@
                IF(f.feedNumber IN (SELECT Likes.feedNumber From Likes WHERE Likes.userNumber = #{userNumber}), 1, 0) AS checkLike,
                (SELECT COUNT(userNumber) FROM Likes WHERE Likes.feedNumber = f.feedNumber) AS cntLike,
                (SELECT COUNT(userNumber) FROM Comment WHERE Comment.feedNumber = f.feedNumber) AS cntComment
-        FROM Feed AS f INNER JOIN User AS u USING(userNumber)
+        FROM Feed AS f INNER JOIN User AS u USING(userNumber) INNER JOIN Pet AS p USING(userNUmber)
+        where (p.animalNumber IN (select animalNumber from FavAnimal INNER JOIN User USING (userNumber) where userNumber = #{userNumber})
+        OR u.userNumber IN (select toUserNumber from Follow where fromUserNumber = #{userNumber})) AND
         <if test='cursor.equals("")'>
             WHERE feedDate <![CDATA[<]]> now()
         </if>
