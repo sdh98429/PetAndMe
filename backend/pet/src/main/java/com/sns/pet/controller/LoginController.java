@@ -53,11 +53,11 @@ public class LoginController {
                     resultMap.put("message", "로그인 실패 : 가입하지 않은 아이디입니다.");
                 }
             }
-            status = HttpStatus.ACCEPTED; // 202. 요청 수신 but, 응하여 행동할 수 없음
+            status = HttpStatus.ACCEPTED; // 202
         } catch (Exception e) {
             logger.error("로그인 실패 : {}", e);
             resultMap.put("message", e.getMessage());
-            status = HttpStatus.INTERNAL_SERVER_ERROR; // 500. 서버가 처리 방법을 모름
+            status = HttpStatus.INTERNAL_SERVER_ERROR; // 500 서버에 문제가 생김
         }
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }

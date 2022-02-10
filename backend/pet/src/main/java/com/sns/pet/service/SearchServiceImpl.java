@@ -45,6 +45,7 @@ public class SearchServiceImpl implements SearchService {
         if(searchDto.getUserNumber() == null || searchDto.getSearchWord() == null) {
             return false;
         }
-        return sqlSession.getMapper(SearchDao.class).insertKeyword(searchDto) == 1;
+        // insert: 1, update: 2 반환
+        return sqlSession.getMapper(SearchDao.class).insertKeyword(searchDto) >= 1;
     }
 }
