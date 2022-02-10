@@ -77,19 +77,19 @@ public class PetController {
         return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT); // 204: 요청 성공했지만 보내줄 내용 없음
     }
 
-    // 특정 반려동물 정보 수정
-    @ApiOperation(value = "현재 회원의 반려동물 정보 수정", notes = "반려동물 객체를 활용하여 정보를 수정합니다.")
-    @PutMapping
-    public ResponseEntity<String> petModify(
-            @ApiParam(value = "반려동물 객체", required = true) @RequestBody PetDto petDto) throws Exception {
-
-        logger.info("petModify 호출");
-        if(petService.modifyPet(petDto)) {
-            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK); // 200
-        }
-        // userNumber가 petNumber를 가지고 있지 않은 경우
-        return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
-    }
+//    // 특정 반려동물 정보 수정
+//    @ApiOperation(value = "현재 회원의 반려동물 정보 수정", notes = "반려동물 객체를 활용하여 정보를 수정합니다.")
+//    @PutMapping
+//    public ResponseEntity<String> petModify(
+//            @ApiParam(value = "반려동물 객체", required = true) @RequestBody PetDto petDto) throws Exception {
+//
+//        logger.info("petModify 호출");
+//        if(petService.modifyPet(petDto)) {
+//            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK); // 200
+//        }
+//        // userNumber가 petNumber를 가지고 있지 않은 경우
+//        return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+//    }
 
     // 특정 반려동물 삭제
     @ApiOperation(value = "현재 회원의 반려동물 삭제", notes = "회원번호와 반려동물번호를 이용하여 삭제한다.")

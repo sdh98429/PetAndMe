@@ -54,11 +54,13 @@ public class UserServiceImpl implements UserService {
             }
             sqlSession.getMapper(FavAnimalDao.class).insertFavAnimal(joinDto.getUserPreference());
         }
+        System.out.println("변경 ㅇㅇ");
         if (joinDto.isPetCheck()) {
             for (int i = 0; i < joinDto.getUserPet().size(); i++) {
                 joinDto.getUserPet().get(i).setUserNumber(joinDto.getUserNumber());
             }
-            return sqlSession.getMapper(PetDao.class).insertJoinPet(joinDto.getUserPet()) == joinDto.getUserPet().size();
+            System.out.println("펫?변경");
+            return sqlSession.getMapper(PetDao.class).updatePet(joinDto.getUserPet()) == joinDto.getUserPet().size();
         } else {
             return true;
         }
