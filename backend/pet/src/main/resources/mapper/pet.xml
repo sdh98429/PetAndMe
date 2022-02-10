@@ -39,7 +39,7 @@
     <!-- 반려동물 정보 수정 -->
     <update id="updatePet" parameterType="PetDto">
         UPDATE Pet
-        SET animalNumber=#{animalNumber}, petName=#{petName}, petGender=#{petGender}, petBirth=#{petBirth}
+        SET petName=#{petName}, petBirth=#{petBirth}, petGender=#{petGender}, animalNumber=#{animalNumber}
         WHERE userNumber = #{userNumber} and petNumber = #{petNumber}
     </update>
 

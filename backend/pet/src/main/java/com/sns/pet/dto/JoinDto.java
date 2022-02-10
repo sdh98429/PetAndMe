@@ -17,8 +17,12 @@ public class JoinDto {
     private String userID;
     @ApiModelProperty(value = "회원 비밀번호")
     private String userPW;
+    @ApiModelProperty(value = "회원 닉네임")
+    private String userNickName;
     @ApiModelProperty(value = "회원 이메일")
     private String userEmail;
+    @ApiModelProperty(value = "회원 프로필 소개")
+    private String userProfileContent;
     @ApiModelProperty(value = "회원 반려동물 유/무")
     private boolean petCheck;
     @ApiModelProperty(value = "반려동물 정보 리스트")

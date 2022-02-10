@@ -17,9 +17,11 @@ public interface UserDao {
     // 회원조회
     UserDto selectUser(Long userNumber) throws SQLException;
     // 회원정보 수정
-    int updateUser(UserDto userDto) throws SQLException;
+    int updateUser(JoinDto joinDto) throws SQLException;
     // 회원정보 삭제
     int deleteUser(Long userNumber) throws SQLException;
+    // 회원 프로필 사진 수정
+    int updateUserPhoto(UserDto userDto) throws SQLException;
     // 회원정보 전송
     UserPetDto selectUserInfo(Long userNumber) throws SQLException;
     // 회원번호 조회
