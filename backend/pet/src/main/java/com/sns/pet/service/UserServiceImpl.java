@@ -1,5 +1,6 @@
 package com.sns.pet.service;
 
+import com.sns.pet.dao.EmailDao;
 import com.sns.pet.dao.FavAnimalDao;
 import com.sns.pet.dao.PetDao;
 import com.sns.pet.dao.UserDao;
@@ -24,6 +25,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackFor = Exception.class)
     public boolean addUser(JoinDto joinDto) throws Exception {
         sqlSession.getMapper(UserDao.class).insertUser(joinDto);
+        sqlSession.getMapper(EmailDao.class).updateAuthKey(joinDto.getUserEmail());
         System.out.println(joinDto.toString());
         if (joinDto.getUserPreference() != null) {
             for (int i = 0; i < joinDto.getUserPreference().size(); i++) {
