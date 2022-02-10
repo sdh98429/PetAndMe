@@ -44,6 +44,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean modifyUser(JoinDto joinDto) throws Exception {
         sqlSession.getMapper(UserDao.class).updateUser(joinDto);
         System.out.println(joinDto.toString());

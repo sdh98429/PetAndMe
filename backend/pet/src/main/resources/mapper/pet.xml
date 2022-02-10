@@ -31,12 +31,6 @@
         VALUES (#{userNumber}, #{animalNumber}, #{petName}, #{petGender}, #{petBirth})
     </insert>
 
-    <!--    <insert id="insertPet" parameterType="JoinDto">-->
-    <!--        INSERT IGNORE INTO Pet (userNumber, animalNumber, petName, petGender, petBirth)-->
-    <!--        VALUES (#{userNumber}, #{animalNumber}, #{petName}, #{petGender}, #{petBirth})-->
-    <!--    </insert>-->
-
-
     <!-- 반려동물 정보 삭제 -->
     <delete id="deletePet" parameterType="map">
         DELETE FROM Pet
@@ -62,4 +56,5 @@
             WHERE userNumber = #{item.userNumber}
         </foreach>
     </update>
+
 </mapper>
