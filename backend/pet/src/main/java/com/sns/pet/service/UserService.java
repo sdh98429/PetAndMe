@@ -13,9 +13,11 @@ public interface UserService {
     // 회원조회
     UserDto findUser(Long userNumber) throws Exception;
     // 회원수정
-    boolean modifyUser(UserDto userDto) throws Exception;
+    boolean modifyUser(JoinDto joinDto) throws Exception;
     // 회원탈퇴
     boolean removeUser(Long userNumber) throws Exception;
+    // 프로필 사진 수정
+    boolean modifyUserPhoto(UserDto userDto) throws Exception;
     // 회원정보 전송
     UserPetDto findUserInfo(Long userNumber) throws Exception;
     // 회원번호 전송

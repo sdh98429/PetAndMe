@@ -13,8 +13,6 @@ public interface PetService {
     public boolean checkPetName(Long userNumber, String petName) throws Exception;
     // 반려동물 정보 저장
     public boolean addPet(PetDto petDto) throws Exception;
-    // 반려동물 정보 수정
-    public boolean modifyPet(PetDto petDto) throws Exception;
     // 반려동물 정보 삭제
     public boolean removePet(Long userNumber, Long petNumber) throws Exception;
 }

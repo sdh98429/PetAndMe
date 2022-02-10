@@ -37,16 +37,6 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public boolean modifyPet(PetDto petDto) throws Exception {
-        // 이름이 중복되지 않는 경우 수정 가능
-        if(sqlSession.getMapper(PetDao.class).selectPetName(petDto.getUserNumber(), petDto.getPetName()) == 0) {
-            return sqlSession.getMapper(PetDao.class).updatePet(petDto) == 1;
-        }
-        return false;
-    }
-
-    @Override
     public boolean removePet(Long userNumber, Long petNumber) throws Exception {
         return sqlSession.getMapper(PetDao.class).deletePet(userNumber, petNumber) == 1;
     }
