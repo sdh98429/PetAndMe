@@ -25,10 +25,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 
 @RestController
@@ -142,7 +139,7 @@ public class FeedController {
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
         }
         logger.info("DB 저장 실패");
-        return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(FAIL, HttpStatus.OK);
     }
 
     @ApiOperation(value = "feedNumber에 해당하는 피드 반환", response = FeedDto.class)
@@ -179,7 +176,25 @@ public class FeedController {
         if (feedService.removeFeed(feedNumber)) {
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
         }
-        return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(FAIL, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "feedNumber에 해당하는 이미지 반환", response = FeedDto.class)
+    @GetMapping("/imagelist")
+    public ResponseEntity<byte[][]> imageList(
+            @ApiParam(value = "피드 번호", required = true) @RequestBody int[] feedNumbers) throws Exception {
+        logger.info("imageList - 호출" + Arrays.toString(feedNumbers));
+        List<FeedPhotoDto> feedPhotoDtoList = feedService.listImage(feedNumbers);
+        logger.info("feedPhotoDtoList - 호출" + feedPhotoDtoList.toString());
+        // 이미지 변환
+        byte[][] images = new byte[feedPhotoDtoList.size()][];
+        int count = 0;
+        InputStream imageStream;
+        for (FeedPhotoDto feedPhotoDto : feedPhotoDtoList) {
+            imageStream = new FileInputStream(feedPhotoDto.getSaveFolder() + feedPhotoDto.getPhotoName());
+            images[count++] = IOUtils.toByteArray(imageStream);
+        }
+        return new ResponseEntity<>(images, HttpStatus.OK);
     }
 
 //    @ApiOperation(value = "feedNumber에 해당하는 피드 수정, 내용만 수정 가능. DB입력 성공 여부에 따라 success, fail 반환")

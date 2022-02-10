@@ -2,6 +2,7 @@ package com.sns.pet.service;
 
 import com.sns.pet.dto.CommentDto;
 import com.sns.pet.dto.FeedDto;
+import com.sns.pet.dto.FeedPhotoDto;
 
 import java.util.List;
 
@@ -14,4 +15,5 @@ public interface FeedService {
     FeedDto findFeed(Long userNumber, Long feedNumber) throws Exception;
 //    boolean modifyFeed(FeedDto feedDto) throws Exception;
     boolean removeFeed(Long feedNumber) throws Exception;
+    List<FeedPhotoDto> listImage(int[] feedNumbers) throws Exception;
 }

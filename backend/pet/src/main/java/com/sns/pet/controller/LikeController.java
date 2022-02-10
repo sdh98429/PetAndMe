@@ -34,7 +34,7 @@ public class LikeController {
         if(likeService.addLike(userNumber, feedNumber)) {
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
         }
-        return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(FAIL, HttpStatus.OK);
     }
 
     @ApiOperation(value = "userNumber 사용자가 feedNumber에 좋아요 취소", response = FeedDto.class)
@@ -43,7 +43,7 @@ public class LikeController {
         if(likeService.removeLike(userNumber, feedNumber)) {
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
         }
-        return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(FAIL, HttpStatus.OK);
     }
 
     @ApiOperation(value = "feedNumber 피드를 좋아요 누른 사람들 리스트", response = FeedDto.class)
