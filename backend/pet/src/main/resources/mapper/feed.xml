@@ -118,4 +118,13 @@
         INSERT INTO Comment (commentContent, commentDate, userNumber, feedNumber)
         VALUES (#{commentContent}, now(), #{userNumber}, #{feedNumber})
     </select>
+
+    <select id="selectFeedPhotoList" resultType="FeedPhotoDto">
+        SELECT photoName, saveFolder
+        FROM FeedPhoto
+        WHERE feedNumber IN
+            <foreach collection="array" item="item" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+    </select>
 </mapper>

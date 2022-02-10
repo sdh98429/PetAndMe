@@ -76,5 +76,10 @@ public class FeedServiceImpl implements FeedService {
             return false;
     }
 
+    @Override
+    public List<FeedPhotoDto> listImage(int[] feedNumbers) throws Exception{
+        return sqlSession.getMapper(FeedDao.class).selectFeedPhotoList(feedNumbers);
+    }
+
 
 }
