@@ -90,7 +90,7 @@ export default {
       axios({
         method: 'post',
         url: 'http://i6b106.p.ssafy.io:8080/search?searchWord=' + this.searchWord + '&userNumber=' + this.myUserNumber,
-        // data: searchSave,
+        data: searchSave,
       })
         .then(() => {
           axios({
