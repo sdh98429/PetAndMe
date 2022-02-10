@@ -1,11 +1,15 @@
 <template>
   <div>
     <h2>유저 피드</h2>
+    <!-- <input @change='onInputImage()' accept="image/*" ref="image" type="file" style="display : none">
+    <button @click="$refs.image.click()">open file dialog</button> -->
+
     <button v-if="(myUserNumber == yourUserNumber)" @click="toUserFeedUpdate">유저 피드 업데이트</button>
     <div>프로필</div>
     <div>{{profile}}</div>
     <div v-if="profile">
-      <img :src="'http://i6b106.p.ssafy.io:8080/main/image?file=' + profile.saveFolder + profile.userPhotoName" alt="프로필 사진">
+      <input v-if="(myUserNumber == yourUserNumber)" @change='onInputImage()' accept="image/*" ref="image" type="file" style="display : none">
+      <img @click="profileChange()" :src="'http://i6b106.p.ssafy.io:8080/main/image?file=' + profile.saveFolder + profile.userPhotoName" alt="프로필 사진" style="width: 300px; height: 150px; object-fit: contain;">
       <div>유저 닉네임 : {{profile.userNickName}}</div>
       <div>유저 아이디 : @{{profile.userID}}</div>
 
@@ -54,6 +58,8 @@ export default {
       yourUserNumber: 1,
       myUserNumber: 1,
       isFollow : false,
+
+      files: [],
     }
   },
   components: {
@@ -98,7 +104,6 @@ export default {
         url: 'http://i6b106.p.ssafy.io:8080//user/following/' + this.myUserNumber,
       })
       .then(response => {
-        console.log(response.data)
         var ind;
         for (ind = 0; ind < response.data.length; ind++) {
           if (this.yourUserNumber == response.data[ind].userNumber){
@@ -140,8 +145,28 @@ export default {
     },
 
     toUserFeedUpdate: function(){
-      this.$router.push({name: `UserFeedUpdate`, yourUserId: this.yourUserId})
+      this.$router.push({name: `UserFeedUpdate`, params : {yourUserId: this.yourUserId}})
+    },
+
+    profileChange: function(){
+      if (this.myUserNumber == this.yourUserNumber){
+        this.$refs.image.click()
+      } else {
+        console.log('본인 프로필 사진만 업데이트 할 수 있습니다.')
+      }
+    },
+
+    onInputImage: function(){ // 이미지 추가
+      this.files = this.$refs.image.files
+      if (this.files[0].size/(1024*1024) > 3){
+        this.files = []
+        this.$refs.image.value = ''
+        alert('이미지 파일은 최대 3MB까지 가능합니다.')
+      } else {
+        console.log('프사 업뎃 준비 완료')
+      }
     }
+
   },
   created: function(){
     this.getUserNumber()

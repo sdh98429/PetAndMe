@@ -3,7 +3,7 @@
 
     <div>프로필</div>
     <div v-if="profile">{{profile}}
-      <img :src="'http://i6b106.p.ssafy.io:8080/main/image?file=' + profile.saveFolder + profile.userPhotoName" alt="프로필 사진" style="width: 300px; height: 150px; object-fit: contain;">
+      <img @click="toUserFeed(profile.userID)" :src="'http://i6b106.p.ssafy.io:8080/main/image?file=' + profile.saveFolder + profile.userPhotoName" alt="프로필 사진" style="width: 300px; height: 150px; object-fit: contain;">
       <div>유저 닉네임 : {{profile.userNickName}}</div>
       <div>유저 아이디 : @{{profile.userID}}</div>
       <br>
@@ -73,7 +73,7 @@ export default {
   },
   methods: {
 
-    likeFeed: function(){
+    likeFeed: function(){ // 좋아요 로직 변경
       
       if (!this.checkLike){
         axios({
@@ -125,6 +125,10 @@ export default {
     goToFeedDetail(feed){ // 상세 피드로 이동
           this.$router.push({path: `/feed/${feed.feedNumber}`})
         },
+
+    toUserFeed : function(userId){
+      this.$router.push({name: `UserFeed`, params : {yourUserId: userId}})
+    }
   },
   created: function () {
       this.getUserProfile()

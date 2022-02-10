@@ -5,7 +5,7 @@
       <div>프로필</div>
       <div>{{profile}}</div>
       <div v-if="profile">
-        <img :src="'http://i6b106.p.ssafy.io:8080/main/image?file=' + profile.saveFolder + profile.userPhotoName" alt="프로필 사진">
+        <img :src="'http://i6b106.p.ssafy.io:8080/main/image?file=' + profile.saveFolder + profile.userPhotoName" alt="프로필 사진" style="width: 300px; height: 150px; object-fit: contain;">
         <div>유저 닉네임 : {{profile.userNickName}}</div>
         <div>유저 아이디 : @{{profile.userID}}</div>
 

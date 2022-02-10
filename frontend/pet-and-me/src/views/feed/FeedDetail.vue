@@ -5,7 +5,7 @@
     <div>프로필</div>
     <!-- <div> conflict 가능 </div> -->
     <div v-if="profile">{{profile}}
-      <img :src="'http://i6b106.p.ssafy.io:8080/main/image?file=' + profile.saveFolder + profile.userPhotoName" alt="프로필 사진">
+      <img @click="toUserFeed(profile.userID)" :src="'http://i6b106.p.ssafy.io:8080/main/image?file=' + profile.saveFolder + profile.userPhotoName" alt="프로필 사진">
       <div>유저 닉네임 : {{profile.userNickName}}</div>
       <div>유저 아이디 : @{{profile.userID}}</div>
       <br>
@@ -122,7 +122,7 @@ export default {
         })
     },
 
-    likeFeed: function(){
+    likeFeed: function(){ // 좋아요 로직 변경
       
       if (!this.checkLike){
         axios({
@@ -220,6 +220,10 @@ export default {
     rightPhoto: function(){ // 뒷 사진으로 이동
       this.photoIndex += 1
     },
+
+    toUserFeed : function(userId){
+      this.$router.push({name: `UserFeed`, params : {yourUserId: userId}})
+    }
   },
 
   created : function() {
