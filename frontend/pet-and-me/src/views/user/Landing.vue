@@ -1,7 +1,10 @@
 <template>
-  <div>
+  <div class="landing-container">
     <section class="home">
     </section>
+    <button @click="signup">signup</button>
+    <button @click="login">login</button>
+    <button @click="newsfeed">newsfeed</button>
     <div style="height: 1000px">
       <h2 class="myH2">Pet And Me</h2>
       <p class="myP">
@@ -34,27 +37,47 @@
 <script>
 // import $ from 'jquery'
 export default {
-  // mounted(){
-  //   $('.my-nav').removeClass('affix')
-  //   $(window).scroll(function() {
-  //     if ($(document).scrollTop() > 200) {
-  //       $('.my-nav').addClass('affix');
-  //     } else {
-  //       $('.my-nav').removeClass('affix');
-  //     }
-  //   });
-  // }
+  methods: {
+    signup() {
+      this.$router.push({name:'Signup'})
+    },
+    login() {
+      this.$router.push({name:'Login'})
+    },
+    newsfeed() {
+      this.$router.push({name:'NewsFeed'})
+    }
+  },
+  mounted() {
+    //   $('.my-nav').removeClass('affix')
+    //   $(window).scroll(function() {
+    //     if ($(document).scrollTop() > 200) {
+    //       $('.my-nav').addClass('affix');
+    //     } else {
+    //       $('.my-nav').removeClass('affix');
+    //     }
+    //   });
+    const footerEl = document.querySelector('#footer-container')
+    footerEl.classList.add('inactive')
+    const inputEl = document.querySelector('.search-bar')
+    inputEl.classList.add('inactive')
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-.home {
-  width: 100%;
-  height: 130vh;
-  background-image: url('../../assets/background.jpg');
-  background-position: center top;
-  background-size: cover;
+.landing-container {
+  position: relative;
+  top:100px;
+  z-index: -1;
 }
+// .home {
+//   width: 100%;
+//   height: 130vh;
+//   background-image: url('../../assets/background.jpg');
+//   background-position: center top;
+//   background-size: cover;
+// }
 
 .myH2 {
   text-align: center;
