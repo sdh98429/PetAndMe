@@ -30,15 +30,10 @@ public class SearchServiceImpl implements SearchService {
         return sqlSession.getMapper(SearchDao.class).selectUserKeywordByName(searchWord);
     }
 
-//    @Override
-//    public List<String> findSearchAboutTag(String searchWord) throws Exception {
-//        return sqlSession.getMapper(SearchDao.class).selecthKeywordAboutTag(searchWord);
-//    }
-//
-//    @Override
-//    public List<SearchDto> findResultTag(String searchWord) throws Exception {
-//        return sqlSession.getMapper(SearchDao.class).selectResultTag(searchWord);
-//    }
+    @Override
+    public List<UserDto> findUserByAnimalName(String searchWord) throws Exception {
+        return sqlSession.getMapper(SearchDao.class).selectUserByAnimalName(searchWord);
+    }
 
     @Override
     public boolean addSearch(SearchDto searchDto) throws Exception {
