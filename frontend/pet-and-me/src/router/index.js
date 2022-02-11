@@ -11,6 +11,7 @@ import SearchResult from '../views/search/SearchResult'
 import FeedCreate from '../views/feed/FeedCreate'
 import NewsFeed from '../views/feed/NewsFeed'
 import UserFeed from '../views/feed/UserFeed'
+import FollowList from '../views/feed/FollowList'
 import UserFeedUpdate from '../views/feed/UserFeedUpdate'
 import FeedDetail from '../views/feed/FeedDetail'
 
@@ -73,6 +74,11 @@ const routes = [
     path: '/feed/userfeed/:yourUserId',
     name: 'UserFeed',
     component: UserFeed,
+  },
+  {
+    path: '/feed/userfeed/:yourUserId/follow',
+    name: 'FollowList',
+    component: FollowList,
   },
   {
     path: '/feed/userfeed/:yourUserId/update',

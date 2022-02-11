@@ -98,8 +98,9 @@ export default {
               formData.append('feedPhoto', fileInput[step]);
 
             }
-
-            formData.append("feedContent", JSON.stringify(this.feedContent));
+            console.log(this.feedContent)
+            // formData.append("feedContent", JSON.stringify(this.feedContent));
+            formData.append("feedContent", this.feedContent); // 추가
             formData.append("userNumber", JSON.stringify(this.myUserNumber));
 
             console.log(formData);
@@ -115,6 +116,7 @@ export default {
             .then(() => {
                 console.log("생성 완료");
                 this.$router.push('NewsFeed')
+                this.$router.go(); // 추가
             })
             .catch( (err) => {
                 console.log(err);
