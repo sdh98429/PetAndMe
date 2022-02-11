@@ -27,7 +27,7 @@
         (SELECT COUNT(userNumber) FROM Likes WHERE Likes.feedNumber = f.feedNumber) AS cntLike,
         (SELECT COUNT(userNumber) FROM Comment WHERE Comment.feedNumber = f.feedNumber) AS cntComment
         FROM Feed AS f INNER JOIN User AS u USING(userNumber) INNER JOIN Pet AS p USING(userNUmber)
-        where p.animalNumber IN (select animalNumber from FavAnimal INNER JOIN User USING (userNumber) where userNumber = #{userNumber}) AND
+        where p.animalNumber = #{animalNumber} AND
         <if test='cursor.equals("")'>
             feedDate <![CDATA[<]]> now()
         </if>
