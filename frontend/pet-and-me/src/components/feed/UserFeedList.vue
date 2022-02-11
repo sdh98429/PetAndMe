@@ -1,7 +1,8 @@
 <template>
   <div style="border: 1px solid;" class="file-preview-container">유저 피드리스트
+    {{userFeeds}}
     <div v-for="userFeed in userFeeds" :key="userFeed.feedNumber">
-      <img class="file-preview-wrapper" @click="goToFeedDetail(userFeed)" :src="`data:image/png;base64,${userFeed.feedThumbnail}`" />
+      <img class="feed-thumbnail" @click="goToFeedDetail(userFeed)" :src="`data:image/png;base64,${userFeed.feedThumbnail}`" />
     </div>
   </div>
 </template>
@@ -56,7 +57,7 @@ export default {
 </script>
 
 <style scoped>
-  .file-preview-container {
+  /* .file-preview-container {
       height: 100%;
       display: flex;
       flex-wrap: wrap;
@@ -65,5 +66,11 @@ export default {
   .file-preview-wrapper {
     padding: 10px;
     position: relative;
-  }
+  } */
+
+.feed-thumbnail{
+  display:block;
+  width:150px;
+  height:150px;
+}
 </style>
