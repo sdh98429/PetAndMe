@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface FeedService {
     List<FeedDto> findNewsFeedList(Long userNumber, String cursor) throws SQLException;
-    List<FeedDto> findFavFeedList(Long userNumber, String cursor) throws SQLException;
+    List<FeedDto> findSimilarAnimalFeedList(Long userNumber, int animalNumber, String cursor) throws SQLException;
     List<FeedDto> findFollowFeedList(Long userNumber, String cursor) throws SQLException;
     List<FeedDto> findMyFeedList(Long userNumber) throws SQLException;
     boolean addFeed(FeedDto feedDto) throws SQLException;
