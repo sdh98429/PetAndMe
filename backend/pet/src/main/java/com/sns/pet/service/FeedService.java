@@ -16,5 +16,5 @@ public interface FeedService {
     FeedDto findFeed(Long userNumber, Long feedNumber) throws SQLException;
 //    boolean modifyFeed(FeedDto feedDto) throws SQLException;
     boolean removeFeed(Long feedNumber) throws SQLException;
-    List<FeedPhotoDto> listImage(int[] feedNumbers) throws SQLException;
+    List<FeedPhotoDto> listImage(FeedDto feedNumbers) throws SQLException;
 }

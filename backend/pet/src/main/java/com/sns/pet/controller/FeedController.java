@@ -180,8 +180,8 @@ public class FeedController {
     @ApiOperation(value = "feedNumber에 해당하는 이미지 반환", response = FeedDto.class)
     @GetMapping("/imagelist")
     public ResponseEntity<byte[][]> imageList(
-            @ApiParam(value = "피드 번호", required = true) @RequestBody int[] feedNumbers) throws Exception {
-        logger.info("imageList - 호출" + Arrays.toString(feedNumbers));
+            @ApiParam(value = "피드 번호", required = true) @RequestBody FeedDto feedNumbers) throws Exception {
+        logger.info("imageList - 호출" + feedNumbers.toString());
         List<FeedPhotoDto> feedPhotoDtoList = feedService.listImage(feedNumbers);
         logger.info("feedPhotoDtoList - 호출" + feedPhotoDtoList.toString());
         // 이미지 변환
