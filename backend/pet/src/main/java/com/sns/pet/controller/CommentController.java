@@ -36,7 +36,7 @@ public class CommentController {
         if(commentService.addComment(commentDto)){
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
         }
-        return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(FAIL, HttpStatus.OK);
     }
 
     @ApiOperation(value = "feedNumber 피드의 댓글 리스트 가져오기, DB입력 성공 여부에 따라 success, fail 반환")
@@ -59,6 +59,6 @@ public class CommentController {
         if(commentService.deleteComment(commentNumber)){
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
         }
-        return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(FAIL, HttpStatus.OK);
     }
 }

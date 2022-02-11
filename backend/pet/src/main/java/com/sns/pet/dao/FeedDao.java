@@ -29,4 +29,6 @@ public interface FeedDao {
     int deleteFeed(Long feedNumber) throws SQLException;
 
     int deletePhotos(Long feedNumber) throws SQLException;
+
+    List<FeedPhotoDto> selectFeedPhotoList(FeedDto feedNumbers) throws SQLException;
 }

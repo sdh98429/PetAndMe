@@ -1,6 +1,5 @@
 package com.sns.pet.controller;
 
-import com.sns.pet.dto.CommentDto;
 import com.sns.pet.dto.FeedDto;
 import com.sns.pet.dto.FeedPhotoDto;
 import com.sns.pet.service.FeedService;
@@ -14,7 +13,6 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,10 +23,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 
 @RestController
@@ -47,7 +42,7 @@ public class FeedController {
     @GetMapping("/newsfeed")
     public ResponseEntity<List<FeedDto>> newsFeedList(
             @ApiParam(value = "로그인 유저 번호", required = true) @RequestParam("userNumber") Long userNumber,
-            @ApiParam(value = "default 빈문자열, 마지막 피드의 생성일", required = false) @RequestParam("cursor") String cursor) throws Exception{
+            @ApiParam(value = "default 빈문자열, 마지막 피드의 생성일", required = false) @RequestParam("cursor") String cursor) throws Exception {
         logger.info("뉴스 피드 목록 - 호출");
         return new ResponseEntity<>(feedService.findNewsFeedList(userNumber, cursor), HttpStatus.OK);
     }
@@ -142,7 +137,7 @@ public class FeedController {
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
         }
         logger.info("DB 저장 실패");
-        return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(FAIL, HttpStatus.OK);
     }
 
     @ApiOperation(value = "feedNumber에 해당하는 피드 반환", response = FeedDto.class)
@@ -179,7 +174,25 @@ public class FeedController {
         if (feedService.removeFeed(feedNumber)) {
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
         }
-        return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(FAIL, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "feedNumber에 해당하는 이미지 반환", response = FeedDto.class)
+    @PostMapping("/imagelist")
+    public ResponseEntity<byte[][]> imageList(
+            @ApiParam(value = "피드 번호", required = true) @RequestBody FeedDto feedNumbers) throws Exception {
+        logger.info("imageList - 호출" + feedNumbers.toString());
+        List<FeedPhotoDto> feedPhotoDtoList = feedService.listImage(feedNumbers);
+        logger.info("feedPhotoDtoList - 호출" + feedPhotoDtoList.toString());
+        // 이미지 변환
+        byte[][] images = new byte[feedPhotoDtoList.size()][];
+        int count = 0;
+        InputStream imageStream;
+        for (FeedPhotoDto feedPhotoDto : feedPhotoDtoList) {
+            imageStream = new FileInputStream(feedPhotoDto.getSaveFolder() + feedPhotoDto.getPhotoName());
+            images[count++] = IOUtils.toByteArray(imageStream);
+        }
+        return new ResponseEntity<>(images, HttpStatus.OK);
     }
 
 //    @ApiOperation(value = "feedNumber에 해당하는 피드 수정, 내용만 수정 가능. DB입력 성공 여부에 따라 success, fail 반환")

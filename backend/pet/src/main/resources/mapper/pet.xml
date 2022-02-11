@@ -31,18 +31,6 @@
         VALUES (#{userNumber}, #{animalNumber}, #{petName}, #{petGender}, #{petBirth})
     </insert>
 
-<!--    <insert id="insertPet" parameterType="JoinDto">-->
-<!--        INSERT IGNORE INTO Pet (userNumber, animalNumber, petName, petGender, petBirth)-->
-<!--        VALUES (#{userNumber}, #{animalNumber}, #{petName}, #{petGender}, #{petBirth})-->
-<!--    </insert>-->
-
-    <!-- 반려동물 정보 수정 -->
-    <update id="updatePet" parameterType="PetDto">
-        UPDATE Pet
-        SET animalNumber=#{animalNumber}, petName=#{petName}, petGender=#{petGender}, petBirth=#{petBirth}
-        WHERE userNumber = #{userNumber} and petNumber = #{petNumber}
-    </update>
-
     <!-- 반려동물 정보 삭제 -->
     <delete id="deletePet" parameterType="map">
         DELETE FROM Pet
@@ -53,8 +41,20 @@
     <insert id="insertJoinPet" parameterType="java.util.List">
         INSERT IGNORE INTO Pet (userNumber, animalNumber, petName, petGender, petBirth)
         VALUES
-        <foreach collection="list" item = "item" separator=" , ">
+        <foreach collection="list" item="item" separator=" , ">
             (#{item.userNumber},#{item.animalNumber},#{item.petName},#{item.petGender},#{item.petBirth})
         </foreach>
     </insert>
+
+    <!-- 반려동물 정보 수정 -->
+    <update id="updatePet" parameterType="java.util.List">
+        UPDATE Pet
+        SET
+        <foreach collection="list" item="item" separator=" , ">
+            petName=#{item.petName}, petBirth=#{item.petBirth}, petGender=#{item.petGender},
+            animalNumber=#{item.animalNumber}
+            WHERE userNumber = #{item.userNumber}
+        </foreach>
+    </update>
+
 </mapper>

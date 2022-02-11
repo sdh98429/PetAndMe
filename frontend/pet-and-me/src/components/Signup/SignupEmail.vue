@@ -72,13 +72,15 @@ export default {
         })
           .then((res) => {
             if (res.data == 'success'){
-              console.log(res.data)
               alert('인증을 성공했습니다.')
               this.certificate = true
             } else if (res.data == 'fail'){
-              console.log(res.data)
               alert('인증번호를 다시 확인해주세요')
               this.credentials.authKey = ''
+            } else if (res.data == 'duplicate'){
+              alert('이미 가입된 이메일입니다.')
+            } else if (res.data == 'email error'){
+              alert(('올바른 이메일 형식인지 다시한번 확인해주세요.'))
             }
             })
             .catch(err => {

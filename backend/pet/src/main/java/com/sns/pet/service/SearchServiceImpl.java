@@ -42,6 +42,10 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public boolean addSearch(SearchDto searchDto) throws Exception {
-        return sqlSession.getMapper(SearchDao.class).insertKeyword(searchDto) == 1;
+        if(searchDto.getUserNumber() == null || searchDto.getSearchWord() == null) {
+            return false;
+        }
+        // insert: 1, update: 2 반환
+        return sqlSession.getMapper(SearchDao.class).insertKeyword(searchDto) >= 1;
     }
 }

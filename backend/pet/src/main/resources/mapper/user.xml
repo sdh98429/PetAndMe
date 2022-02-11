@@ -12,7 +12,14 @@
         </selectKey>
     </insert>
 
-    <!--  회원 조회  -->
+    <!-- 회원 아이디 중복 체크 -->
+    <select id="selectUserID" parameterType="String" resultType="integer">
+        SELECT count(*)
+        FROM User
+        WHERE userID = #{userID}
+    </select>
+
+    <!-- 회원 조회 -->
     <select id="selectUser" parameterType="Long" resultType="userDto">
         SELECT userNumber, userID, userPW, userNickName, userEmail, petCheck, saveFolder, userPhotoName,
         userProfileContent, userType,
@@ -23,10 +30,10 @@
     </select>
 
     <!--  회원정보 수정  -->
-    <update id="updateUser" parameterType="userDto">
+    <update id="updateUser" parameterType="joinDto">
         UPDATE User
-        SET userPW=#{userPW}, userNickName=#{userNickName}, petCheck=#{petCheck}, saveFolder=#{saveFolder},
-        userPhotoName=#{userPhotoName}, userProfileContent=#{userProfileContent}
+        SET userPW=#{userPW}, userNickName=#{userNickName}, petCheck=#{petCheck},
+        userProfileContent=#{userProfileContent}
         WHERE userNumber = #{userNumber}
     </update>
 
@@ -37,9 +44,16 @@
         WHERE userNumber = #{userNumber}
     </delete>
 
+    <!-- 회원 프로필 사진 수정 -->
+    <update id="updateUserPhoto" parameterType="userDto">
+        UPDATE User
+        SET saveFolder=#{saveFolder}, userPhotoName=#{userPhotoName}
+        WHERE userNumber = #{userNumber}
+    </update>
+
     <!--  회원정보 전송  -->
     <select id="selectUserInfo" parameterType="Long" resultType="UserPetDto">
-        SELECT u.saveFolder, u.userPhotoName, u.userNickName, u.userID, p.petName, p.petGender, p.petBirth, a.animalName
+        SELECT u.saveFolder, u.userPhotoName, u.userNickName, u.userID, p.petName, p.petGender, p.petBirth, a.animalName_ko
         FROM User u JOIN Pet p ON u.userNumber = p.userNumber
         JOIN Animal a ON a.animalNumber = p.animalNumber
         WHERE u.userNumber = #{userNumber}

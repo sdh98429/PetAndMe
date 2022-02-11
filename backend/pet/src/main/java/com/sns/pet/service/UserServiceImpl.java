@@ -44,18 +44,46 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean checkUserID(String userID) throws Exception {
+        return sqlSession.getMapper(UserDao.class).selectUserID(userID) == 1;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean modifyUser(JoinDto joinDto) throws Exception {
+        sqlSession.getMapper(UserDao.class).updateUser(joinDto);
+        System.out.println(joinDto.toString());
+        if (joinDto.getUserPreference() != null) {
+            sqlSession.getMapper(FavAnimalDao.class).deleteFavAnimal(joinDto.getUserNumber());
+            for (int i = 0; i < joinDto.getUserPreference().size(); i++) {
+                joinDto.getUserPreference().get(i).setUserNumber(joinDto.getUserNumber());
+            }
+            sqlSession.getMapper(FavAnimalDao.class).insertFavAnimal(joinDto.getUserPreference());
+        }
+        if (joinDto.isPetCheck()) {
+            for (int i = 0; i < joinDto.getUserPet().size(); i++) {
+                joinDto.getUserPet().get(i).setUserNumber(joinDto.getUserNumber());
+            }
+            return sqlSession.getMapper(PetDao.class).updatePet(joinDto.getUserPet()) == joinDto.getUserPet().size();
+        } else {
+            return true;
+        }
+    }
+
+    @Override
     public UserDto findUser(Long userNumber) throws Exception {
         return sqlSession.getMapper(UserDao.class).selectUser(userNumber);
     }
 
-    @Override
-    public boolean modifyUser(UserDto userDto) throws Exception {
-        return sqlSession.getMapper(UserDao.class).updateUser(userDto) == 1;
-    }
 
     @Override
     public boolean removeUser(Long userNumber) throws Exception {
         return sqlSession.getMapper(UserDao.class).deleteUser(userNumber) == 1;
+    }
+
+    @Override
+    public boolean modifyUserPhoto(UserDto userDto) throws Exception {
+        return sqlSession.getMapper(UserDao.class).updateUserPhoto(userDto) == 1;
     }
 
     @Override
