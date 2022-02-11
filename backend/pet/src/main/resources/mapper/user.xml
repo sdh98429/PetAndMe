@@ -53,7 +53,7 @@
 
     <!--  회원정보 전송  -->
     <select id="selectUserInfo" parameterType="Long" resultType="UserPetDto">
-        SELECT u.saveFolder, u.userPhotoName, u.userNickName, u.userID, p.petName, p.petGender, p.petBirth, a.animalName
+        SELECT u.saveFolder, u.userPhotoName, u.userNickName, u.userID, p.petName, p.petGender, p.petBirth, a.animalName_ko
         FROM User u JOIN Pet p ON u.userNumber = p.userNumber
         JOIN Animal a ON a.animalNumber = p.animalNumber
         WHERE u.userNumber = #{userNumber}
