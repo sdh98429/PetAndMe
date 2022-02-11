@@ -11,7 +11,7 @@ import java.util.List;
 public interface FeedDao {
     List<FeedDto> selectNewsFeedList(Long userNumber, String cursor) throws SQLException;
 
-    List<FeedDto> selectFavFeedList(Long userNumber, int animalNumber, String cursor) throws SQLException;
+    List<FeedDto> selectSimilarAnimalFeedList(Long userNumber, int animalNumber, String cursor) throws SQLException;
 
     List<FeedDto> selectFollowList(Long userNumber, String cursor) throws SQLException;
 

@@ -49,12 +49,12 @@ public class FeedController {
 
     @ApiOperation(value = "닮은 동물 피드 목록 반환", response = List.class)
     @GetMapping("/favfeed")
-    public ResponseEntity<List<FeedDto>> favAnimalFeedList(
+    public ResponseEntity<List<FeedDto>> similarAnimalFeedList(
             @ApiParam(value = "로그인 유저 번호", required = true) @RequestParam("userNumber") Long userNumber,
             @ApiParam(value = "동물 번호", required = true) @RequestParam("animalNumber") int animalNumber,
             @ApiParam(value = "default 빈문자열, 마지막 피드의 생성일") @RequestParam("cursor") String cursor) throws Exception{
         logger.info("선호 동물 피드 목록 - 호출");
-        return new ResponseEntity<>(feedService.findFavFeedList(userNumber, animalNumber, cursor), HttpStatus.OK);
+        return new ResponseEntity<>(feedService.findSimilarAnimalFeedList(userNumber, animalNumber, cursor), HttpStatus.OK);
     }
 
     @ApiOperation(value = "팔로우 피드 목록 반환", response = List.class)
