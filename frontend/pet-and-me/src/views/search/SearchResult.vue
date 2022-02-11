@@ -1,11 +1,5 @@
 <template>
   <div>
-    <!-- <input type="text" v-model.trim="NewSearchWord" @keyup.enter="goToSearchResult(NewSearchWord)">
-    <button @click="goToSearchResult(NewSearchWord)">검색하기</button>
-    <div>최근 검색 단어</div>
-    <div v-for="(recent, idx) in resultRecent" :key="'r' + idx">
-      <div @click="goToSearchResult(recent)" style="border: 1px solid;">{{recent}}</div>
-    </div> -->
 
     <div>검색 단어 : {{searchWord}}</div>
     <button v-for="(tab, index) in tabs"
@@ -28,13 +22,8 @@
           <div>@{{Nickname.userID}}</div>
         </div>
       </div>
-      <!-- <div v-show="currentTab==2">{{resultRecent}}</div> -->
     </div>
 
-    <!-- <div>검색결과</div> -->
-    <!-- <div>아이디 검색 : {{resultId}}</div>
-    <div>닉네임 검색 : {{resultNickname}}</div>
-    <div>최근 검색: {{resultRecent}}</div> -->
     
   </div>
 </template>
@@ -68,7 +57,6 @@ export default {
   methods: {
     goToSearchResult: function(NewSearchWord){ // 검색 결과 페이지로 이동
       if (NewSearchWord){
-        // console.log('이동')
         this.$router.push({path: `/search/${NewSearchWord}`})
         this.$router.go();
         console.log(this.searchWord)
@@ -77,7 +65,6 @@ export default {
 
     getSearchResult: function (){ // 검색 결과 가져오기
     if (this.$route.params.searchWord){
-      // console.log(this.$route.params.searchWord)
 
       // userid 검색 결과
       axios({
@@ -107,7 +94,7 @@ export default {
         searchWord : this.searchWord,
         userNumber : this.myUserNumber,
       }
-      // console.log(searchSave)
+
       // 최근 검색 결과 저장 및 조회
       axios({
         method: 'post',
@@ -117,16 +104,6 @@ export default {
       })
         .then(() => {
           console.log('검색어 저장 완료')
-          // axios({
-          //   method: 'get',
-          //   url: 'http://i6b106.p.ssafy.io:8080/search/' + this.myUserNumber,
-          // })
-          //   .then(response => {
-          //     this.resultRecent = response.data
-          //   })
-          //   .catch(err => {
-          //     console.log(err)
-          //   })
         })
         .catch(err => {
           console.log(err)
@@ -150,7 +127,6 @@ export default {
 
     },
     toUserFeed : function(userId){ // 유저 피드로 이동
-      // console.log(userId)
       this.$router.push({name: `UserFeed`, params : {yourUserId: userId}})
     }
   },

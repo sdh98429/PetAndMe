@@ -19,8 +19,6 @@
     <br>
     <div @click="toFollowList()">팔로워 수 : {{followerCnt}}</div>
     <div @click="toFollowList()">팔로잉 수 : {{followingCnt}}</div>
-    <!-- <div>유저 피드 주인 넘버 : {{yourUserNumber}}</div>
-    <div>로그인한 유저 넘버 :{{myUserNumber}}</div> -->
     <br>
     <div v-if="yourUserNumber != myUserNumber">
       <button v-if="!isFollow" @click="followUser">팔로우하기</button>
@@ -46,7 +44,7 @@ export default {
       profile : null,
 
       userNumber: "null",
-      // yourUserNumber: this.$route.params.yourUserNumber,
+
       yourUserId: this.$route.params.yourUserId,
       yourUserNumber: 0,
       myUserNumber: 0,
@@ -222,10 +220,6 @@ export default {
 
   },
   created: function(){
-    // this.getUserNumber()
-    // this.getUserProfile()
-    // this.getFollowing()
-    // this.getFollower()
 
     this.asyncCall()
   }

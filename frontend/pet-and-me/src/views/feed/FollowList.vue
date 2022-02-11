@@ -1,13 +1,8 @@
 <template>
   <div>
     <h2 v-if="profile">{{profile.userNickName}}</h2>
-    <!-- <div>피드 주인 넘버 : {{yourUserNumber}}</div> -->
-    <!-- <div>나의 넘버 : {{myUserNumber}}</div> -->
-    <!-- <div>팔로워, 팔로잉 리스트</div> -->
     <div>팔로워 : {{followerCnt}}</div>
     <div>팔로잉 : {{followingCnt}}</div>
-    <!-- <div> 내 팔로잉 리스트 </div>
-    <div>{{myFollowingList}}</div> -->
     <br>
     <button v-for="(tab, index) in tabs"
       :key="index"
@@ -21,14 +16,10 @@
         <div>@{{follower.userID}}</div>
         <div>팔로워 : {{follower.followerCnt}}</div>
         <div>팔로잉 : {{follower.followingCnt}}</div>
-        <!-- <div>{{follower}}</div>
-        <div>{{myFollowingList}}</div>
-        <div>{{follower.userNumber}}</div> -->
         <button @click="unfollowUser(follower.userNumber)" v-if="myFollowingList.includes(follower.userNumber)">언팔로우</button>
         <button @click="followUser(follower.userNumber)" v-else>팔로우</button>
       </div>
     </div>
-    <!-- <div>{{followerList}}</div> -->
     <div v-show="currentTab==1">
       <div>팔로잉 리스트</div>
       <div v-for="(following, ind) in followingList" :key="'following' + ind" style="border: 1px solid;">
@@ -37,14 +28,10 @@
         <div>@{{following.userID}}</div>
         <div>팔로워 : {{following.followerCnt}}</div>
         <div>팔로잉 : {{following.followingCnt}}</div>
-        <!-- <div>{{following}}</div>
-        <div>{{myFollowingList}}</div>
-        <div>{{following.userNumber}}</div> -->
         <button @click="unfollowUser(follower.userNumber)" v-if="myFollowingList.includes(following.userNumber)">언팔로우</button>
         <button @click="followUser(follower.userNumber)" v-else>팔로우</button>
       </div>
     </div>
-    <!-- <div>{{followingList}}</div> -->
     <div></div>
   </div>
 </template>
@@ -85,8 +72,6 @@ export default {
       })
         .then(response => {
           this.yourUserNumber = response.data
-          // console.log('피드 주인')
-          // console.log(this.yourUserNumber)
         })
         .catch(err => {
           console.log(err)
@@ -105,8 +90,6 @@ export default {
     },
 
     getFollowingList: function(){ // 팔로잉 리스트 가져오기
-      // console.log('팔로잉 가져오는 사람 넘버')
-      // console.log(this.yourUserNumber)
       axios({
         method: 'get',
         url: 'http://i6b106.p.ssafy.io:8080/user/following/' + this.yourUserNumber,
@@ -117,9 +100,7 @@ export default {
         var ind;
         for (ind = 0; ind < response.data.length; ind++) {
           if (this.yourUserNumber == response.data[ind].userNumber){
-            // console.log(response.data[ind].userNumber)
             this.isFollow = true
-            // break
           }
         }
       })
@@ -129,8 +110,6 @@ export default {
     },
 
     getFollowerList: function(){ // 팔로워 리스트 가져오기
-      // console.log('팔로워 가져오는 사람 넘버')
-      // console.log(this.yourUserNumber)
       axios({
         method: 'get',
         url: 'http://i6b106.p.ssafy.io:8080/user/follower/' + this.yourUserNumber,
@@ -145,8 +124,6 @@ export default {
     },
 
     getMyFollowingList: function(){ // 내 팔로잉 리스트 가져오기
-      // console.log('내 팔로잉 가져오는 사람 넘버')
-      // console.log(this.myUserNumber)
       this.myFollowingList = []
       axios({
         method: 'get',
@@ -193,7 +170,6 @@ export default {
     },
 
     toUserFeed : function(userId){ // 유저 피드 이동
-      // console.log(userId)
       this.$router.push({name: `UserFeed`, params : {yourUserId: userId}})
     },
 
@@ -205,17 +181,7 @@ export default {
     }
   },
   created: function(){
-    // this.getUserProfile();
-    // this.getMyFollowingList();
-    // this.getFollowerList();
-    // this.getFollowingList();
-
     this.asyncCall(); // 비동기적 통신
-
-    // this.getUserProfile()
-    // .then(this.getMyFollowingList())
-    // .then(this.getFollowerList())
-    // .then(this.getFollowingList());
   }
 }
 </script>

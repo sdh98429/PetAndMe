@@ -45,7 +45,6 @@ export default {
   methods: {
     goToSearchResult: function(searchWord){ // 검색 결과 페이지로 이동
       if (searchWord){
-        // console.log('이동')
         this.$router.push({path: `/search/${searchWord}`})
       }      
     },
@@ -54,14 +53,11 @@ export default {
 
       if (searchWord && searchWord[0] == '@' && searchWord.length > 1){
         this.isRecent = false
-        // console.log('아이디 검색')
         axios({
           method: 'get',
           url: 'http://i6b106.p.ssafy.io:8080/search/rt/userid/' + searchWord.slice(1),
         })
           .then(response => {
-            // this.resultId = response.data
-            // console.log(response.data)
             this.realTimeSearch = response.data
           })
           .catch(err => {
@@ -69,21 +65,17 @@ export default {
           })
       } else if (searchWord && searchWord[0] != '@'){
         this.isRecent = false
-        // console.log('닉네임 검색')
         axios({
           method: 'get',
           url: 'http://i6b106.p.ssafy.io:8080/search/rt/userName/' + searchWord,
         })
           .then(response => {
-            // console.log(response.data)
-            // this.resultNickname = response.data
             this.realTimeSearch = response.data
           })
           .catch(err => {
             console.log(err)
           })
       } else {
-        // this.realTimeSearch = this.resultRecent
         this.isRecent = true
       }
     },
@@ -95,7 +87,6 @@ export default {
       })
         .then(response => {
           this.resultRecent = response.data
-          // this.realTimeSearch = response.data
         })
         .catch(err => {
           console.log(err)
