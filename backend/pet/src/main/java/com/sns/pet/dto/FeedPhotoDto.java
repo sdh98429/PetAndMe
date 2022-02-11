@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter @Setter
 public class FeedPhotoDto {
-    private String feedNumber;
+    private Long feedNumber;
     private String saveFolder;
     private String photoName;
     private byte[] photo;
