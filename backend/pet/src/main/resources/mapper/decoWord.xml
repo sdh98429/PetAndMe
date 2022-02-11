@@ -15,7 +15,7 @@
     <select id="selectDecoWord" resultType="String">
         SELECT word
         FROM DecoWord
-        ORDER BY rand() LIMIT 1;
+        ORDER BY rand() LIMIT 10;
     </select>
 
 </mapper>

@@ -6,6 +6,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class DecoWordServiceImpl implements DecoWordService {
@@ -14,9 +17,14 @@ public class DecoWordServiceImpl implements DecoWordService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public String makeNickName(String animalName_en) throws Exception {
+    public List<String> makeNickName(String animalName_en) throws Exception {
         String name = sqlSession.getMapper(DecoWordDao.class).selectKoreanName(animalName_en);
-        String deco = sqlSession.getMapper(DecoWordDao.class).selectDecoWord();
-        return deco.concat(" ").concat(name);
+        List<String> deco = sqlSession.getMapper(DecoWordDao.class).selectDecoWord();
+
+        List<String> nickName = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            nickName.add(deco.get(i).concat(" ").concat(name));
+        }
+        return nickName;
     }
 }
