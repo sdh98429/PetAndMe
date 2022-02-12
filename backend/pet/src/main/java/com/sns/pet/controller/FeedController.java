@@ -1,6 +1,5 @@
 package com.sns.pet.controller;
 
-import com.sns.pet.dto.CommentDto;
 import com.sns.pet.dto.FeedDto;
 import com.sns.pet.dto.FeedPhotoDto;
 import com.sns.pet.service.FeedService;
@@ -14,7 +13,6 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,18 +42,19 @@ public class FeedController {
     @GetMapping("/newsfeed")
     public ResponseEntity<List<FeedDto>> newsFeedList(
             @ApiParam(value = "로그인 유저 번호", required = true) @RequestParam("userNumber") Long userNumber,
-            @ApiParam(value = "default 빈문자열, 마지막 피드의 생성일", required = false) @RequestParam("cursor") String cursor) throws Exception{
+            @ApiParam(value = "default 빈문자열, 마지막 피드의 생성일", required = false) @RequestParam("cursor") String cursor) throws Exception {
         logger.info("뉴스 피드 목록 - 호출");
         return new ResponseEntity<>(feedService.findNewsFeedList(userNumber, cursor), HttpStatus.OK);
     }
 
-    @ApiOperation(value = "선호 동물 피드 목록 반환", response = List.class)
+    @ApiOperation(value = "닮은 동물 피드 목록 반환", response = List.class)
     @GetMapping("/favfeed")
-    public ResponseEntity<List<FeedDto>> favAnimalFeedList(
+    public ResponseEntity<List<FeedDto>> similarAnimalFeedList(
             @ApiParam(value = "로그인 유저 번호", required = true) @RequestParam("userNumber") Long userNumber,
-            @ApiParam(value = "default 빈문자열, 마지막 피드의 생성일", required = false) @RequestParam("cursor") String cursor) throws Exception{
+            @ApiParam(value = "동물 번호", required = true) @RequestParam("animalNumber") int animalNumber,
+            @ApiParam(value = "default 빈문자열, 마지막 피드의 생성일") @RequestParam("cursor") String cursor) throws Exception{
         logger.info("선호 동물 피드 목록 - 호출");
-        return new ResponseEntity<>(feedService.findFavFeedList(userNumber, cursor), HttpStatus.OK);
+        return new ResponseEntity<>(feedService.findSimilarAnimalFeedList(userNumber, animalNumber, cursor), HttpStatus.OK);
     }
 
     @ApiOperation(value = "팔로우 피드 목록 반환", response = List.class)
@@ -180,10 +179,10 @@ public class FeedController {
     }
 
     @ApiOperation(value = "feedNumber에 해당하는 이미지 반환", response = FeedDto.class)
-    @GetMapping("/imagelist")
+    @PostMapping("/imagelist")
     public ResponseEntity<byte[][]> imageList(
-            @ApiParam(value = "피드 번호", required = true) @RequestBody int[] feedNumbers) throws Exception {
-        logger.info("imageList - 호출" + Arrays.toString(feedNumbers));
+            @ApiParam(value = "피드 번호", required = true) @RequestBody FeedDto feedNumbers) throws Exception {
+        logger.info("imageList - 호출" + feedNumbers.toString());
         List<FeedPhotoDto> feedPhotoDtoList = feedService.listImage(feedNumbers);
         logger.info("feedPhotoDtoList - 호출" + feedPhotoDtoList.toString());
         // 이미지 변환

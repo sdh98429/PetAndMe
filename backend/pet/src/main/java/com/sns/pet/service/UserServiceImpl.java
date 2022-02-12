@@ -44,6 +44,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean checkUserID(String userID) throws Exception {
+        return sqlSession.getMapper(UserDao.class).selectUserID(userID) == 1;
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean modifyUser(JoinDto joinDto) throws Exception {
         sqlSession.getMapper(UserDao.class).updateUser(joinDto);

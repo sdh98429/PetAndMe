@@ -30,9 +30,8 @@ export default {
     font-style: normal;
 }
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
-
 .notosanskr * { 
- font-family: 'Noto Sans KR', sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 #app{
   box-sizing: border-box;
@@ -47,6 +46,9 @@ body {
 
 /* Mobile Web*/
 @media screen and (max-width:768px){
+  * {
+    cursor: pointer;
+  }
   .my-container {
     height: 0;
     /* width: 400px; */
@@ -64,6 +66,14 @@ body {
 }
 /* PC Web */
 @media screen and (min-width:768px){
-
+  body {
+    /* height: 100%; */
+    width: 100%;
+    height: 100%;
+    background-image: url("./assets/bg_test_2.png");
+    background-repeat: repeat-y;
+    background-size: cover;
+    z-index: -10;
+  }
 }
 </style>

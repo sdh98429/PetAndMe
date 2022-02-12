@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <h2> 피드 작성 페이지 </h2>
+  <div class="feed-create-container">
+    <h2 class="feed-create-header"> 피드 만들기 </h2>
     <ul> 
       <li>
-      <input multiple @change='onInputImage()' accept="image/*" ref="image" type="file">
+        <input multiple @change='onInputImage()' accept="image/*" ref="image" type="file">
       </li> 
     </ul>
 
@@ -28,20 +28,17 @@
 import ContentsForm from '@/components/feed/ContentsForm'
 import CreateBtn from '@/components/feed/CreateBtn'
 import axios from 'axios'
+import move from '@/js/move.js'
 
 export default {
   name: 'FeedCreate',
   data: function () {
     return {
       feedContent: null, 
-
       myUserNumber : 2,
-
       isCreate: false, // createBtn 눌렀는지
       isArrive: 0, // Picture, ContentsForm 신호 도착 개수
       files: [],
-
-
     }
   },
   components: {
@@ -55,8 +52,7 @@ export default {
   methods: {
     onInputImage: function(){ // 이미지 추가
       this.files = this.$refs.image.files
-      
-      if (this.$refs.image.files.length >=5){
+      if (this.$refs.image.files.length >5){
         this.files = []
         this.$refs.image.value = ''
         alert('이미지는 최대 5장까지 가능합니다.')
@@ -71,7 +67,6 @@ export default {
         }
       }
     },
-
     createFeed: function (){ // createBtn 버튼 누름
       this.isCreate = true
     },
@@ -83,7 +78,9 @@ export default {
       this.$router.push({name: "NewsFeed"})
     }
   },
-  
+  mounted() {
+    move('3', '50%', '#fff')
+  },
   watch: {
     isArrive: function(){ // 사진, 내용 도착
       var fileInput = this.files;
@@ -96,10 +93,9 @@ export default {
             var step;
             for (step = 0; step < this.$refs.image.files.length; step++){
               formData.append('feedPhoto', fileInput[step]);
-
             }
 
-            formData.append("feedContent", JSON.stringify(this.feedContent));
+            formData.append("feedContent", this.feedContent);
             formData.append("userNumber", JSON.stringify(this.myUserNumber));
 
             console.log(formData);
@@ -115,6 +111,8 @@ export default {
             .then(() => {
                 console.log("생성 완료");
                 this.$router.push('NewsFeed')
+                this.$router.go()
+                // 상세피드로 이동
             })
             .catch( (err) => {
                 console.log(err);
@@ -134,6 +132,22 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.feed-create-container {
+  font-family: 'MinSans-Regular';
+  width: 100%;
+  position: relative;
+  top: 70px;
+  margin: 0 auto;
+  font-size: 20px;
+}
+.feed-create-container h2 {
+  margin: 0;
+}
+.feed-create-container ul {
+  
+}
+.feed-create-container ul li {
 
+}
 </style>

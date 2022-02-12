@@ -14,6 +14,8 @@ import java.util.List;
 public interface UserDao {
     // 회원가입
     int insertUser(JoinDto joinDto) throws SQLException;
+    // 회원 아이디 중복 조회
+    int selectUserID(String userID) throws SQLException;
     // 회원조회
     UserDto selectUser(Long userNumber) throws SQLException;
     // 회원정보 수정

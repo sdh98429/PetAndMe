@@ -12,7 +12,14 @@
         </selectKey>
     </insert>
 
-    <!--  회원 조회  -->
+    <!-- 회원 아이디 중복 체크 -->
+    <select id="selectUserID" parameterType="String" resultType="integer">
+        SELECT count(*)
+        FROM User
+        WHERE userID = #{userID}
+    </select>
+
+    <!-- 회원 조회 -->
     <select id="selectUser" parameterType="Long" resultType="userDto">
         SELECT userNumber, userID, userPW, userNickName, userEmail, petCheck, saveFolder, userPhotoName,
         userProfileContent, userType,
@@ -46,7 +53,7 @@
 
     <!--  회원정보 전송  -->
     <select id="selectUserInfo" parameterType="Long" resultType="UserPetDto">
-        SELECT u.saveFolder, u.userPhotoName, u.userNickName, u.userID, p.petName, p.petGender, p.petBirth, a.animalName
+        SELECT u.saveFolder, u.userPhotoName, u.userNickName, u.userID, p.petName, p.petGender, p.petBirth, a.animalName_ko
         FROM User u JOIN Pet p ON u.userNumber = p.userNumber
         JOIN Animal a ON a.animalNumber = p.animalNumber
         WHERE u.userNumber = #{userNumber}

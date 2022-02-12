@@ -1,15 +1,15 @@
 <template>
   <div>
     <h3>로그인</h3>
-    <form id="loginform">
+    <form @submit.prevent="login">
       <div>
-        <input type="text" id="userid" v-model="credentials.userId" placeholder="아이디 입력" >
+        <input type="text" id="userID" v-model="credentials.userID" placeholder="아이디 입력" >
       </div>
       <div>
-        <input type="password" id="password" v-model="credentials.password" placeholder="비밀번호 입력">
+        <input type="password" id="userPW" v-model="credentials.userPW" placeholder="비밀번호 입력">
       </div>
       <div>
-        <button @click="login" class="pointer">로그인</button>
+        <button type="submit">로그인</button>
       </div>
     </form>
     <div>
@@ -27,38 +27,54 @@
 <script>
 import axios from 'axios'
 import {mapActions} from 'vuex'
+<<<<<<< HEAD
+=======
+import {BASE_API_URL} from '@/config/config.js'
+>>>>>>> develop
 
 export default {
+    name: 'Login',
     data: function () {
     return {
       credentials: {
-        userId: '',
-        password: '',
+        userID: '',
+        userPW: '',
       }
     }
   },
-
   methods: {
-    login: function () {
-      if (this.credentials.userId === '') {
+    ...mapActions([
+        'loginGetToken',
+    ]),
+    login() {
+      if (this.credentials.userID === '') {
         alert('아이디 미입력')
-      } else if (this.credentials.password === '') {
+        return false;
+      } else if (this.credentials.userPW === '') {
         alert('패스워드 미입력')
+        return false;
       }
-        axios({
-        method: 'post',
-        url: 'http://i6b106.p.ssafy.io:8080/user/login',
-        data: this.credentials
+
+      axios({
+          method: 'post',
+          url: `${BASE_API_URL}/user/login`,
+          data: this.credentials
         })
         .then(res => {
-          localStorage.setItem('jwt', res.data.token)
-          this.$emit('login')
-          console.log('userid', this.userid)
-          this.$router.push({ name: 'home' })
+          console.log(this.credentials)
+          if (res.data.message === 'success') {
+            alert('로그인 성공')
+            this.$emit('login')
+            this.loginGetToken(res.data.accessToken)
+            this.$router.push({ name: 'NewsFeed' })
+          }
+          else {
+            alert(res.data.message)
+          }
         })
         .catch(err => {
           console.log(err)
-          alert('실패')
+          alert('로그인 실패')
         })
     },
     ...mapActions([

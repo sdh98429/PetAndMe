@@ -1,29 +1,39 @@
 <template>
   <div class="nav">
+    <div class="bg-img"></div>
     <nav class="my-nav affix">
       <div class="navcontainer">
         <!-- Logo (Home Btn) -->
-        <span class="logo">
-          <a href="/home">PET & ME</a>
+        <span class="logo" >
+          <div @click="goHome">PET & ME</div>
         </span>
       </div>
     </nav>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <input v-model="searchKeyword" type="text" class="search-input" @focus="onFocus" @blur="onBlur"/>
+      <div class="search-placeholder">
+        <i class="fas fa-search"></i>
+        <div>검색</div>
+      </div>
+    </div>
 
     <!-- Footer Bar -->
     <div id="footer-container">
       <div id="my-footer">
         <div id="bubbleWrapper">
           <div id="bubble1" class="bubble"><span class="icon"><i class="fas fa-home"></i></span></div>
-          <div id="bubble2" class="bubble"><span class="icon"><i class="fas fa-search"></i></span></div>
+          <div id="bubble2" class="bubble"><span class="icon"><i class="fas fa-paw"></i></span></div>
           <div id="bubble3" class="bubble"><span class="icon"><i class="fas fa-plus"></i></span></div>
-          <div id="bubble4" class="bubble"><span class="icon"><i class="fas fa-bell"></i></span></div>
+          <div id="bubble4" class="bubble"><span class="icon"><i class="fas fa-search"></i></span></div>
           <div id="bubble5" class="bubble"><span class="icon"><i class="fas fa-user"></i></span></div>
         </div>
         <div id="menuWrapper">
           <div id="menu1" class="menuElement" @click="goToNewsFeed()"><i class="fas fa-home"></i></div>
-          <div id="menu2" class="menuElement" @click="goToSearch()"><i class="fas fa-search"></i></div>
+          <div id="menu2" class="menuElement" @click="goToSimilarAnimal()"><i class="fas fa-paw"></i></div>
           <div id="menu3" class="menuElement" @click="goToFeedCreate()"><i class="fas fa-plus"></i></div>
-          <div id="menu4" class="menuElement" @click="goToPage()"><i class="fas fa-bell"></i></div>
+          <div id="menu4" class="menuElement" @click="goToSearch()"><i class="fas fa-search"></i></div>
           <div id="menu5" class="menuElement" @click="goToMyPage()"><i class="fas fa-user"></i></div>
         </div>
       </div>
@@ -51,26 +61,45 @@
 import move from '../../js/move.js'
 import $ from 'jquery'
 export default {
+  data() {
+    return {
+      searchKeyword: null,
+    }
+  },
   methods: {
-    goToNewsFeed() {
-      this.$router.push({ name : 'NewsFeed'})
-      move('1', '10%', '#fff')
+    onFocus() {
+      const placeholderEl = document.querySelector('.search-placeholder')
+      placeholderEl.classList.add('focused')
     },
-    goToSearch(){
-      this.$router.push({ name: 'Search' })
+    onBlur() {
+      const placeholderEl = document.querySelector('.search-placeholder')
+      if(this.searchKeyword.trim()){
+        placeholderEl.classList.remove('focused')
+        this.searchKeyword = null
+      }
+    },
+    goHome() {
+      this.$router.push({ name : 'Landing'})
+    },
+    goToNewsFeed() {
+      move('1', '10%', '#fff')
+      this.$router.push({ name : 'NewsFeed'})
+    },
+    goToSimilarAnimal() {
       move('2', '30%', '#fff')
+      this.$router.push({ name : 'SimilarAnimal' })
     },
     goToFeedCreate() {
-      this.$router.push({ name : 'FeedCreate'})
       move('3', '50%', '#fff')
+      this.$router.push({ name : 'FeedCreate'})
     },
-    goToPage() {
-      this.$router.push({ name : 'FeedDetail', params: { feedNumber : 1 }})
+    goToSearch(){
       move('4', '70%', '#fff')
+      this.$router.push({ name: 'Search' })
     },
     goToMyPage() {
-      this.$router.push({ name : 'UserFeed', params: { yourUserNumber : 1}})
       move('5', '90%', '#fff')
+      this.$router.push({ name : 'UserFeed', params: { yourUserId : 'person1' }})
     },
   },
   mounted() {
@@ -79,7 +108,6 @@ export default {
       $(".sidebar_list").toggleClass("show_list");
       $(".sidebar_list").fadeIn();
     });
-    
   }
 }
   
@@ -90,16 +118,30 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Quicksand:400,500,700');
 
 /* Navbar */
+
+// .bg-img {
+//   /* height: 100%; */
+//   position: absolute;
+//   top:0;
+//   width: 100%;
+//   background-image: url("../../assets/bg_test_2.png");
+//   min-height: 100%;
+//   /* background-repeat: no-repeat; */
+//   background-repeat: repeat-y;
+//   background-size: cover;
+//   z-index: -10;
+// }
 .my-nav {
   width: 100%;
-  height: 75px;
+  height: 60px;
   position: fixed;
-  line-height: 70px;
+  line-height: 60px;
   text-align: center;
   top:0;
   padding: 20px 0px;
   -webkit-transition: all 0.4s ease;
   transition: all 0.4s ease;
+  z-index: 3;
 }
 
 .my-nav span.logo {
@@ -107,7 +149,7 @@ export default {
   font-weight: bold;
 }
 
-.my-nav span.logo a {
+.my-nav span.logo div {
   text-decoration: none;
   color: #333;
   font-size: 2.5rem;
@@ -128,7 +170,7 @@ export default {
     position: relative;
     margin:0 auto;
   }
-  .my-nav span.logo a {
+  .my-nav span.logo div {
     text-decoration: none;
     color: #333;
     font-size: 3.4rem;
@@ -145,27 +187,69 @@ export default {
     display: block;
   }
 
+  .search-bar {
+    width: 100%;
+    position: fixed;
+    bottom: 75px;
+    background-color: #fff;
+    height:50px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .search-bar.inactive {
+    display: none;
+  }
+  .search-bar .search-input {
+    width: 62%;
+    background-color: #eee;
+    outline: none;
+    border-radius: 10px;
+    border:none;
+    height:30px;
+    padding: 0 15%;
+    margin:0 auto;
+  }
+  .search-bar .search-placeholder {
+    position: absolute;
+    width: 90%;
+    left: 0;
+    top: 15px;
+    color: #ccc;
+  }
+  .search-bar .search-placeholder.focused div {
+    display:none;
+  }
+  .search-bar .search-placeholder i {
+    position: absolute;
+    left: 10%;
+    font-size: 20px;
+  }
+  .search-bar .search-placeholder div {
+    position: absolute;
+    left: 20%;
+    font-size:16px; 
+    font-family: 'MinSans-Regular'
+  }
   // Mobile Footer bar
   #footer-container{
-    // width: 100%;
-    // min-width: 400px;
-    // max-width: 768px;
     width: 100%;
-    min-width:400px;
+    min-width:300px;
     height: 80px;
     background-color: #fff;
-    // border-radius: 20px;
     display: flex;
     justify-content: flex-end;
     flex-direction: column;
     overflow: hidden;
     position: fixed;
     bottom: 0;
-    // left:50%;
-    margin-left: calc(-100vw/2);
     font-size: 17px;
     z-index: 0;
     margin: 0 auto;
+    cursor: pointer;
+  }
+  #footer-container.inactive{
+    display:none;
   }
 
   #my-footer{
@@ -267,17 +351,19 @@ export default {
   }
 }
 
+// PC Web
 @media screen and (min-width:768px){
   .navcontainer {
     width: 1000px;
     position: relative;
     margin:0 auto;
+    z-index: 3;
   }
   .navTrigger {
     display: block;
   }
 
-  .my-nav span.logo a {
+  .my-nav span.logo div {
     text-decoration: none;
     color: #333;
     font-size: 5rem;
@@ -288,8 +374,185 @@ export default {
   .my-nav div.media_button {
     display: block;
   }
-  #my-footer{
+  
+  .search-bar {
+    width: 600px;
+    position: fixed;
+    bottom: 75px;
+    // left: calc(50%);
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    height:50px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+  }
+  .search-bar.innewsfeed{
+    left: 50%;
+  }
+  .search-bar.inactive {
     display: none;
+  }
+  .search-bar .search-input {
+    width: 62%;
+    background-color: #eee;
+    outline: none;
+    border-radius: 10px;
+    border:none;
+    height:30px;
+    padding: 0 15%;
+    margin:0 auto;
+  }
+  .search-bar .search-placeholder {
+    position: absolute;
+    width: 90%;
+    left: 0;
+    top: 15px;
+    color: #ccc;
+  }
+  .search-bar .search-placeholder.focused div {
+    display:none;
+  }
+  .search-bar .search-placeholder i {
+    position: absolute;
+    left: 10%;
+    font-size: 20px;
+  }
+  .search-bar .search-placeholder div {
+    position: absolute;
+    left: 20%;
+    font-size:16px; 
+    font-family: 'MinSans-Regular'
+  }
+  // Mobile Footer bar
+  #footer-container{
+    // width: 100%;
+    min-width: 300px;
+    width: 600px;
+    height: 80px;
+    background-color: #fff;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    // left: calc(50%);
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 17px;
+    z-index: 3;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc; 
+    // margin: 0 auto;
+  }
+  #footer-container.innewsfeed{
+    // left: 50% + 1px;
+    left: 50%;
+  }
+  #footer-container.inactive{
+    display:none;
+  }
+
+  #my-footer{
+    width: 100%;
+    height: 60px;
+    background-color: #faf4e4;
+    position: absolute;
+  }
+
+  #bubbleWrapper{
+    position: absolute;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    bottom: 25px;
+  }
+
+  .bubble{
+    background-color: #faf4e4;
+    width: 50px;
+    height: 50px;
+    bottom: 85px;
+    border-radius: 50%;
+    z-index: 1;
+    transform: translateY(120%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .icon{
+    opacity: 0;
+  }
+
+  #bubble1{
+    transform: translateY(0%);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    > span{
+      opacity: 0.7;
+    }
+  }
+
+  #bgWrapper{
+    filter: url(#goo);
+    width: 100%;
+    height: 30px;
+    position: absolute;
+    bottom: 60px;
+  }
+  #bg{
+    background-color: #fff;
+    width: 120%;
+    height: 100%;
+    margin-left: -10%;
+  }
+  #bgBubble{
+    position: absolute;
+    background-color: #fff;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    bottom: -50px;
+    left: 10%;
+    transform: translateX(-50%);
+  }
+
+  #menuWrapper{
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .menuElement{
+    opacity: 0.4;
+    transform: translateY(100%);
+    cursor: pointer;
+    &:hover{
+      opacity: 0.5;
+    }
+  }
+
+  #contentWrapper{
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    h2{
+      color: #faf4e4;
+      font-family: sans-serif;
+      font-weight: 400;
+    }
+  }
+  .content{
+    display: none;
+    opacity: 0;
   }
 }
 
@@ -352,157 +615,6 @@ export default {
   animation: inBtm 0.8s forwards;
 }
 
-@-webkit-keyframes inM {
-  50% {
-    -webkit-transform: rotate(0deg);
-  }
-
-  100% {
-    -webkit-transform: rotate(45deg);
-  }
-}
-
-@keyframes inM {
-  50% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(45deg);
-  }
-}
-
-@-webkit-keyframes outM {
-  50% {
-    -webkit-transform: rotate(0deg);
-  }
-
-  100% {
-    -webkit-transform: rotate(45deg);
-  }
-}
-
-@keyframes outM {
-  50% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(45deg);
-  }
-}
-
-@-webkit-keyframes inT {
-  0% {
-    -webkit-transform: translateY(0px) rotate(0deg);
-  }
-
-  50% {
-    -webkit-transform: translateY(9px) rotate(0deg);
-  }
-
-  100% {
-    -webkit-transform: translateY(9px) rotate(135deg);
-  }
-}
-
-@keyframes inT {
-  0% {
-    transform: translateY(0px) rotate(0deg);
-  }
-
-  50% {
-    transform: translateY(9px) rotate(0deg);
-  }
-
-  100% {
-    transform: translateY(9px) rotate(135deg);
-  }
-}
-
-@-webkit-keyframes outT {
-  0% {
-    -webkit-transform: translateY(0px) rotate(0deg);
-  }
-
-  50% {
-    -webkit-transform: translateY(9px) rotate(0deg);
-  }
-
-  100% {
-    -webkit-transform: translateY(9px) rotate(135deg);
-  }
-}
-
-@keyframes outT {
-  0% {
-    transform: translateY(0px) rotate(0deg);
-  }
-
-  50% {
-    transform: translateY(9px) rotate(0deg);
-  }
-
-  100% {
-    transform: translateY(9px) rotate(135deg);
-  }
-}
-
-@-webkit-keyframes inBtm {
-  0% {
-    -webkit-transform: translateY(0px) rotate(0deg);
-  }
-
-  50% {
-    -webkit-transform: translateY(-9px) rotate(0deg);
-  }
-
-  100% {
-    -webkit-transform: translateY(-9px) rotate(135deg);
-  }
-}
-
-@keyframes inBtm {
-  0% {
-    transform: translateY(0px) rotate(0deg);
-  }
-
-  50% {
-    transform: translateY(-9px) rotate(0deg);
-  }
-
-  100% {
-    transform: translateY(-9px) rotate(135deg);
-  }
-}
-
-@-webkit-keyframes outBtm {
-  0% {
-    -webkit-transform: translateY(0px) rotate(0deg);
-  }
-
-  50% {
-    -webkit-transform: translateY(-9px) rotate(0deg);
-  }
-
-  100% {
-    -webkit-transform: translateY(-9px) rotate(135deg);
-  }
-}
-
-@keyframes outBtm {
-  0% {
-    transform: translateY(0px) rotate(0deg);
-  }
-
-  50% {
-    transform: translateY(-9px) rotate(0deg);
-  }
-
-  100% {
-    transform: translateY(-9px) rotate(135deg);
-  }
-}
 
 .affix {
   padding: 0;

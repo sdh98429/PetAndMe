@@ -11,7 +11,7 @@ import java.util.List;
 public interface FeedDao {
     List<FeedDto> selectNewsFeedList(Long userNumber, String cursor) throws SQLException;
 
-    List<FeedDto> selectFavFeedList(Long userNumber, String cursor) throws SQLException;
+    List<FeedDto> selectSimilarAnimalFeedList(Long userNumber, int animalNumber, String cursor) throws SQLException;
 
     List<FeedDto> selectFollowList(Long userNumber, String cursor) throws SQLException;
 
@@ -30,5 +30,5 @@ public interface FeedDao {
 
     int deletePhotos(Long feedNumber) throws SQLException;
 
-    List<FeedPhotoDto> selectFeedPhotoList(int[] feedNumbers) throws SQLException;
+    List<FeedPhotoDto> selectFeedPhotoList(FeedDto feedNumbers) throws SQLException;
 }

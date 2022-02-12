@@ -48,6 +48,17 @@ public class UserController {
         return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
     }
 
+    @ApiOperation(value = "아이디 중복체크", notes = "중복시 false, 중복이 아닐시 true 반환")
+    @GetMapping("/checkID/{userID}")
+    public ResponseEntity<String> userIDCheck(@PathVariable("userID") @ApiParam("입력받은 userID") String userID) throws Exception {
+        logger.info("userIDCheck 호출");
+        if(userService.checkUserID(userID)){
+            return new ResponseEntity<String>(FAIL, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<String >(SUCCESS,HttpStatus.OK);
+        }
+    }
+
     @ApiOperation(value = "회원정보 조회", notes = "회원정보를 조회한다.", response = UserDto.class)
     @GetMapping("/{userNumber}")
     public ResponseEntity<UserDto> userDetails(@PathVariable("userNumber") @ApiParam(value = "조회할 회원번호") Long userNumber) throws Exception {
@@ -75,11 +86,11 @@ public class UserController {
 
     @ApiOperation(value = "프로필 사진 등록", notes = "프로필 사진을 등록한다. DB 성공 여부에 따라 SUCCESS, FAIL 반환")
     @PutMapping("/userPhoto")
-    public ResponseEntity<String> userPhotomodify(@RequestPart(value = "userNumber") @ApiParam(value = "회원번호") Long userNumber,
+    public ResponseEntity<String> userPhotomodify(@RequestPart(value = "userNumber") @ApiParam(value = "회원번호") String userNumber,
                                                   @RequestPart(value = "userPhoto") @ApiParam(value = "프로필 사진") MultipartFile image) throws Exception {
         logger.info("userPhotomodify 호출");
         UserDto userDto = new UserDto();
-        userDto.setUserNumber(userNumber);
+        userDto.setUserNumber(Long.parseLong(userNumber));
 
         if (image != null) {
             logger.info("file 확인");

@@ -11,17 +11,21 @@ import SearchResult from '../views/search/SearchResult'
 import FeedCreate from '../views/feed/FeedCreate'
 import NewsFeed from '../views/feed/NewsFeed'
 import UserFeed from '../views/feed/UserFeed'
+import FollowList from '../views/feed/FollowList'
 import UserFeedUpdate from '../views/feed/UserFeedUpdate'
 import FeedDetail from '../views/feed/FeedDetail'
-
+// import Components from '../views/Components.vue'
+ 
+import store from '../store'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/home',
+    path: '/',
     name: 'Landing',
     component: Landing,
+    meta: {requiresAuth: true}
   },
   {
     path: '/user/login',
@@ -68,11 +72,17 @@ const routes = [
     path: '/feed/newsfeed',
     name: 'NewsFeed',
     component: NewsFeed,
+    meta: {requiresAuth: true}
   },
   {
     path: '/feed/userfeed/:yourUserId',
     name: 'UserFeed',
     component: UserFeed,
+  },
+  {
+    path: '/feed/userfeed/:yourUserId/follow',
+    name: 'FollowList',
+    component: FollowList,
   },
   {
     path: '/feed/userfeed/:yourUserId/update',
@@ -92,4 +102,24 @@ const router = new VueRouter({
   routes
 })
 
+router.beforeEach((to, from, next) => {
+
+  const isLogin = store.getters['isLogin']
+  console.log(isLogin)
+  
+ // requiresAuth 체크
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+
+    if(to.path === '/home' && isLogin) {
+      console.log("hello2")
+      next('/feed/newsfeed')
+    }
+    else if(to.path === '/feed/newsfeed' && !isLogin) {
+      alert('로그인이 필요합니다')
+      next('/home')
+    }
+  }
+  // requiresAuth가 false일 때 (권한이 필요 없는 페이지)
+  next()
+})
 export default router
