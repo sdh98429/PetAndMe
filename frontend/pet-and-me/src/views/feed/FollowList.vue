@@ -19,7 +19,7 @@
       </div>
     </div>
     <div v-show="currentTab==1">
-      <div>팔로잉 리스트{{myUserNumber}}</div>
+      <div>팔로잉 리스트</div>
       <div v-for="(following, ind) in followingList" :key="'following' + ind" style="border: 1px solid;">
         <img @click="toUserFeed(following.userID)" :src="'http://i6b106.p.ssafy.io:8080/main/image?file=' + following.saveFolder + following.userPhotoName" alt="프로필 사진" style="width: 300px; height: 150px; object-fit: contain;">
         <div>{{following.userNickName}}</div>
