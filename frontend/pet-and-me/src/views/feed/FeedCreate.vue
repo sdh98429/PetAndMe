@@ -35,7 +35,7 @@ export default {
   data: function () {
     return {
       feedContent: null, 
-      myUserNumber : 2,
+
       isCreate: false, // createBtn 눌렀는지
       isArrive: 0, // Picture, ContentsForm 신호 도착 개수
       files: [],
@@ -80,6 +80,11 @@ export default {
   },
   mounted() {
     move('3', '50%', '#fff')
+  },
+  computed: {
+    myUserNumber () {
+      return this.$store.getters.getUserNumber
+    }
   },
   watch: {
     isArrive: function(){ // 사진, 내용 도착

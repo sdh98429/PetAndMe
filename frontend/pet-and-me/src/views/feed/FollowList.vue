@@ -19,13 +19,13 @@
       </div>
     </div>
     <div v-show="currentTab==1">
-      <div>팔로잉 리스트</div>
+      <div>팔로잉 리스트{{myUserNumber}}</div>
       <div v-for="(following, ind) in followingList" :key="'following' + ind" style="border: 1px solid;">
         <img @click="toUserFeed(following.userID)" :src="'http://i6b106.p.ssafy.io:8080/main/image?file=' + following.saveFolder + following.userPhotoName" alt="프로필 사진" style="width: 300px; height: 150px; object-fit: contain;">
         <div>{{following.userNickName}}</div>
         <div>@{{following.userID}}</div>
-        <button @click="unfollowUser(follower.userNumber)" v-if="myFollowingList.includes(following.userNumber)">언팔로우</button>
-        <button @click="followUser(follower.userNumber)" v-else>팔로우</button>
+        <button @click="unfollowUser(following.userNumber)" v-if="myFollowingList.includes(following.userNumber)">언팔로우</button>
+        <button @click="followUser(following.userNumber)" v-else>팔로우</button>
       </div>
     </div>
     <div></div>
@@ -48,7 +48,6 @@ export default {
       myFollowingList: [], // 내 팔로잉 리스트
 
       yourUserNumber : 0,
-      myUserNumber : 2,
 
       currentTab: 0, // 현재 탭
       tabs: ['팔로워', '팔로잉'],
@@ -106,6 +105,7 @@ export default {
     },
 
     getFollowerList: function(){ // 팔로워 리스트 가져오기
+      console.log(typeof(localStorage.getItem('vuex')));
       axios({
         method: 'get',
         url: 'http://i6b106.p.ssafy.io:8080/user/follower/' + this.yourUserNumber,
@@ -178,7 +178,12 @@ export default {
   },
   created: function(){
     this.asyncCall(); // 비동기적 통신
-  }
+  },
+  computed: {
+    myUserNumber () {
+      return this.$store.getters.getUserNumber
+    }
+  },
 }
 </script>
 

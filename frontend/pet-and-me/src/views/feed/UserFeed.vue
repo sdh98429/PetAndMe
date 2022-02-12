@@ -1,7 +1,6 @@
 <template>
   <div>
     <h2>유저 피드</h2>
-
     <button v-if="(myUserNumber == yourUserNumber)" @click="toUserFeedUpdate">유저 피드 업데이트</button>
     <div>프로필</div>
     <div v-if="profile">
@@ -46,7 +45,7 @@ export default {
 
       yourUserId: this.$route.params.yourUserId,
       yourUserNumber: 0,
-      myUserNumber: 0,
+
       isFollow : false,
 
       followerCnt : 0,
@@ -64,9 +63,6 @@ export default {
 
   },
   methods: {
-    getUserNumber : function (){ // 로그인한 유저 넘버 가져오기
-      this.myUserNumber = 2 // 현재 페이지의 유저로 userNumber 가져오는 로직
-    },
 
     getUserProfile: async function(){ // 프로필 정보 가져오기
         await axios({
@@ -211,7 +207,6 @@ export default {
     },
 
     asyncCall : async function(){
-      await this.getUserNumber();
       await this.getUserProfile();
       await this.getFollowing();
       await this.getFollower();
@@ -221,7 +216,12 @@ export default {
   created: function(){
 
     this.asyncCall()
-  }
+  },
+  computed: {
+    myUserNumber () {
+      return this.$store.getters.getUserNumber
+    }
+  },
 }
 </script>
 

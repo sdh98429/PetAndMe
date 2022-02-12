@@ -78,7 +78,7 @@ import {BASE_API_URL} from '@/config/config.js'
 import '@/css/feeddetail.css'
 
 export default {
-  name: 'FeedListItem',
+  name: 'FeedDetail',
   components: {
     // slide
   },
@@ -93,7 +93,7 @@ export default {
       profile : null,
       photoIndex : 0,
       commentContent : null,
-      myUserNumber: 1,
+
       feedUserNumber: null,
       feedContent: null,
       feedDate: null,
@@ -318,7 +318,12 @@ export default {
     searchEl.classList.remove('inactive')
     const footerEl = document.querySelector('#footer-container')
     footerEl.classList.remove('indetail')
-  }
+  },
+  computed: {
+    myUserNumber () {
+      return this.$store.getters.getUserNumber
+    }
+  },
 }
 </script>
 
