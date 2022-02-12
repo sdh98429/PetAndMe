@@ -43,7 +43,7 @@ public class LoginController {
                 // 토큰 생성
                 String token = jwtService.create("userNumber", loginUserNumber, "access-token");// key, data, subject
                 logger.debug("로그인 토큰정보 : {}", token);
-                resultMap.put("access-token", token);
+                resultMap.put("accessToken", token);
                 resultMap.put("message", SUCCESS);
             } else { // 아이디 또는 비번을 틀림
                 loginUserNumber = loginService.findById(user.get("userID")); // 아이디로 회원 찾기
