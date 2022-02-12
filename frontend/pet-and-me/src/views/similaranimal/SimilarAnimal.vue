@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import '@/css/similaranimal.scss'
 import '@tensorflow/tfjs'
 import * as tmImage from '@teachablemachine/image';
 import move from '@/js/move.js'
@@ -128,7 +129,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss" src="../../css/similaranimal.scss">
+<style scoped lang="scss">
 img{
   display: block;
 }
