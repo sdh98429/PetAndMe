@@ -19,7 +19,7 @@ export default {
       profile : null,
       yourUserId: this.$route.params.yourUserId,
       yourUserNumber: 1,
-      myUserNumber: 1,
+
     }
   },
   components: {
@@ -45,7 +45,12 @@ export default {
   },
   created : function(){
     this.getUserProfile()
-  }
+  },
+  computed: {
+    myUserNumber () {
+      return this.$store.getters.getUserNumber
+    }
+  },
 }
 </script>
 

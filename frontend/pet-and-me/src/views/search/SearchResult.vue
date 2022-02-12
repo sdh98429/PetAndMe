@@ -49,7 +49,7 @@ export default {
       resultAnimal: null, // 반려동물 종류 검색 결과
       resultRecent: null, // 최근 검색 결과
       searchWord: this.$route.params.searchWord, // 검색 단어
-      myUserNumber : 1,
+
 
       currentTab: 0, // 현재 탭
       // tabs: ['아이디 검색 결과', '닉네임 검색 결과', '최근 검색 단어'],
@@ -158,7 +158,12 @@ export default {
     searchWord: function(){
       this.getSearchResult()
     }
-  }
+  },
+  computed: {
+    myUserNumber () {
+      return this.$store.getters.getUserNumber
+    }
+  },
 
 }
 </script>
