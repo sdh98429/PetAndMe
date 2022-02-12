@@ -5,6 +5,7 @@
     <button @click="signup">signup</button>
     <button @click="login">login</button>
     <button @click="newsfeed">newsfeed</button>
+    <button @click="logout">logout</button>
     <div style="height: 1000px">
       <h2 class="myH2">Pet And Me</h2>
       <p class="myP">
@@ -36,8 +37,16 @@
 
 <script>
 // import $ from 'jquery'
+import { mapGetters, mapActions } from "vuex"
+
 export default {
+  computed: {
+    ...mapGetters(['getUserNumber'])
+  },
   methods: {
+    ...mapActions([
+      'logoutRemoveToekn'
+    ]),
     signup() {
       this.$router.push({name:'Signup'})
     },
@@ -46,6 +55,11 @@ export default {
     },
     newsfeed() {
       this.$router.push({name:'NewsFeed'})
+    },
+    logout() {
+      console.log(this.getUserNumber)
+      this.logoutRemoveToekn()
+      this.$router.push({name:'Landing'})
     }
   },
   mounted() {
