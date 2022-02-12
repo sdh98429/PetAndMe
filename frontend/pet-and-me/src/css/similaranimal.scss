@@ -110,68 +110,185 @@
   }
   
 }
+@media screen and (min-width:768px){
+  .sa-container {
+    font-family: 'MinSans-Regular';
+    position: relative;
+    height: 70vh;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    top: 46px;
+    width: 100%;
+    max-width: 600px;
+    padding-bottom: 150px;
+  }
+  .sa-container h1 {
+    margin: 0;
+    text-align: center;
+  }
+  .sa-container .first-step{
+    width: 90%;
+    margin: 0 auto;
+    position: relative;
+  }
+  .sa-container .first-step .input-image{
+    position: relative;
+    width: 100%;
+  }
+  .sa-container .first-step label{
+    border-radius: 20px;
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    height:100%;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+  }
+  .sa-container .first-step label .input-image-label{
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    font-size: 20px;
+  }
+  .sa-container .first-step input[type="file"]{
+    display:none;
+  }
+  .sa-container .first-step .img-upload-box{
+    position: relative;
+    top:0;
+    margin: 0 auto;
+    width: 100%;
+    height: 350px;
+    border: 1px solid #333;
+    border-radius: 20px;
+    display:flex;
+    justify-content: center;
+  }
+  .sa-container .first-step .img-upload-box .accept-image{
+    display: block;
+    position: absolute;
+    margin: 0 auto;
+    max-width: 70%;
+    height: 300px;
+    top: 15px;
+    object-fit: cover;
+  }
+  .sa-container .second-step{
+    width: 90%;
+    margin: 0 auto;
+    position: relative;
+    top: 0;
+  }
+  .sa-container .second-step .result-box .result-message{
+    width: 50%;
+    margin: 0 auto;
+    position: absolute;
+    top:0;
+  }
+  .sa-container .second-step .result-box .image-box{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 350px;
+    border: 1px solid #333;
+    border-radius: 20px;
+  }
+  .sa-container .second-step .result-box .image-box .result-image{
+    position: absolute;
+    top: 49px;
+    display:block;
+    max-width: 70%;
+    height: 300px;
+    object-fit: cover;
+  }
+  .sa-container .second-step .result-box .retry-btn{
+    width: 50%;
+    margin: 0 auto;
+    position: relative;
+    text-align: center;
+    font-size: 25px;
+    cursor: pointer;
+  }
+  .sa-container .second-step .nickname-box{
+    width: 80%;
+    margin: 0 auto;
+    position: relative;
+  }
+  .sa-container .second-step .nickname-box .nickname-result{
+    text-align: center;
+    line-height: 35px;
+    cursor: pointer;
+    font-size: 20px;
+    background-color: #faf4e4;
+
+  }
+  
+}
 /* KEYFRAMES */
 
-@keyframes spin {
-  from {
-    transform: rotate(0);
-  }
-  to{
-    transform: rotate(359deg);
-  }
-}
-@keyframes spin3D {
-  from {
-    transform: rotate3d(.5,.5,.5, 360deg);
-  }
-  to{
-    transform: rotate3d(0deg);
-  }
-}
-@keyframes configure-clockwise {
-  0% {
-    transform: rotate(0);
-  }
-  25% {
-    transform: rotate(90deg);
-  }
-  50% {
-    transform: rotate(180deg);
-  }
-  75% {
-    transform: rotate(270deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-@keyframes configure-xclockwise {
-  0% {
-    transform: rotate(45deg);
-  }
-  25% {
-    transform: rotate(-45deg);
-  }
-  50% {
-    transform: rotate(-135deg);
-  }
-  75% {
-    transform: rotate(-225deg);
-  }
-  100% {
-    transform: rotate(-315deg);
-  }
-}
-@keyframes pulse {
-  from {
-    opacity: 1;
-    transform: scale(1);
-  }
-  to {
-    opacity: .25;
-    transform: scale(.75);
-  }
-}
+// @keyframes spin {
+//   from {
+//     transform: rotate(0);
+//   }
+//   to{
+//     transform: rotate(359deg);
+//   }
+// }
+// @keyframes spin3D {
+//   from {
+//     transform: rotate3d(.5,.5,.5, 360deg);
+//   }
+//   to{
+//     transform: rotate3d(0deg);
+//   }
+// }
+// @keyframes configure-clockwise {
+//   0% {
+//     transform: rotate(0);
+//   }
+//   25% {
+//     transform: rotate(90deg);
+//   }
+//   50% {
+//     transform: rotate(180deg);
+//   }
+//   75% {
+//     transform: rotate(270deg);
+//   }
+//   100% {
+//     transform: rotate(360deg);
+//   }
+// }
+// @keyframes configure-xclockwise {
+//   0% {
+//     transform: rotate(45deg);
+//   }
+//   25% {
+//     transform: rotate(-45deg);
+//   }
+//   50% {
+//     transform: rotate(-135deg);
+//   }
+//   75% {
+//     transform: rotate(-225deg);
+//   }
+//   100% {
+//     transform: rotate(-315deg);
+//   }
+// }
+// @keyframes pulse {
+//   from {
+//     opacity: 1;
+//     transform: scale(1);
+//   }
+//   to {
+//     opacity: .25;
+//     transform: scale(.75);
+//   }
+// }
 
 /* GRID STYLING */
 
