@@ -1,5 +1,6 @@
 <template>
   <div class="nav">
+    <div class="bg-img"></div>
     <nav class="my-nav affix">
       <div class="navcontainer">
         <!-- Logo (Home Btn) -->
@@ -72,9 +73,9 @@ export default {
     },
     onBlur() {
       const placeholderEl = document.querySelector('.search-placeholder')
-      if(!this.searchKeyword.trim()){
-      placeholderEl.classList.remove('focused')
-      this.searchKeyword = null
+      if(this.searchKeyword.trim()){
+        placeholderEl.classList.remove('focused')
+        this.searchKeyword = null
       }
     },
     goHome() {
@@ -117,6 +118,19 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Quicksand:400,500,700');
 
 /* Navbar */
+
+// .bg-img {
+//   /* height: 100%; */
+//   position: absolute;
+//   top:0;
+//   width: 100%;
+//   background-image: url("../../assets/bg_test_2.png");
+//   min-height: 100%;
+//   /* background-repeat: no-repeat; */
+//   background-repeat: repeat-y;
+//   background-size: cover;
+//   z-index: -10;
+// }
 .my-nav {
   width: 100%;
   height: 60px;
@@ -127,6 +141,7 @@ export default {
   padding: 20px 0px;
   -webkit-transition: all 0.4s ease;
   transition: all 0.4s ease;
+  z-index: 3;
 }
 
 .my-nav span.logo {
@@ -335,11 +350,13 @@ export default {
   }
 }
 
+// PC Web
 @media screen and (min-width:768px){
   .navcontainer {
     width: 1000px;
     position: relative;
     margin:0 auto;
+    z-index: 3;
   }
   .navTrigger {
     display: block;
@@ -356,8 +373,183 @@ export default {
   .my-nav div.media_button {
     display: block;
   }
-  #my-footer{
+  
+  .search-bar {
+    width: 600px;
+    position: fixed;
+    bottom: 75px;
+    left: calc(50%);
+    transform: translateX(-50%);
+    background-color: #fff;
+    height:50px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+  }
+  .search-bar.innewsfeed{
+    left: calc(50% + 1px);
+  }
+  .search-bar.inactive {
     display: none;
+  }
+  .search-bar .search-input {
+    width: 62%;
+    background-color: #eee;
+    outline: none;
+    border-radius: 10px;
+    border:none;
+    height:30px;
+    padding: 0 15%;
+    margin:0 auto;
+  }
+  .search-bar .search-placeholder {
+    position: absolute;
+    width: 90%;
+    left: 0;
+    top: 15px;
+    color: #ccc;
+  }
+  .search-bar .search-placeholder.focused div {
+    display:none;
+  }
+  .search-bar .search-placeholder i {
+    position: absolute;
+    left: 10%;
+    font-size: 20px;
+  }
+  .search-bar .search-placeholder div {
+    position: absolute;
+    left: 20%;
+    font-size:16px; 
+    font-family: 'MinSans-Regular'
+  }
+  // Mobile Footer bar
+  #footer-container{
+    // width: 100%;
+    min-width: 300px;
+    width: 600px;
+    height: 80px;
+    background-color: #fff;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    // left: calc(50%);
+    left: calc(50%);
+    transform: translateX(-50%);
+    font-size: 17px;
+    z-index: 3;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc; 
+    // margin: 0 auto;
+  }
+  #footer-container.innewsfeed{
+    left: calc(50% + 1px);
+  }
+  #footer-container.inactive{
+    display:none;
+  }
+
+  #my-footer{
+    width: 100%;
+    height: 60px;
+    background-color: #faf4e4;
+    position: absolute;
+  }
+
+  #bubbleWrapper{
+    position: absolute;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    bottom: 25px;
+  }
+
+  .bubble{
+    background-color: #faf4e4;
+    width: 50px;
+    height: 50px;
+    bottom: 85px;
+    border-radius: 50%;
+    z-index: 1;
+    transform: translateY(120%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .icon{
+    opacity: 0;
+  }
+
+  #bubble1{
+    transform: translateY(0%);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    > span{
+      opacity: 0.7;
+    }
+  }
+
+  #bgWrapper{
+    filter: url(#goo);
+    width: 100%;
+    height: 30px;
+    position: absolute;
+    bottom: 60px;
+  }
+  #bg{
+    background-color: #fff;
+    width: 120%;
+    height: 100%;
+    margin-left: -10%;
+  }
+  #bgBubble{
+    position: absolute;
+    background-color: #fff;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    bottom: -50px;
+    left: 10%;
+    transform: translateX(-50%);
+  }
+
+  #menuWrapper{
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .menuElement{
+    opacity: 0.4;
+    transform: translateY(100%);
+    cursor: pointer;
+    &:hover{
+      opacity: 0.5;
+    }
+  }
+
+  #contentWrapper{
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    h2{
+      color: #faf4e4;
+      font-family: sans-serif;
+      font-weight: 400;
+    }
+  }
+  .content{
+    display: none;
+    opacity: 0;
   }
 }
 

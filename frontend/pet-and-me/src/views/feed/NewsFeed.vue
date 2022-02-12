@@ -1,48 +1,49 @@
 <template>
-  <div class="newsfeed-container">
-
-    <!-- <button v-for="(tab, index) in tabs"
-      :key="index"
-      v-bind="{active: currentTab === index}"
-      @click="currentTab = index">{{tab}}
-    </button> -->
-    <div>
-      <!-- <div>최신 피드</div> -->
-      <div v-show="currentTab==0">
-        <div v-for="(feed, idx) in RecentFeedList" :key="idx">
-          <NewsFeedListItem
-          :feed="feed"
-          :feedUploadDate="getUploadDate(feed)"
-          />
+  <div class="bg-container">
+    <div class="newsfeed-container">
+      <!-- <button v-for="(tab, index) in tabs"
+        :key="index"
+        v-bind="{active: currentTab === index}"
+        @click="currentTab = index">{{tab}}
+      </button> -->
+      <div>
+        <!-- <div>최신 피드</div> -->
+        <div v-show="currentTab==0">
+          <div v-for="(feed, idx) in RecentFeedList" :key="idx">
+            <NewsFeedListItem
+            :feed="feed"
+            :feedUploadDate="getUploadDate(feed)"
+            />
+          </div>
         </div>
+
+        <!-- <div>선호 피드</div> -->
+        <div v-show="currentTab==1">
+          <div v-for="(feed, idx) in FavFeedList" :key="idx">
+            <NewsFeedListItem
+            :feed="feed"
+            :feedUploadDate="getUploadDate(feed)"
+            />
+          </div>
+        </div>
+
+        <!-- <div>친구 피드</div> -->
+        <div v-show="currentTab==2">
+          <div v-for="(feed, idx) in FollowFeedList" :key="idx">
+            <NewsFeedListItem
+            :feed="feed"
+            :feedUploadDate="getUploadDate(feed)"
+            />
+          </div>
+        </div>
+
+        <!-- <div>인피니트 스크롤</div> -->
+        <infinite-loading :identifier="currentTab" @infinite="infiniteHandler" spinner="waveDots">
+          <div slot="no-more" style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px;"></div>
+        </infinite-loading>
       </div>
 
-      <!-- <div>선호 피드</div> -->
-      <div v-show="currentTab==1">
-        <div v-for="(feed, idx) in FavFeedList" :key="idx">
-          <NewsFeedListItem
-          :feed="feed"
-          :feedUploadDate="getUploadDate(feed)"
-          />
-        </div>
-      </div>
-
-      <!-- <div>친구 피드</div> -->
-      <div v-show="currentTab==2">
-        <div v-for="(feed, idx) in FollowFeedList" :key="idx">
-          <NewsFeedListItem
-          :feed="feed"
-          :feedUploadDate="getUploadDate(feed)"
-          />
-        </div>
-      </div>
-
-      <!-- <div>인피니트 스크롤</div> -->
-      <infinite-loading :identifier="currentTab" @infinite="infiniteHandler" spinner="waveDots">
-        <div slot="no-more" style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px;"></div>
-      </infinite-loading>
     </div>
-
   </div>
 </template>
 
@@ -188,11 +189,22 @@ export default {
   },
   mounted() {
     move('1', '10%', '#fff')
+    const footerEl = document.querySelector('#footer-container')
+    footerEl.classList.add('innewsfeed')
+    const searchEl = document.querySelector('.search-bar')
+    searchEl.classList.add('innewsfeed')
+  },
+  destroyed() {
+    const footerEl = document.querySelector('#footer-container')
+    const searchEl = document.querySelector('.search-bar')
+    searchEl.classList.remove('innewsfeed')
+    footerEl.classList.remove('innewsfeed')
   }
+
 }
 </script>
 
-<style scoped src="../../css/newsfeed.css">
+<style src="../../css/newsfeed.css">
 /* COMMON */
 img {
   width: 200px;
