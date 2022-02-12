@@ -48,6 +48,7 @@
     background-color:#333; 
     border-radius:50%; 
     color: #fff;
+    cursor: pointer;
   }
   .feed-detail-container .feed-img .material-icons.right-btn {
     position: absolute;
@@ -58,6 +59,7 @@
     background-color:#333; 
     border-radius:50%; 
     color: #fff;
+    cursor: pointer;
   }
   .feed-detail-container .feed-profile {
     position:relative;
@@ -76,6 +78,7 @@
     position: absolute;
     left: 5px;
     top: 5px;
+    cursor: pointer;
   }
   .feed-detail-container .feed-profile .feed-profile-nickname {
     width: 65%;
@@ -83,7 +86,8 @@
     font-weight: bold;
     position: absolute;
     left: 65px;
-    top:0
+    top:0;
+    cursor: pointer;
   }
   .feed-detail-container .feed-profile .feed-profile-nickname2 {
     width: 65%;
@@ -92,6 +96,7 @@
     position: absolute;
     left: 65px;
     top: 16px;
+    cursor: pointer;
   }
   .feed-detail-container .feed-profile .feed-profile-mypet {
     width: auto;
@@ -130,11 +135,13 @@
   .feed-detail-container .like-and-comment .like .material-icons.btn--like{
     color: #333;
     font-size: 26px;
+    cursor: pointer;
   }
   .feed-detail-container .like-and-comment .like .material-icons.btn--dislike{
     /* color: #fa7b53;*/
     color: #fa7b53;
     font-size: 26px;
+    cursor: pointer;
   }
   .feed-detail-container .like-and-comment .comment{
     display:flex;
@@ -153,6 +160,7 @@
     align-items: center;
     position: absolute;
     right: 0px;
+    cursor: pointer;
   }
   .feed-detail-container .comment-list {
     width: 90%;
@@ -187,6 +195,7 @@
     position: absolute;
     right: 0;
     top:0;
+    cursor: pointer;
   }
   .feed-detail-container .comment-list .comment-item .comment-content{
     position: relative;
