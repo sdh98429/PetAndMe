@@ -27,10 +27,7 @@
 <script>
 import axios from 'axios'
 import {mapActions} from 'vuex'
-<<<<<<< HEAD
-=======
 import {BASE_API_URL} from '@/config/config.js'
->>>>>>> develop
 
 export default {
     name: 'Login',
