@@ -1,6 +1,5 @@
 <template>
-  <div style="border: 1px solid;" class="file-preview-container">유저 피드리스트
-    {{userFeeds}}
+  <div style="border: 1px solid;" class="file-preview-container">
     <div v-for="userFeed in userFeeds" :key="userFeed.feedNumber">
       <img class="feed-thumbnail" @click="goToFeedDetail(userFeed)" :src="`data:image/png;base64,${userFeed.feedThumbnail}`" />
     </div>

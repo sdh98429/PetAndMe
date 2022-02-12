@@ -4,7 +4,6 @@
 
     <button v-if="(myUserNumber == yourUserNumber)" @click="toUserFeedUpdate">유저 피드 업데이트</button>
     <div>프로필</div>
-    <div>{{profile}}</div>
     <div v-if="profile">
       <input v-if="(myUserNumber == yourUserNumber)" @change='onInputImage()' accept="image/*" ref="image" type="file" style="display : none">
       <img @click="profileChange()" :src="'http://i6b106.p.ssafy.io:8080/main/image?file=' + profile.saveFolder + profile.userPhotoName" alt="프로필 사진" style="width: 300px; height: 150px; object-fit: contain;">
