@@ -1,5 +1,5 @@
 <template>
-  <div class="feed-container">
+  <div class="feed-detail-container">
     <!-- Feed Image -->
     <div class="feed-img">
       <span v-show="photoIndex > 0" class="material-icons left-btn" @click="leftPhoto">arrow_forward_ios</span>
@@ -47,6 +47,16 @@
       <div v-if="myUserNumber === feedUserNumber" class="material-icons delete-btn" @click="deleteFeedDetail">delete_outline</div>
     </div>
 
+    <div class="comment-create">
+      <img class="my-profile-image" src="@/assets/unknown_image.jpg" alt="">
+      <input class="comment-input" type="text" v-model.trim="commentContent" placeholder="댓글을 남겨주세요" @keyup.enter="createComment">
+      <div class="material-icons comment-btn--mobile" @click="createComment">north</div>
+      <div class="comment-btn--pc" @click="createComment">Enter</div>
+      <!-- <span  class="comment-btn" @click="createComment">게시</span> -->
+      <!-- <img src="@/assets/arrow.png" alt="" class="comment-btn"> -->
+      <!-- <div  class="material-icons comment-btn" @click="createComment">done_outline</div> -->
+      <!-- <font-awesome-icon icon="arrow-right" class="comment-btn" @click="createComment"></font-awesome-icon> -->
+    </div>
   
     <div class="comment-list">
       <div v-if="commentList.length == 0">댓글이 없습니다.</div>
@@ -58,11 +68,6 @@
       </div>
     </div>
 
-    <div class="comment-create">
-      <img class="my-profile-image" src="@/assets/unknown_image.jpg" alt="">
-      <input class="comment-input" type="text" v-model.trim="commentContent" placeholder="댓글을 남겨주세요" @keyup.enter="createComment">
-      <div  class="material-icons comment-btn" @click="createComment">north</div>
-    </div>
   </div>
 </template>
 
@@ -87,7 +92,7 @@ export default {
       profile : null,
       photoIndex : 0,
       commentContent : null,
-      myUserNumber: 2,
+      myUserNumber: 1,
       feedUserNumber: null,
       feedContent: null,
       feedDate: null,
@@ -303,10 +308,15 @@ export default {
   mounted(){
     const searchEl = document.querySelector('.search-bar')
     searchEl.classList.add('inactive')
+    const footerEl = document.querySelector('#footer-container')
+    footerEl.classList.add('indetail')
+    move('0', '0', '#faf4e4')
   },
   destroyed() {
     const searchEl = document.querySelector('.search-bar')
     searchEl.classList.remove('inactive')
+    const footerEl = document.querySelector('#footer-container')
+    footerEl.classList.remove('indetail')
   }
 }
 </script>
