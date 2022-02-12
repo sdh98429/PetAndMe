@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="my-container">
-    <!-- <Navbar/> -->
+    <Navbar/>
     <router-view/>
     <footer >
       <div class="my-footer"></div>
@@ -8,11 +8,11 @@
   </div>
 </template>
 <script>
-// import Navbar from '@/views/navbar/Navbar'
+import Navbar from '@/views/navbar/Navbar'
 
 export default {
   components: {
-    // Navbar
+    Navbar
   },
   methods: {
     createFeed() {
