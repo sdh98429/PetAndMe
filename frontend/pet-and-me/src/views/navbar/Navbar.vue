@@ -246,6 +246,7 @@ export default {
     font-size: 17px;
     z-index: 0;
     margin: 0 auto;
+    cursor: pointer;
   }
   #footer-container.inactive{
     display:none;

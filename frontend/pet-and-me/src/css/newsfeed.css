@@ -54,6 +54,7 @@
     background-color:#333; 
     border-radius:50%; 
     color: #fff;
+    cursor: pointer;
   }
   .feed-container .feed-img .material-icons.right-btn {
     position: absolute;
@@ -64,6 +65,7 @@
     background-color:#333; 
     border-radius:50%; 
     color: #fff;
+    cursor: pointer;
   }
   .feed-container .feed-profile {
     position:relative;
@@ -82,6 +84,7 @@
     position: absolute;
     left: 5px;
     top: 5px;
+    cursor: pointer;
   }
   .feed-container .feed-profile .feed-profile-nickname {
     width: 65%;
@@ -89,7 +92,8 @@
     font-weight: bold;
     position: absolute;
     left: 65px;
-    top:0
+    top:0;
+    cursor: pointer;
   }
   .feed-container .feed-profile .feed-profile-nickname2 {
     width: 65%;
@@ -98,6 +102,7 @@
     position: absolute;
     left: 65px;
     top: 16px;
+    cursor: pointer;
   }
   .feed-container .feed-profile .feed-profile-mypet {
     width: auto;
@@ -121,6 +126,7 @@
     width: 95%;
     height: 30px;
     color: #ccc;
+    cursor: pointer;
   }
   .feed-container .feed-upload-date {
     position: relative;
@@ -145,11 +151,13 @@
   .feed-container .like-and-comment .like .material-icons.btn--like{
     color: #333;
     font-size: 26px;
+    cursor: pointer;
   }
   .feed-container .like-and-comment .like .material-icons.btn--dislike{
     /* color: #fa7b53;*/
     color: #fa7b53;
     font-size: 26px;
+    cursor: pointer;
   }
   .feed-container .like-and-comment .comment{
     display:flex;
@@ -161,6 +169,7 @@
   }
   .feed-container .like-and-comment .comment .material-icons.btn--comment {
     font-size: 26px;
+    cursor: pointer;
   }
   .feed-container .like-and-comment .material-icons.delete-btn{
     font-size:30px;
@@ -168,6 +177,7 @@
     align-items: center;
     position: absolute;
     right: 0px;
+    cursor: pointer;
   }
   .feed-container .comment-list {
     width: 95%;
@@ -176,12 +186,14 @@
     max-height: 300px;
     overflow: scroll;
     position: relative;
+    cursor: pointer;
   }
   .feed-container .comment-list .comment-item {
     position: relative;
     width: 100%;
     min-height: 30px;
     margin-bottom: 30px;
+    cursor: pointer;
   }
   .feed-container .comment-list .comment-item .comment-user-profile{
     position: absolute;
@@ -208,6 +220,7 @@
     top: 20px;
     width: 75%;
     word-break: break-all;
+    cursor: pointer;
   }
   /* .feed-container .comment-create {
   /   position: relative;
