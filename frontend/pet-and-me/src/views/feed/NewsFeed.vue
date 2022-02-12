@@ -1,35 +1,10 @@
 <template>
   <div class="bg-container">
     <div class="newsfeed-container">
-      <!-- <button v-for="(tab, index) in tabs"
-        :key="index"
-        v-bind="{active: currentTab === index}"
-        @click="currentTab = index">{{tab}}
-      </button> -->
       <div>
-        <!-- <div>최신 피드</div> -->
+        <!-- <div>뉴스 피드</div> -->
         <div v-show="currentTab==0">
           <div v-for="(feed, idx) in RecentFeedList" :key="idx">
-            <NewsFeedListItem
-            :feed="feed"
-            :feedUploadDate="getUploadDate(feed)"
-            />
-          </div>
-        </div>
-
-        <!-- <div>선호 피드</div> -->
-        <div v-show="currentTab==1">
-          <div v-for="(feed, idx) in FavFeedList" :key="idx">
-            <NewsFeedListItem
-            :feed="feed"
-            :feedUploadDate="getUploadDate(feed)"
-            />
-          </div>
-        </div>
-
-        <!-- <div>친구 피드</div> -->
-        <div v-show="currentTab==2">
-          <div v-for="(feed, idx) in FollowFeedList" :key="idx">
             <NewsFeedListItem
             :feed="feed"
             :feedUploadDate="getUploadDate(feed)"
@@ -61,8 +36,7 @@ export default {
       today: new Date(),
       NewsFeedList: [], // 현재 화면에 보여줄 뉴스피드리스트
       RecentFeedList: [], // 뉴스피드리스트1 최신피드리스트
-      FavFeedList: [], // 뉴스피드리스트2 선호피드리스트
-      FollowFeedList: [], // 뉴스피드리스트3 친구피드리스트
+
       myUserNumber: 2,
       cursor: '', // 스크롤에서 가장 마지막 게시글 생성 날짜
 
@@ -71,8 +45,6 @@ export default {
       NewsFeedUrl : null, // 피드 요청 보낼 뉴스피드 url
 
       RecentFeedUrl : `${BASE_API_URL}/main/newsfeed?userNumber=${this.myUserNumber}&cursor=${this.cursor}`,
-      FavFeedUrl : `${BASE_API_URL}/main/favfeed?userNumber=${this.myUserNumber}&cursor=${this.cursor}`,
-      FollowFeedUrl : `${BASE_API_URL}/main/followfeed?userNumber=${this.myUserNumber}&cursor=${this.cursor}`,
 
     }
   },
@@ -102,31 +74,15 @@ export default {
     },
     infiniteHandler: function($state){ // 인피니트 스크롤 함수
       this.NewsFeedList = []
-      if (this.currentTab === 0){
-        this.NewsFeedList = this.RecentFeedList
-        if (this.NewsFeedList.length){
-          this.cursor = this.NewsFeedList[this.NewsFeedList.length-1].feedDate
-        } else {
-          this.cursor = ''
-        }
-        this.NewsFeedUrl = `${BASE_API_URL}/main/newsfeed?userNumber=${this.myUserNumber}&cursor=${this.cursor}`
-      } else if (this.currentTab === 1){
-        this.NewsFeedList = this.FavFeedList
-        if (this.NewsFeedList.length){
-          this.cursor = this.NewsFeedList[this.NewsFeedList.length-1].feedDate
-        } else {
-          this.cursor = ''
-        }
-        this.NewsFeedUrl = `${BASE_API_URL}/main/favfeed?userNumber=${this.myUserNumber}&cursor=${this.cursor}`
-      } else if (this.currentTab === 2){
-        this.NewsFeedList = this.FollowFeedList
-        if (this.NewsFeedList.length){
-          this.cursor = this.NewsFeedList[this.NewsFeedList.length-1].feedDate
-        } else {
-          this.cursor = ''
-        }
-        this.NewsFeedUrl = `${BASE_API_URL}/main/followfeed?userNumber=${this.myUserNumber}&cursor=${this.cursor}`
+      console.log('스크롤 작동')
+
+      this.NewsFeedList = this.RecentFeedList
+      if (localStorage.getItem('NewsCursor')){
+        this.cursor = localStorage.getItem('NewsCursor')
+      } else {
+        this.cursor = ''
       }
+      this.NewsFeedUrl = `${BASE_API_URL}/main/newsfeed?userNumber=${this.myUserNumber}&cursor=${this.cursor}`
 
       if (this.NewsFeedList.length){
         axios({
@@ -136,14 +92,9 @@ export default {
           .then(res => {
             setTimeout(() => {
               this.NewsFeedList = this.NewsFeedList.concat(res.data)
-              if (this.currentTab === 0){
-                this.RecentFeedList = this.NewsFeedList
-              } else if (this.currentTab === 1){
-                this.FavFeedList = this.NewsFeedList
-              } else if (this.currentTab === 2){
-                this.FollowFeedList = this.NewsFeedList
-              }
-
+              this.RecentFeedList = this.NewsFeedList
+              localStorage.setItem('NewsCursor', this.NewsFeedList[this.NewsFeedList.length-1].feedDate);
+ 
               $state.loaded()
               if (!res.data.length){
                 $state.complete();
@@ -161,16 +112,18 @@ export default {
         })
           .then(res => {
             this.NewsFeedList = res.data
-            if (this.currentTab === 0){
-              this.RecentFeedList = this.NewsFeedList
-            } else if (this.currentTab === 1){
-              this.FavFeedList = this.NewsFeedList
-            } else if (this.currentTab === 2){
-              this.FollowFeedList = this.NewsFeedList
-              }
-            $state.loaded();
+            this.RecentFeedList = this.NewsFeedList
+            
+
             if (!res.data.length){
-              $state.complete();
+              // $state.complete();
+              localStorage.setItem('NewsCursor', '')
+              $state.loaded();
+            } else {
+              setTimeout(() => {
+                localStorage.setItem('NewsCursor', this.NewsFeedList[this.NewsFeedList.length-1].feedDate);
+                $state.loaded();
+              }, 500)
             }
           })
           .catch(err => {
