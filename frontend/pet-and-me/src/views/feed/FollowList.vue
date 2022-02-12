@@ -14,8 +14,6 @@
         <img @click="toUserFeed(follower.userID)" :src="'http://i6b106.p.ssafy.io:8080/main/image?file=' + follower.saveFolder + follower.userPhotoName" alt="프로필 사진" style="width: 300px; height: 150px; object-fit: contain;">
         <div>{{follower.userNickName}}</div>
         <div>@{{follower.userID}}</div>
-        <div>팔로워 : {{follower.followerCnt}}</div>
-        <div>팔로잉 : {{follower.followingCnt}}</div>
         <button @click="unfollowUser(follower.userNumber)" v-if="myFollowingList.includes(follower.userNumber)">언팔로우</button>
         <button @click="followUser(follower.userNumber)" v-else>팔로우</button>
       </div>
@@ -26,8 +24,6 @@
         <img @click="toUserFeed(following.userID)" :src="'http://i6b106.p.ssafy.io:8080/main/image?file=' + following.saveFolder + following.userPhotoName" alt="프로필 사진" style="width: 300px; height: 150px; object-fit: contain;">
         <div>{{following.userNickName}}</div>
         <div>@{{following.userID}}</div>
-        <div>팔로워 : {{following.followerCnt}}</div>
-        <div>팔로잉 : {{following.followingCnt}}</div>
         <button @click="unfollowUser(follower.userNumber)" v-if="myFollowingList.includes(following.userNumber)">언팔로우</button>
         <button @click="followUser(follower.userNumber)" v-else>팔로우</button>
       </div>

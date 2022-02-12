@@ -22,6 +22,13 @@
           <div>@{{Nickname.userID}}</div>
         </div>
       </div>
+      <div v-show="currentTab==2">
+        <div v-for="(Animal, idx) in resultAnimal" :key="idx" style="border: 1px solid;">
+          <img @click="toUserFeed(Animal.userID)" :src="'http://i6b106.p.ssafy.io:8080/main/image?file=' + Animal.saveFolder + Animal.userPhotoName" alt="프로필 사진" style="width: 300px; height: 150px; object-fit: contain;">
+          <div>{{Animal.userNickName}}</div>
+          <div>@{{Animal.userID}}</div>
+        </div>
+      </div>
     </div>
 
     
@@ -39,13 +46,14 @@ export default {
 
       resultId: null, // ID 검색 결과
       resultNickname: null, // 닉네임 검색 결과
+      resultAnimal: null, // 반려동물 종류 검색 결과
       resultRecent: null, // 최근 검색 결과
       searchWord: this.$route.params.searchWord, // 검색 단어
       myUserNumber : 1,
 
       currentTab: 0, // 현재 탭
       // tabs: ['아이디 검색 결과', '닉네임 검색 결과', '최근 검색 단어'],
-      tabs: ['아이디 검색 결과', '닉네임 검색 결과']
+      tabs: ['아이디 검색 결과', '닉네임 검색 결과', '반려동물 종류 검색 결과']
     }
   },
   components: {
@@ -94,6 +102,18 @@ export default {
         searchWord : this.searchWord,
         userNumber : this.myUserNumber,
       }
+
+      // 반려동물 종류 검색 결과
+      axios({
+        method: 'get',
+        url: 'http://i6b106.p.ssafy.io:8080/search/animal/' + this.$route.params.searchWord,
+      })
+        .then(response => {
+          this.resultAnimal = response.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
 
       // 최근 검색 결과 저장 및 조회
       axios({

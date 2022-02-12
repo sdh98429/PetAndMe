@@ -64,6 +64,14 @@ body {
 }
 /* PC Web */
 @media screen and (min-width:768px){
-
+  body {
+    /* height: 100%; */
+    width: 100%;
+    height: 100%;
+    background-image: url("./assets/bg_test_2.png");
+    background-repeat: repeat-y;
+    background-size: cover;
+    z-index: -10;
+  }
 }
 </style>
