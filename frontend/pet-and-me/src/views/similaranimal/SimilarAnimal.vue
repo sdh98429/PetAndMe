@@ -128,5 +128,6 @@ export default {
 }
 </script>
 
-<style scoped lang="scss" src="@/css/similaranimal.scss">
+<style scoped lang="scss" src="../../css/similaranimal.scss">
+
 </style>

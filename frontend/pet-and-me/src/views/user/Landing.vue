@@ -9,6 +9,9 @@
     <div style="height: 1000px">
       <h2 class="myH2">Pet And Me</h2>
       <p class="myP">
+      <button @click="signup">signup</button>
+      <button @click="login">login</button>
+      <button @click="newsfeed">newsfeed</button>
 
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum ratione facere animi impedit rem labore sint
         repellendus ipsa sapiente voluptatem aut excepturi quo itaque, ab earum cumque. Voluptatem beatae id inventore
@@ -83,7 +86,7 @@ export default {
 .landing-container {
   position: relative;
   top:100px;
-  z-index: -1;
+  z-index: 3;
 }
 // .home {
 //   width: 100%;
@@ -103,6 +106,7 @@ export default {
   padding-left: 15%;
   padding-right: 15%;
   font-size: 20px; 
+  background-color: #fff;
 }
 @media all and (max-width:700px) {
   .myP {

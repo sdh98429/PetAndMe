@@ -204,7 +204,8 @@ export default {
 }
 </script>
 
-<style src="../../css/newsfeed.css">
+<style>
+@import url("../../css/newsfeed.css");
 /* COMMON */
 img {
   width: 200px;
