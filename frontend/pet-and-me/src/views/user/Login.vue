@@ -27,6 +27,7 @@
 <script>
 import axios from 'axios'
 import {mapActions} from 'vuex'
+import {BASE_API_URL} from '@/config/config.js'
 
 export default {
     name: 'Login',
@@ -53,7 +54,7 @@ export default {
 
       axios({
           method: 'post',
-          url: 'http://localhost:8000/user/login',
+          url: `${BASE_API_URL}/user/login`,
           data: this.credentials
         })
         .then(res => {

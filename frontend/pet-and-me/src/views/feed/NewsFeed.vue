@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import '@/css/newsfeed.css'
 import NewsFeedListItem from '@/components/feed/NewsFeedListItem'
 import axios from "axios"
 import infiniteLoading from 'vue-infinite-loading'
@@ -205,7 +206,6 @@ export default {
 </script>
 
 <style>
-@import url("../../css/newsfeed.css");
 /* COMMON */
 img {
   width: 200px;
