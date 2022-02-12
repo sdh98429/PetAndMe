@@ -26,6 +26,7 @@
 
 <script>
 import axios from 'axios'
+import {mapActions} from 'vuex'
 
 export default {
     data: function () {
@@ -46,7 +47,7 @@ export default {
       }
         axios({
         method: 'post',
-        url: 'http://127.0.0.1:8000/user/login',
+        url: 'http://i6b106.p.ssafy.io:8080/user/login',
         data: this.credentials
         })
         .then(res => {
@@ -57,8 +58,12 @@ export default {
         })
         .catch(err => {
           console.log(err)
+          alert('실패')
         })
     },
+    ...mapActions([
+			'loginGetToken',
+		]),
     // google
     onSignIn(googleUser){
       const profile = googleUser.getBasicProfile();

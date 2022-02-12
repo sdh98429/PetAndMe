@@ -1,4 +1,9 @@
+from urllib import request, response
+from rest_framework.response import Response
 from django.shortcuts import render
+from rest_framework.decorators import api_view
+from django.http.response import HttpResponse
+import datetime
 
 # Video
 from moviepy.editor import *
@@ -9,18 +14,55 @@ import numpy as np
 from PIL import Image, ImageOps
 import glob
 from natsort import natsorted
+import base64
 
 # path
 import os
+import shutil
+
+# list test
+from rest_framework.decorators import api_view
 
 # Create your views here.
 
+@api_view(['POST'])
 def pet_tape(request):
+    # user Id
+    userId = 'person1'
+    # base64 encoded video list
+    videoList = []
+
+    if request.method == "POST":
+        # userId로 만들어진 dir 있는지 확인 / 없으면 만들기
+        try:
+            os.mkdir('./taping/' + userId)
+        except:
+            pass
+        # data parsing
+        movieType = request.data.get('type')
+        movieBgm = request.data.get('bgm')
+        movieImages = request.data.get('images')
+        # 넘어온 images list 돌면서 base64 decode
+        imageIdx = 0
+        for (idx, image) in enumerate(movieImages):
+            imgdata = base64.b64decode(image)
+            filename = userId + str(idx) + 'image.jpg'
+            imageIdx += 1
+            with open(filename, 'wb') as f:
+                f.write(imgdata)
+
+
     origin = os.path.dirname(os.path.abspath(__file__))
+    originPath = os.path.abspath(os.path.join(origin, '..'))
     audiodir = origin + '/audiofiles'
     picdir = origin + '/pics'
+    videodir = origin + '/' + userId
+    # userDir = request.GET.get('userNumber')
+    userdir = origin + '\\' + userId
+    print(origin)
     # 폴더 내 모든 jpeg 파일 가져와서 정렬
-    file_list = glob.glob(os.path.join(picdir, '*.jpg'))
+    file_list = glob.glob(os.path.join(originPath, '*.jpg'))
+
     # print(origin)
     # print(os.path.join(picdir))
     # print(file_list)
@@ -34,7 +76,7 @@ def pet_tape(request):
         image = ImageOps.exif_transpose(image)
         resized = image.resize((1280, 720))
         resized.save(i)
-
+    userID = 'person1'
     file_list_sorted = natsorted(file_list,reverse=False)
 
     # 각 사진당 2초의 시간을 두고 이어붙이기
@@ -83,9 +125,41 @@ def pet_tape(request):
 
     # 영상 길이에 맞춰 bgm duration 설정
     final_clip = concatenate_videoclips(clips)
-    bgm = AudioFileClip(os.path.join(audiodir, 'optimistic.mp3')).set_duration(final_clip.duration)
+    bgm = AudioFileClip(os.path.join(audiodir, str(movieBgm)+'.mp3')).set_duration(final_clip.duration)
     clips = final_clip.set_audio(bgm)
 
+    # video indexing
+    idx = str(datetime.date.today())
+    videoname = userId + idx
+    originPath = os.path.abspath(os.path.join(origin, '..'))
+
     # 렌더링
-    clips.write_videofile('PetNMe.mp4',fps=12, codec='libx264')
-    return (clips)
+    clips.write_videofile(videoname + '.mp4', fps=12, codec='libx264')
+
+    # 유저별 경로로 이동
+    shutil.move(originPath + '\\' + videoname + '.mp4', userdir + '\\' + videoname + '.mp4')
+
+    # base64 decode한 사진 삭제
+    for j in range(imageIdx):
+        removefilename = os.path.join(originPath) + '\\' + userId + str(j) + 'image.jpg'
+        os.remove(removefilename)
+
+    # return (clips)
+    # 폴더 내 모든 mp4 파일 가져와서 정렬
+    video_list = glob.glob(os.path.join(videodir, '*.mp4'))
+    video_list_sorted = natsorted(video_list,reverse=False)
+    # print('비디오리스트' + str(video_list))
+    # video encode
+    vid_list = []
+    for vid in video_list_sorted:
+        vid_encode = vid.encode('utf-8')
+        vidData = base64.b64encode(vid_encode)
+        vid_list.append(vidData)
+    return Response(vid_list)
+
+@api_view(['GET'])
+def test(request):
+    li = request.GET.get("/test/data", None)
+    print(li)
+    print('타입은')
+    print(type(li))

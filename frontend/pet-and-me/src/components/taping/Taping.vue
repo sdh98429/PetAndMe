@@ -19,15 +19,17 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
   name: 'Taping',
   data() {
     return {
       files: [],
-      style: null,
-      bgm: null,
+      types: {
+        type: 1,
+        bgm: 2,
+        images: 3,
+      },
     }
   },
   methods: {
@@ -50,17 +52,8 @@ export default {
       }
     },
     createTape() {
-      axios({
-        method: 'post',
-        url: 'http://127.0.0.1:8000/api/v1/tape/',
-        data: this.credentials
-      })
-        .then(() => {
-          console.log('생성요청')
-        })
-        .catch(err => {
-          console.log(err.response)
-        })
+      this.$emit("tapedata-update", this.types)
+
     }
   },
 }
