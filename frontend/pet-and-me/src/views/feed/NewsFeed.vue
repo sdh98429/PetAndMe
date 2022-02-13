@@ -1,49 +1,47 @@
 <template>
-  <div class="bg-container">
-    <div class="newsfeed-container">
-      <!-- <button v-for="(tab, index) in tabs"
-        :key="index"
-        v-bind="{active: currentTab === index}"
-        @click="currentTab = index">{{tab}}
-      </button> -->
-      <div>
-        <!-- <div>최신 피드</div> -->
-        <div v-show="currentTab==0">
-          <div v-for="(feed, idx) in RecentFeedList" :key="idx">
-            <NewsFeedListItem
-            :feed="feed"
-            :feedUploadDate="getUploadDate(feed)"
-            />
-          </div>
+  <div class="newsfeed-container">
+    <!-- <button v-for="(tab, index) in tabs"
+      :key="index"
+      v-bind="{active: currentTab === index}"
+      @click="currentTab = index">{{tab}}
+    </button> -->
+    <div>
+      <!-- <div>최신 피드</div> -->
+      <div v-show="currentTab==0">
+        <div v-for="(feed, idx) in RecentFeedList" :key="idx">
+          <NewsFeedListItem
+          :feed="feed"
+          :feedUploadDate="getUploadDate(feed)"
+          />
         </div>
-
-        <!-- <div>선호 피드</div> -->
-        <div v-show="currentTab==1">
-          <div v-for="(feed, idx) in FavFeedList" :key="idx">
-            <NewsFeedListItem
-            :feed="feed"
-            :feedUploadDate="getUploadDate(feed)"
-            />
-          </div>
-        </div>
-
-        <!-- <div>친구 피드</div> -->
-        <div v-show="currentTab==2">
-          <div v-for="(feed, idx) in FollowFeedList" :key="idx">
-            <NewsFeedListItem
-            :feed="feed"
-            :feedUploadDate="getUploadDate(feed)"
-            />
-          </div>
-        </div>
-
-        <!-- <div>인피니트 스크롤</div> -->
-        <infinite-loading :identifier="currentTab" @infinite="infiniteHandler" spinner="waveDots">
-          <div slot="no-more" style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px;"></div>
-        </infinite-loading>
       </div>
 
+      <!-- <div>선호 피드</div> -->
+      <div v-show="currentTab==1">
+        <div v-for="(feed, idx) in FavFeedList" :key="idx">
+          <NewsFeedListItem
+          :feed="feed"
+          :feedUploadDate="getUploadDate(feed)"
+          />
+        </div>
+      </div>
+
+      <!-- <div>친구 피드</div> -->
+      <div v-show="currentTab==2">
+        <div v-for="(feed, idx) in FollowFeedList" :key="idx">
+          <NewsFeedListItem
+          :feed="feed"
+          :feedUploadDate="getUploadDate(feed)"
+          />
+        </div>
+      </div>
+
+      <!-- <div>인피니트 스크롤</div> -->
+      <infinite-loading :identifier="currentTab" @infinite="infiniteHandler" spinner="waveDots">
+        <div slot="no-more" style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px;"></div>
+      </infinite-loading>
     </div>
+
   </div>
 </template>
 
@@ -190,22 +188,35 @@ export default {
   },
   mounted() {
     move('1', '10%', '#fff')
-    const footerEl = document.querySelector('#footer-container')
-    footerEl.classList.add('innewsfeed')
-    const searchEl = document.querySelector('.search-bar')
-    searchEl.classList.add('innewsfeed')
+    // const footerEl = document.querySelector('#footer-container')
+    // footerEl.classList.add('innewsfeed')
+    // const searchEl = document.querySelector('.search-bar')
+    // searchEl.classList.add('innewsfeed')
+    // const searchResultEl = document.querySelector('.search-result')
+    // searchResultEl.classList.add('innewsfeed')
   },
   destroyed() {
-    const footerEl = document.querySelector('#footer-container')
-    const searchEl = document.querySelector('.search-bar')
-    searchEl.classList.remove('innewsfeed')
-    footerEl.classList.remove('innewsfeed')
+    // const searchResultEl = document.querySelector('.search-result')
+    // searchResultEl.classList.remove('innewsfeed')
+    // const footerEl = document.querySelector('#footer-container')
+    // footerEl.classList.remove('innewsfeed')
+    // const searchEl = document.querySelector('.search-bar')
+    // searchEl.classList.remove('innewsfeed')
   }
 
 }
 </script>
 
-<style>
+<style scoped>
+.search-result{
+  left: calc(50% + 1px)
+}
+#footer-container{
+  left: calc(50% + 1px)
+}
+.search-bar {
+  left: calc(50% + 1px)
+}
 /* COMMON */
 img {
   width: 200px;

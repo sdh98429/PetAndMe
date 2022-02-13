@@ -1,6 +1,5 @@
 <template>
-  <div>
-
+  <div class="test-container">
     <div>검색 단어 : {{searchWord}}</div>
     <button v-for="(tab, index) in tabs"
       :key="index"
@@ -164,5 +163,8 @@ export default {
 </script>
 
 <style>
-
+.test-container {
+  position: relative;
+  top:100px;
+}
 </style>
