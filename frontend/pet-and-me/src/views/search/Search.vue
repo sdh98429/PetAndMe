@@ -33,7 +33,7 @@ export default {
       realTimeSearch: null, // 실시간 검색 결과
       isRecent: true, // 최근 검색 결과 보여주는지 여부
 
-      myUserNumber: 1,
+
     }
   },
   components: {
@@ -99,7 +99,12 @@ export default {
 
   created : function(){
     this.getSearchHistory()
-  }
+  },
+  computed: {
+    myUserNumber () {
+      return this.$store.getters.getUserNumber
+    }
+  },
 }
 </script>
 

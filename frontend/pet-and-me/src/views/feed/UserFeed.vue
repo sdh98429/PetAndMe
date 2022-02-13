@@ -70,8 +70,8 @@ export default {
       userNumber: "null",
 
       yourUserId: this.$route.params.yourUserId,
-      yourUserNumber: 1,
-      myUserNumber: 0,
+      yourUserNumber: 0,
+
       isFollow : false,
       followerCnt : 0,
       followingCnt : 0,
@@ -239,7 +239,6 @@ export default {
     },
 
     asyncCall : async function(){
-      await this.getUserNumber();
       await this.getUserProfile();
       await this.getFollowing();
       await this.getFollower();
@@ -251,7 +250,12 @@ export default {
   },
   mounted() {
     move('5','90%','#fff')
-  }
+  },
+  computed: {
+    myUserNumber () {
+      return this.$store.getters.getUserNumber
+    }
+  },
 }
 </script>
 

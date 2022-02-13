@@ -75,7 +75,7 @@ export default {
       today: new Date(),
       profile : null,
       photoIndex : 0,
-      myUserNumber: 1,
+
       feedUserNumber: this.feed.userNumber,
       feedNumber: this.feed.feedNumber,
       feedContent: this.feed.feedContent,
@@ -236,6 +236,11 @@ export default {
       this.getComments()
   },
   mounted() {
+  },
+  computed: {
+    myUserNumber () {
+      return this.$store.getters.getUserNumber
+    }
   },
 }
 </script>

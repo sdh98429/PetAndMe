@@ -9,6 +9,7 @@ import datetime
 from moviepy.editor import *
 from moviepy.video.tools.segmenting import findObjects
 import numpy as np
+import cv2
 
 # Image
 from PIL import Image, ImageOps
@@ -63,10 +64,6 @@ def pet_tape(request):
     # 폴더 내 모든 jpeg 파일 가져와서 정렬
     file_list = glob.glob(os.path.join(originPath, '*.jpg'))
 
-    # print(origin)
-    # print(os.path.join(picdir))
-    # print(file_list)
-    # resizing prevent rotate
     '''
     일반적으로 세로 > 가로면 rotate정보가 EXIF 메타데이터에 저장되고, PIL은 이를 자동으로 읽어 사진을 rotate한다.
     이를 방지하기 위해 ImageOps.exif_transpose를 활용하여 이미지를 fix한다.
@@ -148,13 +145,14 @@ def pet_tape(request):
     # 폴더 내 모든 mp4 파일 가져와서 정렬
     video_list = glob.glob(os.path.join(videodir, '*.mp4'))
     video_list_sorted = natsorted(video_list,reverse=False)
-    # print('비디오리스트' + str(video_list))
+
     # video encode
     vid_list = []
     for vid in video_list_sorted:
-        vid_encode = vid.encode('utf-8')
-        vidData = base64.b64encode(vid_encode)
-        vid_list.append(vidData)
+        with open(vid, "rb") as vidStr:
+            convert = base64.b64encode(vidStr.read())
+        vid_list.append(convert)
+
     return Response(vid_list)
 
 @api_view(['GET'])
