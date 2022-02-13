@@ -6,7 +6,7 @@
 
     <!-- 번호에 해당하는 동물이름 한국명 조회 -->
     <select id="selectKoreanName" resultType="String" parameterType="int">
-        SELECT animalName_ko
+        SELECT animalName
         FROM Animal
         WHERE animalNumber = #{animalNumber};
     </select>
