@@ -27,7 +27,7 @@
     </select>
 
     <!-- 동물목록 조회 -->
-    <select id="selectAnimal" resultType="FavAnimalDto">
+    <select id="selectAnimal" resultType="AnimalDto">
         SELECT animalNumber, animalName
         FROM Animal
     </select>
