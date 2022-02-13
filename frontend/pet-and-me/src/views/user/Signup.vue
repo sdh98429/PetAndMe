@@ -87,16 +87,16 @@ export default {
     },
     petSave: function(res) {
       this.credentials.petCheck = res.petCheck
-      this.credentials.userPet.petName = res.petName
-      this.credentials.userPet.petBirth = res.petBirth
-      this.credentials.userPet.petGender = res.petGender
-      this.credentials.userPet.animalNumber = res.petType*1
+      this.credentials.userPet[0].petName = res.petName
+      this.credentials.userPet[0].petBirth = res.petBirth
+      this.credentials.userPet[0].petGender = res.petGender
+      this.credentials.userPet[0].animalNumber = res.petType*1
       this.level++
     },
     preferenceSave: function(res) {
       this.credentials.userPreference = res.selected
       for (var step=0; step < res.selected.length; step++) {
-        this.credentials.userPreference[step] = {'AnimalNumber' : res.selected[step]*=1}
+        this.credentials.userPreference[step] = {'animalNumber' : res.selected[step]*=1}
       }
       console.log(this.credentials.userPreference)
         axios({

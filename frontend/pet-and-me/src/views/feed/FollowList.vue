@@ -92,12 +92,12 @@ export default {
       .then(response => {
         this.followingCnt = response.data.length
         this.followingList = response.data
-        var ind;
-        for (ind = 0; ind < response.data.length; ind++) {
-          if (this.yourUserNumber == response.data[ind].userNumber){
-            this.isFollow = true
-          }
-        }
+        // var ind;
+        // for (ind = 0; ind < response.data.length; ind++) {
+        //   if (this.yourUserNumber == response.data[ind].userNumber){
+        //     this.isFollow = true
+        //   }
+        // }
       })
       .catch(err => {
         console.log(err)
@@ -143,7 +143,7 @@ export default {
         url: 'http://i6b106.p.ssafy.io:8080/user/follow/' + this.myUserNumber + '/' + toUserNumber,
       })
       .then(() => {
-        this.isFollow = true
+        // this.isFollow = true
         this.asyncCall()
       })
       .catch(err => {
@@ -157,7 +157,7 @@ export default {
         url: 'http://i6b106.p.ssafy.io:8080/user/follow/' + this.myUserNumber + '/' + toUserNumber,
       })
       .then(() => {
-        this.isFollow = false
+        // this.isFollow = false
         this.asyncCall()
       })
       .catch(err => {
