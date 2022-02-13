@@ -1,6 +1,5 @@
 <template>
   <div class="nav">
-    <div class="bg-img"></div>
     <nav class="my-nav affix">
       <div class="navcontainer">
         <!-- Logo (Home Btn) -->
@@ -12,29 +11,50 @@
 
     <!-- Search Bar -->
     <div class="search-bar">
-      <input v-model="searchKeyword" type="text" class="search-input" @focus="onFocus" @blur="onBlur"/>
+      <input v-model="searchWord" type="text" class="search-input" placeholder="검색" @focus="onFocus" @keyup.enter="goToSearchResult" @input="getRealTimeSearch" />
+      <!-- <div v-if="isRecent">
+        <div v-for="(recent, idx) in resultRecent" :key="idx">
+          <div @click="goToSearchResult(recent)" style="border: 1px solid;">{{recent}}</div>
+        </div>
+      </div> -->
+      
       <div class="search-placeholder">
-        <i class="fas fa-search"></i>
-        <div>검색</div>
+        <font-awesome-icon icon="search" class="search-icon"></font-awesome-icon>
       </div>
+      <div class="search-btn"></div>
+
+      <div v-if="searchState" class="search-result">
+        <div v-for="(real, idx) in realTimeSearch" :key="idx" class="search-result-item">
+          <img 
+            class="search-result-image"
+            @click="toUserFeed(real.userID)" 
+            :src="`http://i6b106.p.ssafy.io:8080/main/image?file=${real.saveFolder}${real.userPhotoName}`" 
+            alt="프로필 사진" 
+          />
+          <div class="search-result-nickname">{{real.userNickName}}</div>
+          <div class="search-result-id">@{{real.userID}}</div>
+        </div>
+      </div>
+      <button @click="test">test</button>
+      <span class="material-icons close-btn" v-if="searchState" @click="closeTab">close</span>
     </div>
 
     <!-- Footer Bar -->
     <div id="footer-container">
       <div id="my-footer">
         <div id="bubbleWrapper">
-          <div id="bubble1" class="bubble"><span class="icon"><i class="fas fa-home"></i></span></div>
-          <div id="bubble2" class="bubble"><span class="icon"><i class="fas fa-paw"></i></span></div>
-          <div id="bubble3" class="bubble"><span class="icon"><i class="fas fa-plus"></i></span></div>
-          <div id="bubble4" class="bubble"><span class="icon"><i class="fas fa-search"></i></span></div>
-          <div id="bubble5" class="bubble"><span class="icon"><i class="fas fa-user"></i></span></div>
+          <div id="bubble1" class="bubble"><span class="icon"><font-awesome-icon icon="home"></font-awesome-icon></span></div>
+          <div id="bubble2" class="bubble"><span class="icon"><font-awesome-icon icon="paw"></font-awesome-icon></span></div>
+          <div id="bubble3" class="bubble"><span class="icon"><font-awesome-icon icon="plus"></font-awesome-icon></span></div>
+          <div id="bubble4" class="bubble"><span class="icon"><font-awesome-icon icon="video"></font-awesome-icon></span></div>
+          <div id="bubble5" class="bubble"><span class="icon"><font-awesome-icon icon="user"></font-awesome-icon></span></div>
         </div>
         <div id="menuWrapper">
-          <div id="menu1" class="menuElement" @click="goToNewsFeed()"><i class="fas fa-home"></i></div>
-          <div id="menu2" class="menuElement" @click="goToSimilarAnimal()"><i class="fas fa-paw"></i></div>
-          <div id="menu3" class="menuElement" @click="goToFeedCreate()"><i class="fas fa-plus"></i></div>
-          <div id="menu4" class="menuElement" @click="goToSearch()"><i class="fas fa-search"></i></div>
-          <div id="menu5" class="menuElement" @click="goToMyPage()"><i class="fas fa-user"></i></div>
+          <div id="menu1" class="menuElement" @click="goToNewsFeed()"><font-awesome-icon icon="home"></font-awesome-icon></div>
+          <div id="menu2" class="menuElement" @click="goToSimilarAnimal()"><font-awesome-icon icon="paw"></font-awesome-icon></div>
+          <div id="menu3" class="menuElement" @click="goToFeedCreate()"><font-awesome-icon icon="plus"></font-awesome-icon></div>
+          <div id="menu4" class="menuElement" @click="goToTaping()"><font-awesome-icon icon="video"></font-awesome-icon></div>
+          <div id="menu5" class="menuElement" @click="goToMyPage()"><font-awesome-icon icon="user"></font-awesome-icon></div>
         </div>
       </div>
       <div id="bgWrapper">
@@ -42,8 +62,8 @@
         <div id="bgBubble"></div>
       </div>
     </div>
-
     <svg width="0" height="0">
+
       <defs>
         <filter id="goo">
           <feGaussianBlur in="SourceGraphic" stdDeviation="20" result="blur" id="blurFilter" />
@@ -60,23 +80,37 @@
 <script>
 import move from '../../js/move.js'
 import $ from 'jquery'
+import axios from 'axios'
+import {BASE_API_URL} from '@/config/config.js'
+import '@/css/navbar.scss'
 export default {
   data() {
     return {
-      searchKeyword: null,
+      searchWord: null,
+      resultRecent: null, // 최근 검색 결과
+      resultId: null, // ID 검색 결과
+      resultNickname: null, // 닉네임 검색 결과
+      realTimeSearch: null, // 실시간 검색 결과
+      isRecent: false, // 최근 검색 결과 보여주는지 여부
+      myUserNumber: 1,
+      searchState: false,
     }
   },
   methods: {
-    onFocus() {
-      const placeholderEl = document.querySelector('.search-placeholder')
-      placeholderEl.classList.add('focused')
+    test(){
+      const el = document.querySelector('.search-result')
+      console.log(el.scrollLeft)
+      el.scrollTo({left:el.scrollLeft+200, behavior:'smooth'})
     },
-    onBlur() {
-      const placeholderEl = document.querySelector('.search-placeholder')
-      if(this.searchKeyword.trim()){
-        placeholderEl.classList.remove('focused')
-        this.searchKeyword = null
-      }
+    onFocus() {
+      this.searchState = true
+      // const searchResultEl = document.querySelector('.search-result')
+      // searchResultEl.classList.remove('inactive')
+      },
+    closeTab() {
+      this.searchState = false
+      // const searchResultEl = document.querySelector('.search-result')
+      // searchResultEl.classList.add('inactive')
     },
     goHome() {
       this.$router.push({ name : 'Landing'})
@@ -93,14 +127,90 @@ export default {
       move('3', '50%', '#fff')
       this.$router.push({ name : 'FeedCreate'})
     },
-    goToSearch(){
+    goToTaping(){
       move('4', '70%', '#fff')
-      this.$router.push({ name: 'Search' })
+      this.$router.push({ name: 'Taping' })
     },
     goToMyPage() {
       move('5', '90%', '#fff')
       this.$router.push({ name : 'UserFeed', params: { yourUserId : 'person1' }})
     },
+    
+    goToSearchResult: function(){ // 검색 결과 페이지로 이동
+      if (this.searchWord){
+        // this.$router.push({path: `/search/${this.searchWord}`})
+        if (this.searchWord[0] == '@' || this.searchWord[0] == '#'){
+          this.searchWord = this.searchWord.slice(1)
+        }
+        encodeURIComponent(this.searchWord)
+        this.$router.push({name: 'SearchResult', params:{searchWord:this.searchWord}})
+      }
+    },
+
+    getRealTimeSearch(e){ // 실시간 검색 결과
+      this.searchWord = e.target.value
+      if (this.searchWord && this.searchWord[0] == '@' && this.searchWord.length > 1){
+        this.isRecent = false
+        axios({
+          method: 'get',
+          url: `${BASE_API_URL}/search/rt/userid/${this.searchWord.slice(1)}`
+        })
+          .then(response => {
+            this.realTimeSearch = response.data
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      } else if (this.searchWord && this.searchWord[0] != '@' && this.searchWord[0] != '#'){
+        this.isRecent = false
+        axios({
+          method: 'get',
+          url: `${BASE_API_URL}/search/rt/userName/${this.searchWord}`,
+        })
+          .then(response => {
+            this.realTimeSearch = response.data
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      } else if (this.searchWord && this.searchWord[0] === '#'){
+        this.isRecent = false
+        axios({
+          method: 'get',
+          url: `${BASE_API_URL}/search/animal/${this.searchWord.slice(1)}`,
+        })
+          .then(response => {
+            this.realTimeSearch = response.data
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      } 
+      else {
+        this.isRecent = true
+        this.realTimeSearch = null
+      }
+    },
+
+    getSearchHistory: function(){ // 최근 검색 결과
+      axios({
+        method: 'get',
+        url: `${BASE_API_URL}/search/${this.myUserNumber}`,
+      })
+        .then(response => {
+          this.resultRecent = response.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    toUserFeed : function(userId){ // 유저 피드로 이동
+      this.$router.push({name: `UserFeed`, params : {yourUserId: userId}})
+      window.location.reload()
+    }
+  },
+  created() {
+    this.getSearchHistory()
   },
   mounted() {
     $('.navTrigger').click(function () {
@@ -115,510 +225,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Quicksand:400,500,700');
-
-/* Navbar */
-
-// .bg-img {
-//   /* height: 100%; */
-//   position: absolute;
-//   top:0;
-//   width: 100%;
-//   background-image: url("../../assets/bg_test_2.png");
-//   min-height: 100%;
-//   /* background-repeat: no-repeat; */
-//   background-repeat: repeat-y;
-//   background-size: cover;
-//   z-index: -10;
-// }
-.my-nav {
-  width: 100%;
-  height: 60px;
-  position: fixed;
-  line-height: 60px;
-  text-align: center;
-  top:0;
-  padding: 20px 0px;
-  -webkit-transition: all 0.4s ease;
-  transition: all 0.4s ease;
-  z-index: 3;
-}
-
-.my-nav span.logo {
-  margin: 0 auto;
-  font-weight: bold;
-}
-
-.my-nav span.logo div {
-  text-decoration: none;
-  color: #333;
-  font-size: 2.5rem;
-  text-align: center;
-}
-
-.navTrigger {
-  
-  display: none;
-  float: left;
-}
-
-/* Media query section */
-
-@media screen and (max-width: 768px){
-  .navcontainer {
-    width: 100%;
-    position: relative;
-    margin:0 auto;
-  }
-  .my-nav span.logo div {
-    text-decoration: none;
-    color: #333;
-    font-size: 3.4rem;
-  }
-  .navTrigger {
-    display: block;
-  }
-
-  .my-nav div.logo {
-    margin-left: 15px;
-  }
-
-  .my-nav div.media_button {
-    display: block;
-  }
-
-  .search-bar {
-    width: 100%;
-    position: fixed;
-    bottom: 75px;
-    background-color: #fff;
-    height:50px;
-    display:flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .search-bar.inactive {
-    display: none;
-  }
-  .search-bar .search-input {
-    width: 62%;
-    background-color: #eee;
-    outline: none;
-    border-radius: 10px;
-    border:none;
-    height:30px;
-    padding: 0 15%;
-    margin:0 auto;
-  }
-  .search-bar .search-placeholder {
-    position: absolute;
-    width: 90%;
-    left: 0;
-    top: 15px;
-    color: #ccc;
-  }
-  .search-bar .search-placeholder.focused div {
-    display:none;
-  }
-  .search-bar .search-placeholder i {
-    position: absolute;
-    left: 10%;
-    font-size: 20px;
-  }
-  .search-bar .search-placeholder div {
-    position: absolute;
-    left: 20%;
-    font-size:16px; 
-    font-family: 'MinSans-Regular'
-  }
-  // Mobile Footer bar
-  #footer-container{
-    width: 100%;
-    min-width:300px;
-    height: 80px;
-    background-color: #fff;
-    display: flex;
-    justify-content: flex-end;
-    flex-direction: column;
-    overflow: hidden;
-    position: fixed;
-    bottom: 0;
-    font-size: 17px;
-    z-index: 0;
-    margin: 0 auto;
-    cursor: pointer;
-  }
-  #footer-container.inactive{
-    display:none;
-  }
-
-  #my-footer{
-    width: 100%;
-    height: 60px;
-    background-color: #faf4e4;
-    position: absolute;
-  }
-
-  #bubbleWrapper{
-    position: absolute;
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    bottom: 25px;
-  }
-
-  .bubble{
-    background-color: #faf4e4;
-    width: 50px;
-    height: 50px;
-    bottom: 85px;
-    border-radius: 50%;
-    z-index: 1;
-    transform: translateY(120%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .icon{
-    opacity: 0;
-  }
-
-  #bubble1{
-    transform: translateY(0%);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    > span{
-      opacity: 0.7;
-    }
-  }
-
-  #bgWrapper{
-    filter: url(#goo);
-    width: 100%;
-    height: 30px;
-    position: absolute;
-    bottom: 60px;
-  }
-  #bg{
-    background-color: #fff;
-    width: 120%;
-    height: 100%;
-    margin-left: -10%;
-  }
-  #bgBubble{
-    position: absolute;
-    background-color: #fff;
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    bottom: -50px;
-    left: 10%;
-    transform: translateX(-50%);
-  }
-
-  #menuWrapper{
-    position: absolute;
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-  }
-
-  .menuElement{
-    opacity: 0.4;
-    transform: translateY(100%);
-    cursor: pointer;
-    &:hover{
-      opacity: 0.5;
-    }
-  }
-
-  #contentWrapper{
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    transform: translateY(-50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    h2{
-      color: #faf4e4;
-      font-family: sans-serif;
-      font-weight: 400;
-    }
-  }
-  .content{
-    display: none;
-    opacity: 0;
-  }
-}
-
-// PC Web
-@media screen and (min-width:768px){
-  .navcontainer {
-    width: 1000px;
-    position: relative;
-    margin:0 auto;
-    z-index: 3;
-  }
-  .navTrigger {
-    display: block;
-  }
-
-  .my-nav span.logo div {
-    text-decoration: none;
-    color: #333;
-    font-size: 5rem;
-  }
-  .my-nav div.logo {
-    margin-left: 15px;
-  }
-  .my-nav div.media_button {
-    display: block;
-  }
-  
-  .search-bar {
-    width: 600px;
-    position: fixed;
-    bottom: 75px;
-    // left: calc(50%);
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #fff;
-    height:50px;
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
-  }
-  .search-bar.innewsfeed{
-    left: 50%;
-  }
-  .search-bar.inactive {
-    display: none;
-  }
-  .search-bar .search-input {
-    width: 62%;
-    background-color: #eee;
-    outline: none;
-    border-radius: 10px;
-    border:none;
-    height:30px;
-    padding: 0 15%;
-    margin:0 auto;
-  }
-  .search-bar .search-placeholder {
-    position: absolute;
-    width: 90%;
-    left: 0;
-    top: 15px;
-    color: #ccc;
-  }
-  .search-bar .search-placeholder.focused div {
-    display:none;
-  }
-  .search-bar .search-placeholder i {
-    position: absolute;
-    left: 10%;
-    font-size: 20px;
-  }
-  .search-bar .search-placeholder div {
-    position: absolute;
-    left: 20%;
-    font-size:16px; 
-    font-family: 'MinSans-Regular'
-  }
-  // Mobile Footer bar
-  #footer-container{
-    // width: 100%;
-    min-width: 300px;
-    width: 600px;
-    height: 80px;
-    background-color: #fff;
-    display: flex;
-    justify-content: flex-end;
-    flex-direction: column;
-    overflow: hidden;
-    position: fixed;
-    bottom: 0;
-    // left: calc(50%);
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 17px;
-    z-index: 3;
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc; 
-    // margin: 0 auto;
-  }
-  #footer-container.innewsfeed{
-    // left: 50% + 1px;
-    left: 50%;
-  }
-  #footer-container.inactive{
-    display:none;
-  }
-
-  #my-footer{
-    width: 100%;
-    height: 60px;
-    background-color: #faf4e4;
-    position: absolute;
-  }
-
-  #bubbleWrapper{
-    position: absolute;
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    bottom: 25px;
-  }
-
-  .bubble{
-    background-color: #faf4e4;
-    width: 50px;
-    height: 50px;
-    bottom: 85px;
-    border-radius: 50%;
-    z-index: 1;
-    transform: translateY(120%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .icon{
-    opacity: 0;
-  }
-
-  #bubble1{
-    transform: translateY(0%);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    > span{
-      opacity: 0.7;
-    }
-  }
-
-  #bgWrapper{
-    filter: url(#goo);
-    width: 100%;
-    height: 30px;
-    position: absolute;
-    bottom: 60px;
-  }
-  #bg{
-    background-color: #fff;
-    width: 120%;
-    height: 100%;
-    margin-left: -10%;
-  }
-  #bgBubble{
-    position: absolute;
-    background-color: #fff;
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    bottom: -50px;
-    left: 10%;
-    transform: translateX(-50%);
-  }
-
-  #menuWrapper{
-    position: absolute;
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-  }
-
-  .menuElement{
-    opacity: 0.4;
-    transform: translateY(100%);
-    cursor: pointer;
-    &:hover{
-      opacity: 0.5;
-    }
-  }
-
-  #contentWrapper{
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    transform: translateY(-50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    h2{
-      color: #faf4e4;
-      font-family: sans-serif;
-      font-weight: 400;
-    }
-  }
-  .content{
-    display: none;
-    opacity: 0;
-  }
-}
-
-
-/* Animation */
-/* Inspiration taken from Dicson https://codemyui.com/simple-hamburger-menu-x-mark-animation/ */
-
-.navTrigger {
-  cursor: pointer;
-  position: absolute;
-  width: 30px;
-  height: 25px;
-  margin: 20px 20px;
-  right: 10px;
-}
-
-.navTrigger i {
-  background-color: #333;
-  border-radius: 2px;
-  content: '';
-  display: block;
-  width: 100%;
-  height: 4px;
-}
-
-.navTrigger i:nth-child(1) {
-  -webkit-animation: outT 0.8s backwards;
-  animation: outT 0.8s backwards;
-  -webkit-animation-direction: reverse;
-  animation-direction: reverse;
-}
-
-.navTrigger i:nth-child(2) {
-  margin: 5px 0;
-  -webkit-animation: outM 0.8s backwards;
-  animation: outM 0.8s backwards;
-  -webkit-animation-direction: reverse;
-  animation-direction: reverse;
-}
-
-.navTrigger i:nth-child(3) {
-  -webkit-animation: outBtm 0.8s backwards;
-  animation: outBtm 0.8s backwards;
-  -webkit-animation-direction: reverse;
-  animation-direction: reverse;
-}
-
-.navTrigger.active i:nth-child(1) {
-  -webkit-animation: inT 0.8s forwards;
-  animation: inT 0.8s forwards;
-}
-
-.navTrigger.active i:nth-child(2) {
-  -webkit-animation: inM 0.8s forwards;
-  animation: inM 0.8s forwards;
-}
-
-.navTrigger.active i:nth-child(3) {
-  -webkit-animation: inBtm 0.8s forwards;
-  animation: inBtm 0.8s forwards;
-}
-
-
-.affix {
-  padding: 0;
-  background-color: #faf4e4;
-}
 
 </style>
