@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sns.pet.dao.LikeDao">
+    <insert id="insertLike" parameterType="map">
+        INSERT INTO Likes (userNumber, feedNumber)
+        VALUES (#{userNumber}, #{feedNumber})
+    </insert>
+
+    <delete id="deleteLike" parameterType="map">
+        DELETE FROM Likes
+        WHERE userNumber = #{userNumber} AND feedNumber = #{feedNumber}
+    </delete>
+
+    <select id="selectLikeList" parameterType="Long" resultType="UserDto">
+        SELECT u.userNumber, u.userNickName, u.UserID, u.saveFolder, u.userPhotoName
+        FROM User AS u INNER JOIN (
+            SELECT userNumber
+            FROM Likes
+            WHERE feedNumber = #{feedNumber}
+            ) AS l
+        ON u.userNumber = l.userNumber
+    </select>
+
+</mapper>

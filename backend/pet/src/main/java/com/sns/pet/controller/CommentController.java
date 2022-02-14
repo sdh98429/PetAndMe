@@ -4,12 +4,15 @@ import com.sns.pet.dto.CommentDto;
 import com.sns.pet.service.CommentService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.List;
 
 @RestController
@@ -33,14 +36,20 @@ public class CommentController {
         if(commentService.addComment(commentDto)){
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
         }
-        return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(FAIL, HttpStatus.OK);
     }
 
     @ApiOperation(value = "feedNumber 피드의 댓글 리스트 가져오기, DB입력 성공 여부에 따라 success, fail 반환")
     @GetMapping("/{feedNumber}")
     public ResponseEntity<List<CommentDto>> commentList(@PathVariable("feedNumber") Long feedNumber) throws Exception{
         logger.info("commentList - 호출");
-        return new ResponseEntity<>(commentService.findCommentList(feedNumber), HttpStatus.OK);
+        InputStream image;
+        List<CommentDto> commentDtoList = commentService.findCommentList(feedNumber);
+        for (CommentDto commentDto : commentDtoList) {
+            image = new FileInputStream(commentDto.getSaveFolder() + commentDto.getUserPhotoName());
+            commentDto.setUserProfilePhoto(IOUtils.toByteArray(image));
+        }
+        return new ResponseEntity<>(commentDtoList, HttpStatus.OK);
     }
 
     @ApiOperation(value = "commentNumber에 해당하는 댓글 삭제, DB입력 성공 여부에 따라 success, fail 반환")
@@ -50,6 +59,6 @@ public class CommentController {
         if(commentService.deleteComment(commentNumber)){
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
         }
-        return new ResponseEntity<>(FAIL, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(FAIL, HttpStatus.OK);
     }
 }

@@ -19,6 +19,6 @@ public class PetDto {
     private String petName;
     @ApiModelProperty(value = "반려동물 성별", example = "M")
     private String petGender;
-    @ApiModelProperty(value = "반려동물 생일", example = "2022.02.01")
+    @ApiModelProperty(value = "반려동물 생일", example = "2022-02-01")
     private String petBirth;
 }

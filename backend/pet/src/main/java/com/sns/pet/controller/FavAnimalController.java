@@ -17,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/animal")
 @RestController
+@CrossOrigin(origins = {"*"}, maxAge = 6000)
 public class FavAnimalController {
 
     private static final Logger logger = LoggerFactory.getLogger(FavAnimalController.class);

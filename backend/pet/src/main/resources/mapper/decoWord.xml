@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sns.pet.dao.DecoWordDao">
+
+    <!-- 번호에 해당하는 동물이름 한국명 조회 -->
+    <select id="selectAnimalName" resultType="String" parameterType="int">
+        SELECT animalName
+        FROM Animal
+        WHERE animalNumber = #{animalNumber};
+    </select>
+
+    <!-- 랜덤으로 수식어 10개 조회 -->
+    <select id="selectDecoWord" resultType="String">
+        SELECT word
+        FROM DecoWord
+        ORDER BY rand() LIMIT 10;
+    </select>
+
+</mapper>

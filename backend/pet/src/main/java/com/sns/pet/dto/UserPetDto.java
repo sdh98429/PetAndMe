@@ -13,8 +13,12 @@ public class UserPetDto {
     private String userID;
     @ApiModelProperty(value = "회원 닉네임")
     private String userNickName;
+    @ApiModelProperty(value = "사진 저장 폴더")
+    private String saveFolder;
     @ApiModelProperty(value = "회원 프로필 사진")
     private String userPhotoName;
+    @ApiModelProperty(value = "회원 프로필 소개")
+    private String userProfileContent;
     @ApiModelProperty(value = "반려동물 이름")
     private String petName;
     @ApiModelProperty(value = "반려동물 성별")

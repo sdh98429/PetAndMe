@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sns.pet.dao.FeedDao">
+    <!-- 최신피드 (선호동물 + 팔로우 피드만) -->
+    <select id="selectNewsFeedList" parameterType="Map" resultMap="getFeed">
+        SELECT f.feedNumber, f.feedContent, f.feedDate, u.userNumber,
+               IF(f.feedNumber IN (SELECT Likes.feedNumber From Likes WHERE Likes.userNumber = #{userNumber}), 1, 0) AS checkLike,
+               (SELECT COUNT(userNumber) FROM Likes WHERE Likes.feedNumber = f.feedNumber) AS cntLike,
+               (SELECT COUNT(userNumber) FROM Comment WHERE Comment.feedNumber = f.feedNumber) AS cntComment
+        FROM Feed AS f INNER JOIN User AS u USING(userNumber) INNER JOIN Pet AS p USING(userNUmber)
+        where (p.animalNumber IN (select animalNumber from FavAnimal INNER JOIN User USING (userNumber) where userNumber = #{userNumber})
+        OR u.userNumber IN (select toUserNumber from Follow where fromUserNumber = #{userNumber})) AND
+        <if test='cursor.equals("")'>
+            feedDate <![CDATA[<]]> now()
+        </if>
+        <if test='!cursor.equals("")'>
+            feedDate <![CDATA[<]]> #{cursor}
+        </if>
+        ORDER BY feedDate DESC
+        LIMIT 10
+    </select>
+
+    <!--  선호동물 피드  -->
+    <select id="selectSimilarAnimalFeedList" parameterType="Map" resultMap="getFeed">
+        SELECT f.feedNumber, f.feedContent, f.feedDate, u.userNumber, u.userID, u.userNickName,
+        IF(f.feedNumber IN (SELECT Likes.feedNumber From Likes WHERE Likes.userNumber = #{userNumber}), 1, 0) AS checklike,
+        (SELECT COUNT(userNumber) FROM Likes WHERE Likes.feedNumber = f.feedNumber) AS cntLike,
+        (SELECT COUNT(userNumber) FROM Comment WHERE Comment.feedNumber = f.feedNumber) AS cntComment
+        FROM Feed AS f INNER JOIN User AS u USING(userNumber) INNER JOIN Pet AS p USING(userNUmber)
+        where p.animalNumber = #{animalNumber} AND
+        <if test='cursor.equals("")'>
+            feedDate <![CDATA[<]]> now()
+        </if>
+        <if test='!cursor.equals("")'>
+            feedDate <![CDATA[<]]> #{cursor}
+        </if>
+        ORDER BY feedDate desc
+        LIMIT 10
+    </select>
+
+    <!--  팔로우 피드  -->
+    <select id="selectFollowList" parameterType="Map" resultMap="getFeed">
+        SELECT f.feedNumber, f.feedContent, f.feedDate, u.userNumber, u.userID, u.userNickName,
+        IF(f.feedNumber IN (SELECT Likes.feedNumber From Likes WHERE Likes.userNumber = #{userNumber}), 1, 0) AS checklike,
+        (SELECT COUNT(userNumber) FROM Likes WHERE Likes.feedNumber = f.feedNumber) AS cntLike,
+        (SELECT COUNT(userNumber) FROM Comment WHERE Comment.feedNumber = f.feedNumber) AS cntComment
+        FROM Feed AS f INNER JOIN User AS u USING(userNumber)
+        where u.userNumber IN (select toUserNumber from Follow where fromUserNumber = #{userNumber}) AND
+        <if test='cursor.equals("")'>
+            feedDate <![CDATA[<]]> now()
+        </if>
+        <if test='!cursor.equals("")'>
+            feedDate <![CDATA[<]]> #{cursor}
+        </if>
+        ORDER BY feedDate desc
+        LIMIT 10;
+    </select>
+
+    <!--  피드 생성  -->
     <insert id="insertFeed" parameterType="FeedDto">
         INSERT INTO Feed (userNumber, feedContent, feedDate, feedThumbnailFolder, feedThumbnailName)
         VALUES (#{userNumber}, #{feedContent}, now(), #{feedThumbnailFolder}, #{feedThumbnailName})
@@ -9,6 +65,7 @@
         </selectKey>
     </insert>
 
+    <!--  피드 사진 생성  -->
     <insert id="insertImages" parameterType="FeedDto">
         INSERT INTO FeedPhoto (photoName, saveFolder, feedNumber)
         VALUES
@@ -17,46 +74,72 @@
         </foreach>
     </insert>
 
+    <!--  피드 조회  -->
     <select id="selectFeed" parameterType="Long" resultMap="getFeed">
-        SELECT feedNumber, feedContent, feedDate
-        FROM Feed
+        SELECT f.feedNumber, f.feedContent, f.feedDate, u.userNumber,
+               IF(feedNumber
+                      IN (SELECT feedNumber FROM Likes WHERE userNumber=#{userNumber}), 1, 0) AS checkLike,
+               (SELECT COUNT(userNumber) FROM Likes WHERE Likes.feedNumber = f.feedNumber) AS cntLike,
+               (SELECT COUNT(userNumber) FROM Comment WHERE Comment.feedNumber = f.feedNumber) AS cntComment
+        FROM Feed AS f INNER JOIN User AS u
+        USING(userNumber)
         WHERE feedNumber = #{feedNumber}
     </select>
 
+    <!--  피드 조회 resultMap  -->
     <resultMap id="getFeed" type="FeedDto">
         <result column="feedNumber" property="feedNumber"/>
         <result column="feedContent" property="feedContent"/>
         <result column="feedDate" property="feedDate"/>
+        <result column="userNumber" property="userNumber"/>
+        <result column="checkLike" property="checkLike"/>
+        <result column="cntLike" property="cntLike"/>
+        <result column="cntComment" property="cntComment"/>
         <collection property="feedPhotoDtoList" column="feedNumber=feedNumber" javaType="list" ofType="FeedPhotoDto"
                     select="selectFeedPhotoByFeedNumber"/>
     </resultMap>
 
+    <!--  피드 조회(FeedDto안에 넣기)  -->
     <select id="selectFeedPhotoByFeedNumber" resultType="FeedPhotoDto">
         SELECT saveFolder, photoName
         FROM FeedPhoto
         WHERE feedNumber = #{feedNumber}
     </select>
 
+    <!--  유저페이지 피드 조회  -->
     <select id="selectMyFeedList" resultType="FeedDto">
         SELECT feedNumber, feedThumbnailFolder, feedThumbnailName
         FROM Feed
         WHERE userNumber = #{userNumber}
     </select>
 
+    <!--  피드 삭제  -->
     <delete id="deleteFeed" parameterType="Long">
         DELETE
         FROM Feed
         WHERE feedNumber = #{feedNumber}
     </delete>
 
+    <!--  사진 삭제  -->
     <delete id="deletePhotos" parameterType="Long">
         DELETE
         FROM FeedPhoto
         WHERE feedNumber = #{feedNumber}
     </delete>
 
+    <!--  댓글 생성  -->
     <select id="insertComment" parameterType="CommentDto">
         INSERT INTO Comment (commentContent, commentDate, userNumber, feedNumber)
         VALUES (#{commentContent}, now(), #{userNumber}, #{feedNumber})
+    </select>
+
+    <!--  taping용 이미지 전달  -->
+    <select id="selectFeedPhotoList" parameterType="FeedDto" resultType="FeedPhotoDto">
+        SELECT photoName, saveFolder
+        FROM FeedPhoto
+        WHERE feedNumber IN
+            <foreach collection="feedPhotoDtoList" item="item" separator="," open="(" close=")">
+                #{item.feedNumber}
+            </foreach>
     </select>
 </mapper>

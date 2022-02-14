@@ -17,10 +17,10 @@ public interface PetDao {
     int selectPetName(@Param("userNumber") Long userNumber, @Param("petName") String petName) throws SQLException;
     // 반려동물 정보 저장
     int insertPet(PetDto petDto) throws SQLException;
-    // 반려동물 정보 수정
-    int updatePet(PetDto petDto) throws SQLException;
     // 반려동물 정보 삭제
     int deletePet(@Param("userNumber") Long userNumber, @Param("petNumber") Long petNumber) throws SQLException;
     // 회원가입 반려동물 정보 저장
     int insertJoinPet(List<PetDto> petDtoList) throws SQLException;
+    // 반려동물 정보 수정
+    int updatePet(List<PetDto> petDtoList) throws SQLException;
 }

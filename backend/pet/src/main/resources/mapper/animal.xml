@@ -5,14 +5,14 @@
 <mapper namespace="com.sns.pet.dao.FavAnimalDao">
 
     <!-- 선호동물 등록 -->
-     <insert id="insertFavAnimal" parameterType="java.util.List">
+    <insert id="insertFavAnimal" parameterType="java.util.List">
         INSERT IGNORE INTO FavAnimal(userNumber, animalNumber)
         VALUES
         <foreach collection="list" item="item" separator=" , ">
-        (#{item.userNumber}, #{item.animalNumber})
+            (#{item.userNumber}, #{item.animalNumber})
         </foreach>
     </insert>
-
+    
     <!-- 선호동물 삭제 -->
     <delete id="deleteFavAnimal" parameterType="Long">
         DELETE FROM FavAnimal
@@ -27,7 +27,7 @@
     </select>
 
     <!-- 동물목록 조회 -->
-    <select id="selectAnimal" resultType="FavAnimalDto">
+    <select id="selectAnimal" resultType="AnimalDto">
         SELECT animalNumber, animalName
         FROM Animal
     </select>
