@@ -1,8 +1,8 @@
-# Pet&Me Backend
+# Backend 포팅매뉴얼
 
 ## 소개
 
-Pet&Me Backend 코드
+Pet&Me Backend 빌드 매뉴얼
 
 ## 기술스택 및 라이브러리
 

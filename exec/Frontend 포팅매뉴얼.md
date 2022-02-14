@@ -1,8 +1,8 @@
-# Pet&Me Frontend
+# Frontend 포팅매뉴얼
 
 ## 소개
 
-Pet&Me Frontend 코드
+Pet&Me Frontend 빌드 매뉴얼
 
 ## 기술스택 및 라이브러리
 
@@ -51,6 +51,11 @@ Pet&Me Frontend 코드
     ├─api
     ├─assets  /* image, css, js 등의 리소스 */
     ├─components  /* 컴포넌트 단위의 Vue 파일 */
-    ├─views  /* 페이지 단위의 Vue 파일 */
-    └─vuex  /* Vuex 관련 파일 */
+    ├─config  /* 설정 파일 */
+    ├─css  /* css 디자인 파일 */
+    ├─js  /* Taping(영상) 제작 관련 파일 */
+    ├─router  /* 컴포넌트 단위의 Vue 파일 */
+    ├─store  /* Vuex 관련 파일 */
+    └─views  /* 페이지 단위의 Vue 파일 */
 ```
+
