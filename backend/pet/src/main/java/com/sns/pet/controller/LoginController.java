@@ -37,7 +37,7 @@ public class LoginController {
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
         try {
-            Long loginUserNumber = loginService.findByIdAndPw(user);
+            UserDto loginUserNumber = loginService.findByIdAndPw(user);
 
             if (loginUserNumber != null) {
                 // 토큰 생성
