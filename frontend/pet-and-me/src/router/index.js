@@ -109,13 +109,12 @@ router.beforeEach((to, from, next) => {
  // requiresAuth 체크
   if (to.matched.some(record => record.meta.requiresAuth)) {
 
-    if(to.path === '/home' && isLogin) {
-      console.log("hello2")
+    if(to.path === '/' && isLogin) {
       next('/feed/newsfeed')
     }
     else if(to.path === '/feed/newsfeed' && !isLogin) {
       alert('로그인이 필요합니다')
-      next('/home')
+      next('/')
     }
   }
   // requiresAuth가 false일 때 (권한이 필요 없는 페이지)
