@@ -7,28 +7,24 @@
       </li> 
     </ul>
 
-    <hr>
-    <div align="right">
+    <div>
       <button @click="toNewsFeed">X</button>
     </div>
-    <br>
-    <div><ContentsForm
-      :is-create="isCreate"
-      @form-to-create="createFeedContent"
-      /></div>
-    <br>
-    <div align="right"><CreateBtn
-      @create-click="createFeed"
-      /></div>
-    <br>
+    <div>
+      <ContentsForm
+        :is-create="isCreate"
+        @form-to-create="createFeedContent"
+      />
+    </div>
+    <button @create-click="createFeed">생성</button>
   </div>
 </template>
 
 <script>
 import ContentsForm from '@/components/feed/ContentsForm'
-import CreateBtn from '@/components/feed/CreateBtn'
 import axios from 'axios'
 import move from '@/js/move.js'
+import '@/css/feedcreate.css'
 
 export default {
   name: 'FeedCreate',
@@ -44,7 +40,6 @@ export default {
   components: {
 
     ContentsForm,
-    CreateBtn,
   },
   props: {
 
@@ -133,7 +128,7 @@ export default {
       }
       this.isArrive = 0
     }
-  }
+  },
 }
 </script>
 

@@ -46,9 +46,6 @@ body {
 
 /* Mobile Web*/
 @media screen and (max-width:768px){
-  * {
-    cursor: pointer;
-  }
   .my-container {
     height: 0;
     /* width: 400px; */
