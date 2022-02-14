@@ -59,6 +59,13 @@
         WHERE u.userNumber = #{userNumber}
     </select>
 
+    <!--  회원정보 전송  -->
+    <select id="selectNoPetUserInfo" parameterType="Long" resultType="UserPetDto">
+        SELECT saveFolder, userPhotoName, userNickName, userID, userProfileContent
+        FROM User
+        WHERE userNumber = #{userNumber}
+    </select>
+
     <!-- 회원번호 전송 -->
     <select id="selectUserNumber" parameterType="String" resultType="UserDto">
         SELECT userNumber

@@ -92,6 +92,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserPetDto findNoPetUserInfo(Long userNumber) throws Exception {
+        return sqlSession.getMapper(UserDao.class).selectNoPetUserInfo(userNumber);
+    }
+
+    @Override
     public UserDto findUserNumber(String userID) throws Exception {
         return sqlSession.getMapper(UserDao.class).selectUserNumber(userID);
     }
