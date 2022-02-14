@@ -26,6 +26,8 @@ public interface UserDao {
     int updateUserPhoto(UserDto userDto) throws SQLException;
     // 회원정보 전송
     UserPetDto selectUserInfo(Long userNumber) throws SQLException;
+    // 펫정보가 없는 회원정보 전송
+    UserPetDto selectNoPetUserInfo(Long userNumber) throws SQLException;
     // 회원번호 조회
     UserDto selectUserNumber(String userID) throws SQLException;
     // 팔로우
