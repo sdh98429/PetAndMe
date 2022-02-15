@@ -40,8 +40,8 @@
         <div class="follwing" @click="toFollowList()">팔로잉&nbsp;{{followingCnt}}</div>
       </div>
       <div v-if="yourUserNumber != myUserNumber">
-        <button class="follow-btn bttn-unite bttn-sm bttn-warning bttn-block" v-if="!isFollow" @click="followUser">팔로우</button>
-        <button class="follow-btn bttn-unite bttn-sm bttn-warning bttn-block" v-if="isFollow" @click="unfollowUser">언팔로우</button>
+        <button class="follow-btn bttn-pill bttn-sm bttn-warning bttn-block" v-if="!isFollow" @click="followUser">팔로우</button>
+        <button class="follow-btn bttn-pill bttn-sm bttn-warning bttn-block" v-if="isFollow" @click="unfollowUser">언팔로우</button>
       </div>
     </div>
       <UserFeedList
@@ -68,10 +68,8 @@ export default {
       petMonth: null,
       petAge: null,
       userNumber: "null",
-
       yourUserId: this.$route.params.yourUserId,
       yourUserNumber: 0,
-
       isFollow : false,
       followerCnt : 0,
       followingCnt : 0,

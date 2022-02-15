@@ -133,6 +133,7 @@
     width: 90%;
     margin: 0 auto;
     position: relative;
+    top: 100px;
   }
   .sa-container .first-step .input-image{
     position: relative;
@@ -167,6 +168,24 @@
     border-radius: 20px;
     display:flex;
     justify-content: center;
+    cursor: pointer;
+  }
+  .sa-container .first-step .img-upload-box .accept-image{
+    display: block;
+    position: absolute;
+    margin: 0 auto;
+    max-width: 70%;
+    height: 300px;
+    top: 15px;
+    object-fit: cover;
+  }
+  .sa-container .first-step .next-step-btn{
+    position:absolute;
+    left:50%;
+    top: 500px;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 50px;
   }
   .sa-container .first-step .img-upload-box .accept-image{
     display: block;
@@ -207,11 +226,35 @@
     object-fit: cover;
   }
   .sa-container .second-step .result-box .retry-btn{
-    width: 50%;
-    margin: 0 auto;
-    position: relative;
-    text-align: center;
-    font-size: 25px;
+    position: absolute;
+    width: 300px;
+    top: 400px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+  }
+  .sa-container .second-step .result-box .nickname-btn{
+    position: absolute;
+    width: 300px;
+    top: 550px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+  }
+  .sa-container .second-step .result-box .search-btn{
+    position: absolute;
+    width: 300px;
+    top: 600px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+  }
+  .sa-container .second-step .result-box .feed-btn{
+    position: absolute;
+    width: 300px;
+    top: 650px;
+    left: 50%;
+    transform: translateX(-50%);
     cursor: pointer;
   }
   .sa-container .second-step .nickname-box{

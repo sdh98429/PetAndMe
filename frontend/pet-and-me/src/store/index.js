@@ -48,7 +48,7 @@ export default new Vuex.Store({
       state.myuserNumber = null
       localStorage.removeItem('accessToken')
       location.reload();
-    }
+    },
   },
   actions: {
     loginGetToken: function ({commit}, token) {
