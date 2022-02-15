@@ -58,7 +58,6 @@ export default {
           data: this.credentials
         })
         .then(res => {
-          console.log(this.credentials)
           if (res.data.message === 'success') {
             alert('로그인 성공')
             this.$emit('login')
@@ -74,9 +73,6 @@ export default {
           alert('로그인 실패')
         })
     },
-    ...mapActions([
-			'loginGetToken',
-		]),
     // google
     onSignIn(googleUser){
       const profile = googleUser.getBasicProfile();
