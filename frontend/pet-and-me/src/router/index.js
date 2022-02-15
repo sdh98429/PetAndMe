@@ -15,7 +15,7 @@ import FollowList from '../views/feed/FollowList'
 import UserFeedUpdate from '../views/feed/UserFeedUpdate'
 import FeedDetail from '../views/feed/FeedDetail'
 // import Components from '../views/Components.vue'
- 
+
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -108,17 +108,17 @@ router.beforeEach((to, from, next) => {
   console.log(isLogin)
   
  // requiresAuth 체크
-  if (to.matched.some(record => record.meta.requiresAuth)) {
+  // if (to.matched.some(record => record.meta.requiresAuth)) {
 
-    if(to.path === '/home' && isLogin) {
-      console.log("hello2")
-      next('/feed/newsfeed')
-    }
-    else if(to.path === '/feed/newsfeed' && !isLogin) {
-      alert('로그인이 필요합니다')
-      next('/home')
-    }
-  }
+  //   if(to.path === '/home' && isLogin) {
+  //     console.log("hello2")
+  //     next('/feed/newsfeed')
+  //   }
+  //   else if(to.path === '/feed/newsfeed' && !isLogin) {
+  //     alert('로그인이 필요합니다')
+  //     next('/home')
+  //   }
+  // }
   // requiresAuth가 false일 때 (권한이 필요 없는 페이지)
   next()
 })

@@ -40,8 +40,8 @@
 import axios from 'axios'
 import Taping from '@/components/taping/Taping'
 import TapingFeedList from '@/components/taping/TapingFeedList'
-import {VIDEO_API_URL, BASE_API_URL} from '@/config/config.js'
-// import {BASE_API_URL} from '@/config/config.js'
+// import {VIDEO_API_URL, BASE_API_URL} from '@/config/config.js'
+import {BASE_API_URL} from '@/config/config.js'
 
 export default {
   data() {
@@ -91,8 +91,8 @@ export default {
     tape() {
         axios({
         method: 'post',
-        url: `${VIDEO_API_URL}/api/v1/tape/`,
-        // url: `http://i6b106.p.ssafy.io:8000/api/v1/tape/`,
+        // url: `${VIDEO_API_URL}/api/v1/tape/`,
+        url: `http://i6b106.p.ssafy.io:8000/api/v1/tape/`,
         data: this.tapeMovie
       })
         .then((res) => {
