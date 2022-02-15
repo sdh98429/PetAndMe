@@ -307,6 +307,20 @@
     bottom: 210px;
     cursor: pointer;
   }
+  .search-bar .result-right-btn{
+    position: fixed;
+    right: 0px;
+    bottom: 140px;
+    z-index: 3;
+    cursor: pointer;
+  }
+  .search-bar .result-left-btn{
+    position: fixed;
+    left: 0px;
+    bottom: 140px;
+    z-index: 3;
+    cursor: pointer;
+  }
   .search-bar .search-result-item {
     width: 150px;
     height: 135px;

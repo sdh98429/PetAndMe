@@ -17,24 +17,24 @@
       </div>
 
       <!-- <div>선호 피드</div> -->
-      <div v-show="currentTab==1">
+      <!-- <div v-show="currentTab==1">
         <div v-for="(feed, idx) in FavFeedList" :key="idx">
           <NewsFeedListItem
           :feed="feed"
           :feedUploadDate="getUploadDate(feed)"
           />
         </div>
-      </div>
+      </div> -->
 
       <!-- <div>친구 피드</div> -->
-      <div v-show="currentTab==2">
+      <!-- <div v-show="currentTab==2">
         <div v-for="(feed, idx) in FollowFeedList" :key="idx">
           <NewsFeedListItem
           :feed="feed"
           :feedUploadDate="getUploadDate(feed)"
           />
         </div>
-      </div>
+      </div> -->
 
       <!-- <div>인피니트 스크롤</div> -->
       <infinite-loading :identifier="currentTab" @infinite="infiniteHandler" spinner="waveDots">
@@ -197,15 +197,6 @@ export default {
 </script>
 
 <style scoped>
-.search-result{
-  left: calc(50% + 1px)
-}
-#footer-container{
-  left: calc(50% + 1px)
-}
-.search-bar {
-  left: calc(50% + 1px)
-}
 /* COMMON */
 img {
   width: 200px;

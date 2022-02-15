@@ -9,7 +9,7 @@ export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
     accessToken: localStorage.getItem("accessToken"), // 토큰정보
-    myuserNumber: null
+    myuserNumber: null,
   },
   getters: {
     config: function (state) {
@@ -26,7 +26,7 @@ export default new Vuex.Store({
     },
     getUserNumber: function (state) {
       return state.myuserNumber;
-    }
+    },
   },
   mutations: {
     SET_LOGIN: function (state, accessToken) {
@@ -45,7 +45,7 @@ export default new Vuex.Store({
       state.myuserNumber = null
       localStorage.removeItem('accessToken')
       location.reload();
-    }
+    },
   },
   actions: {
     loginGetToken: function ({commit}, token) {
