@@ -15,6 +15,8 @@
       <div>반려동물 생일 : {{profile.petBirth}}</div>
       <div>반려동물 종류 : {{profile.animalName}}</div>
     </div>
+    <TapingViewer>
+    </TapingViewer>
     <br>
     <div @click="toFollowList()">팔로워 수 : {{followerCnt}}</div>
     <div @click="toFollowList()">팔로잉 수 : {{followingCnt}}</div>
@@ -34,6 +36,7 @@
 <script>
 import axios from 'axios'
 import UserFeedList from '@/components/feed/UserFeedList'
+import TapingViewer from '@/components/taping/TapingViewer'
 
 
 export default {
@@ -58,6 +61,7 @@ export default {
   components: {
 
     UserFeedList,
+    TapingViewer
 
   },
   props: {

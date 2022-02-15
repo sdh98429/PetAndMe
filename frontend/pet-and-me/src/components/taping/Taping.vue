@@ -1,20 +1,19 @@
 <template>
   <div>
-    <input multiple @change='onInputImage()' accept="image/*" ref="image" type="file">
     <h3>style</h3>
-      <label> <input type="radio" v-model="style" value="1"> 기본 </label>
-      <label> <input type="radio" v-model="style" value="2"> 만화풍 </label>
+      <input type="radio" id="nomal" v-model="types.type" value="1"> <label for="nomal"> 기본 </label>
+      <input type="radio" id="cartoon" v-model="types.type" value="2"><label for="cartoon"> 만화풍 </label>
+      <input type="radio" id="turn" v-model="types.type" value="3"><label for="turn"> 좌우반전 </label>
+      <input type="radio" id="grayscale" v-model="types.type" value="4"><label for="grayscale"> 흑백 </label>
     <h3>bgm</h3>
-      <label> <input type="radio" v-model="bgm" value="1"> 밝은 </label>
-      <label> <input type="radio" v-model="bgm" value="2"> 차분한 </label>
-      <label> <input type="radio" v-model="bgm" value="3"> 회고 </label>
-      <label> <input type="radio" v-model="bgm" value="4"> 펑키 </label>
-    <div>
-      <p>스타일 {{this.style}}</p>
-      <p>bgm {{ this.bgm }}</p>
-    </div>
+      <input type="radio" id="bright" v-model="types.bgm" value="1"> <label for="bright"> 밝은 </label>
+      <input type="radio" id="calm" v-model="types.bgm" value="2"> <label for="calm"> 차분한 </label>
+      <input type="radio" id="cure" v-model="types.bgm" value="3"> <label for="cure"> 힐링 </label>
+      <input type="radio" id="flashback" v-model="types.bgm" value="4"> <label for="flashback">회고</label>
+      <input type="radio" id="funcky" v-model="types.bgm" value="5"> <label for="funcky"> 펑키 </label>
+      <input type="radio" id="optimistc" v-model="types.bgm" value="6"> <label for="optimistc"> 천진난만한 </label>
 
-    <button @click="createTape">taping</button>
+    <button @click="createTape">스타일 및 bgm 선택 완료</button>
   </div>
 </template>
 
@@ -24,35 +23,21 @@ export default {
   name: 'Taping',
   data() {
     return {
-      files: [],
       types: {
-        type: 1,
-        bgm: 2,
-        images: 3,
+        type: null,
+        bgm: null,
       },
     }
   },
   methods: {
-      onInputImage: function(){
-      this.files = this.$refs.image.files
-      
-      if (this.$refs.image.files.length > 16){
-        this.files = []
-        this.$refs.image.value = ''
-        alert('이미지는 최대 16장까지 가능합니다.')
-      } else {
-        var step;
-        for (step = 0; step < this.files.length; step++) {
-          if (this.files[step].size/(1024*1024) > 30){
-            this.files = []
-            this.$refs.image.value = ''
-            alert('이미지 파일은 최대 30MB까지 가능합니다.')
-          }
-        }
-      }
-    },
     createTape() {
-      this.$emit("tapedata-update", this.types)
+      if (this.types.type === null) {
+        alert('영상 스타일을 선택해주세요!')
+      } else if (this.types.bgm === null) {
+        alert('영상 배경음악을 선택해주세요!')
+      } else {
+        this.$emit("tapedata-update", this.types)
+      }
 
     }
   },
