@@ -40,7 +40,7 @@ import { mapGetters, mapActions } from "vuex"
 
 export default {
   computed: {
-    ...mapGetters(['getUserNumber'])
+    ...mapGetters(['getUserNumber', 'getUserInfo'])
   },
   methods: {
     ...mapActions([
@@ -57,6 +57,7 @@ export default {
     },
     logout() {
       console.log(this.getUserNumber)
+      console.log(this.getUserInfo)
       this.logoutRemoveToekn()
       this.$router.push({name:'Landing'})
     }

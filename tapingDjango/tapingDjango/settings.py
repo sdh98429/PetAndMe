@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-co2j3tk1!96!@gek-ga_*rmgi$b^sw*zc&ed)l6a2p)!h&zato
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['i6b106.p.ssafy.io']
 
 
 # Application definition
@@ -92,7 +92,8 @@ WSGI_APPLICATION = 'tapingDjango.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
