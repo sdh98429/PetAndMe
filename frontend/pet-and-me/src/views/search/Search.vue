@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="test-container">
     <input type="text" v-model.trim="searchWord" @keyup.enter="goToSearchResult(searchWord)" @input="getRealTimeSearch(searchWord)">
     <button @click="goToSearchResult(searchWord)">검색하기</button>
 
@@ -14,13 +14,13 @@
         <div>{{real.userNickName}}</div>
         <div>@{{real.userID}}</div>
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import {BASE_API_URL} from '@/config/config.js'
 
 export default {
   name: 'Search',
@@ -33,7 +33,7 @@ export default {
       realTimeSearch: null, // 실시간 검색 결과
       isRecent: true, // 최근 검색 결과 보여주는지 여부
 
-      myUserNumber: 1,
+
     }
   },
   components: {
@@ -55,7 +55,7 @@ export default {
         this.isRecent = false
         axios({
           method: 'get',
-          url: 'http://i6b106.p.ssafy.io:8080/search/rt/userid/' + searchWord.slice(1),
+          url: `${BASE_API_URL}/search/rt/userid/${searchWord.slice(1)}`
         })
           .then(response => {
             this.realTimeSearch = response.data
@@ -67,7 +67,7 @@ export default {
         this.isRecent = false
         axios({
           method: 'get',
-          url: 'http://i6b106.p.ssafy.io:8080/search/rt/userName/' + searchWord,
+          url: `${BASE_API_URL}/search/rt/userName/${searchWord}`,
         })
           .then(response => {
             this.realTimeSearch = response.data
@@ -83,7 +83,7 @@ export default {
     getSearchHistory: function(){ // 최근 검색 결과
       axios({
         method: 'get',
-        url: 'http://i6b106.p.ssafy.io:8080/search/' + this.myUserNumber,
+        url: `${BASE_API_URL}/search/${this.myUserNumber}`,
       })
         .then(response => {
           this.resultRecent = response.data
@@ -99,10 +99,19 @@ export default {
 
   created : function(){
     this.getSearchHistory()
-  }
+  },
+  computed: {
+    myUserNumber () {
+      return this.$store.getters.getUserNumber
+    }
+  },
 }
 </script>
 
-<style>
+<style scoped>
+.test-container {
+  position: relative;
+  top: 100px;
 
+}
 </style>

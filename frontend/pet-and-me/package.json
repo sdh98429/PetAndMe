@@ -18,6 +18,7 @@
     "@wyhaya/vue-slide": "^1.0.2",
     "axios": "^0.26.0",
     "core-js": "^3.21.0",
+    "email-validator": "^2.0.4",
     "gsap": "^3.9.1",
     "jquery": "^3.6.0",
     "jwt-decode": "^3.1.2",

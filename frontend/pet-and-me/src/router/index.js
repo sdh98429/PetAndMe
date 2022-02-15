@@ -14,8 +14,12 @@ import UserFeed from '../views/feed/UserFeed'
 import FollowList from '../views/feed/FollowList'
 import UserFeedUpdate from '../views/feed/UserFeedUpdate'
 import FeedDetail from '../views/feed/FeedDetail'
+<<<<<<< HEAD
 // import Components from '../views/Components.vue'
 
+=======
+ 
+>>>>>>> 92e3e1f3fb97d5ac9f767aa87035a94cf230206a
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -110,6 +114,7 @@ router.beforeEach((to, from, next) => {
  // requiresAuth 체크
   // if (to.matched.some(record => record.meta.requiresAuth)) {
 
+<<<<<<< HEAD
   //   if(to.path === '/home' && isLogin) {
   //     console.log("hello2")
   //     next('/feed/newsfeed')
@@ -119,6 +124,23 @@ router.beforeEach((to, from, next) => {
   //     next('/home')
   //   }
   // }
+=======
+    if(to.name === 'Landing' && isLogin) {
+      next('/feed/newsfeed')
+    }
+    else if(to.name === 'NewsFeed') {
+      if(!isLogin) {
+        alert('로그인이 필요합니다')
+        next('/')
+      }
+
+      if(!store.getters['getUserInfo'].userNickName) {
+        next('/similar')
+      }
+      
+    }
+  }
+>>>>>>> 92e3e1f3fb97d5ac9f767aa87035a94cf230206a
   // requiresAuth가 false일 때 (권한이 필요 없는 페이지)
   next()
 })

@@ -7,44 +7,38 @@
       </li> 
     </ul>
 
-    <hr>
-    <div align="right">
+    <div>
       <button @click="toNewsFeed">X</button>
     </div>
-    <br>
-    <div><ContentsForm
-      :is-create="isCreate"
-      @form-to-create="createFeedContent"
-      /></div>
-    <br>
-    <div align="right"><CreateBtn
-      @create-click="createFeed"
-      /></div>
-    <br>
+    <div>
+      <ContentsForm
+        :is-create="isCreate"
+        @form-to-create="createFeedContent"
+      />
+    </div>
+    <button @create-click="createFeed">생성</button>
   </div>
 </template>
 
 <script>
 import ContentsForm from '@/components/feed/ContentsForm'
-import CreateBtn from '@/components/feed/CreateBtn'
 import axios from 'axios'
 import move from '@/js/move.js'
+import '@/css/feedcreate.css'
 
 export default {
   name: 'FeedCreate',
   data: function () {
     return {
       feedContent: null, 
-      myUserNumber : 2,
+
       isCreate: false, // createBtn 눌렀는지
       isArrive: 0, // Picture, ContentsForm 신호 도착 개수
       files: [],
     }
   },
   components: {
-
     ContentsForm,
-    CreateBtn,
   },
   props: {
 
@@ -80,6 +74,11 @@ export default {
   },
   mounted() {
     move('3', '50%', '#fff')
+  },
+  computed: {
+    myUserNumber () {
+      return this.$store.getters.getUserNumber
+    }
   },
   watch: {
     isArrive: function(){ // 사진, 내용 도착
@@ -128,7 +127,7 @@ export default {
       }
       this.isArrive = 0
     }
-  }
+  },
 }
 </script>
 
