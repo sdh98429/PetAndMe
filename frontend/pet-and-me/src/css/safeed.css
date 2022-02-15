@@ -19,7 +19,7 @@
     z-index: -1;
     padding-bottom: 100px;
   }
-  .feed-container{
+  .sa-feed-container{
     font-family: 'MinSans-Regular';
     width: 100%;
     position: relative;
@@ -30,14 +30,14 @@
     /* border-bottom: 1px solid #333;
     border-top: 1px solid #333; */
   }
-  .feed-container .feed-img {
+  .sa-feed-container .feed-img {
     /* width: 400px;*/
     width: 100%;
     max-width: 600px;
     position: relative;
     margin: 0 auto 15px;
   }
-  .feed-container .feed-img .show-img {
+  .sa-feed-container .feed-img .show-img {
     /* width: 400px; */
     width: 100%;  
     /* max-height: 300px;*/
@@ -48,7 +48,7 @@
     z-index: -10;
     object-fit: cover;
   }
-  .feed-container .feed-img .material-icons.left-btn {
+  .sa-feed-container .feed-img .material-icons.left-btn {
     transform: rotate(180deg);
     position: absolute;
     top: 50%;
@@ -60,7 +60,7 @@
     color: #fff;
     cursor: pointer;
   }
-  .feed-container .feed-img .material-icons.right-btn {
+  .sa-feed-container .feed-img .material-icons.right-btn {
     position: absolute;
     top: 50%;
     right:5px;
@@ -71,7 +71,7 @@
     color: #fff;
     cursor: pointer;
   }
-  .feed-container .feed-profile {
+  .sa-feed-container .feed-profile {
     position:relative;
     display: flex;
     /* width: 350px;*/
@@ -80,7 +80,7 @@
     margin: 0 auto;
     overflow: auto;
   }
-  .feed-container .feed-profile .feed-profile-image {
+  .sa-feed-container .feed-profile .feed-profile-image {
     border-radius: 50%;
     width: 50px;
     height: 50px;
@@ -90,7 +90,7 @@
     top: 5px;
     cursor: pointer;
   }
-  .feed-container .feed-profile .feed-profile-nickname {
+  .sa-feed-container .feed-profile .feed-profile-nickname {
     width: 65%;
     max-width: 300px;
     font-weight: bold;
@@ -99,7 +99,7 @@
     top:0;
     cursor: pointer;
   }
-  .feed-container .feed-profile .feed-profile-nickname2 {
+  .sa-feed-container .feed-profile .feed-profile-nickname2 {
     width: 65%;
     max-width: 300px;
     font-weight: bold;
@@ -108,13 +108,13 @@
     top: 16px;
     cursor: pointer;
   }
-  .feed-container .feed-profile .feed-profile-mypet {
+  .sa-feed-container .feed-profile .feed-profile-mypet {
     width: auto;
     position: absolute;
     left: 65px;
     top: 40px;
   }
-  .feed-container .feed-content {
+  .sa-feed-container .feed-content {
     position: relative;
     margin: 10px auto 0px;
     width: 95%;
@@ -124,7 +124,7 @@
     /* white-space: nowrap; */
     word-break: break-all;
   }
-  .feed-container .feed-content-more-btn {
+  .sa-feed-container .feed-content-more-btn {
     position: relative;
     margin: 0px auto 20px;
     width: 95%;
@@ -132,19 +132,19 @@
     color: #ccc;
     cursor: pointer;
   }
-  .feed-container .feed-upload-date {
+  .sa-feed-container .feed-upload-date {
     position: relative;
     margin: 0 auto;
     width: 95%;
   }
-  .feed-container .like-and-comment {
+  .sa-feed-container .like-and-comment {
     position: relative;
     width: 95%;
     height:30px;
     top: 0px;
     margin: 10px auto;
   }
-  .feed-container .like-and-comment .like{
+  .sa-feed-container .like-and-comment .like{
     display:flex;
     align-items: center;
     position: absolute;
@@ -153,18 +153,18 @@
     font-size: 18px;
     gap: 5px;
   }
-  .feed-container .like-and-comment .like .material-icons.btn--like{
+  .sa-feed-container .like-and-comment .like .material-icons.btn--like{
     color: #333;
     font-size: 26px;
     cursor: pointer;
   }
-  .feed-container .like-and-comment .like .material-icons.btn--dislike{
+  .sa-feed-container .like-and-comment .like .material-icons.btn--dislike{
     /* color: #fa7b53;*/
     color: #fa7b53;
     font-size: 26px;
     cursor: pointer;
   }
-  .feed-container .like-and-comment .comment{
+  .sa-feed-container .like-and-comment .comment{
     display:flex;
     align-items: center;
     position: absolute;
@@ -173,11 +173,11 @@
     font-size: 18px;
     gap: 5px;
   }
-  .feed-container .like-and-comment .comment .material-icons.btn--comment {
+  .sa-feed-container .like-and-comment .comment .material-icons.btn--comment {
     font-size: 26px;
     cursor: pointer;
   }
-  .feed-container .like-and-comment .material-icons.delete-btn{
+  .sa-feed-container .like-and-comment .material-icons.delete-btn{
     font-size:30px;
     display:flex;
     align-items: center;
@@ -185,7 +185,7 @@
     right: 0px;
     cursor: pointer;
   }
-  .feed-container .comment-list {
+  .sa-feed-container .comment-list {
     width: 95%;
     margin: 0 auto;
     min-height: 50px;
@@ -194,14 +194,14 @@
     position: relative;
     cursor: pointer;
   }
-  .feed-container .comment-list .comment-item {
+  .sa-feed-container .comment-list .comment-item {
     position: relative;
     width: 100%;
     min-height: 30px;
     margin-bottom: 30px;
     cursor: pointer;
   }
-  .feed-container .comment-list .comment-item .comment-user-profile{
+  .sa-feed-container .comment-list .comment-item .comment-user-profile{
     position: absolute;
     left: 0px;
     width: 30px;
@@ -209,18 +209,18 @@
     object-fit: cover;
     border-radius: 50%;
   }
-  .feed-container .comment-list .comment-item .comment-user-nickname{
+  .sa-feed-container .comment-list .comment-item .comment-user-nickname{
     position: absolute;
     left: 40px;
     font-weight: bold;
     cursor: pointer;
   }
-  .feed-container .comment-list .comment-item .comment-btn-delete{
+  .sa-feed-container .comment-list .comment-item .comment-btn-delete{
     position: absolute;
     right: 0;
     top:0;
   }
-  .feed-container .comment-list .comment-item .comment-content{
+  .sa-feed-container .comment-list .comment-item .comment-content{
     position: relative;
     left: 40px;
     top: 20px;
@@ -228,7 +228,7 @@
     word-break: break-all;
     cursor: pointer;
   }
-  .feed-container .comment-create {
+  .sa-feed-container .comment-create {
     position: fixed;
     width: 100%;
     bottom: 80px;
@@ -239,19 +239,19 @@
     justify-content: center;
 
   }
-  .feed-container .comment-create .my-profile-image{
+  .sa-feed-container .comment-create .my-profile-image{
     border-radius: 50%;
     width: 30px;
     margin-right: 10px;
   }
-  .feed-container .comment-create .comment-input {
+  .sa-feed-container .comment-create .comment-input {
     width: 70%;
     height: 30px;
     border-radius: 15px;
     outline: none;
     border: 1px solid #333;
   }
-  .feed-container .comment-create .comment-btn {
+  .sa-feed-container .comment-create .comment-btn {
     font-size: 30px;
     background-color: #faf4e4;
     color: #333;
@@ -274,28 +274,41 @@
     z-index: -1;
     padding-bottom: 100px;
   }
-  .feed-container{
+  .sa-feed-container{
     font-family: 'MinSans-Regular';
-    width: 100%;
+    width: 798px;
+    left: 50%;
+    transform: translateX(-50%);
     position: relative;
     margin: 15px auto;
     font-size: 14px;
-    border: 1px solid #ccc;
     background-color: #fff;
   }
-  .feed-container .feed-img {
+  .sa-feed-container h2{
+    width: 300px;
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+  }
+  .sa-feed-container .back-btn{
+    
+    cursor: pointer;
+  }
+  .sa-feed-container .feed-img {
     width: 100%;
     max-width: 800px;
     position: relative;
     margin: 0 auto 15px;
   }
-  .feed-container .feed-img .show-img {
+  .sa-feed-container .feed-img .show-img {
     width: 100%;  
     height: 600px;
     z-index: -10;
     object-fit: cover;
   }
-  .feed-container .feed-img .material-icons.left-btn {
+  .sa-feed-container .feed-img .material-icons.left-btn {
     transform: rotate(180deg);
     position: absolute;
     top: 50%;
@@ -306,7 +319,7 @@
     border-radius:50%; 
     color: #fff;
   }
-  .feed-container .feed-img .material-icons.right-btn {
+  .sa-feed-container .feed-img .material-icons.right-btn {
     position: absolute;
     top: 50%;
     right:5px;
@@ -316,7 +329,7 @@
     border-radius:50%; 
     color: #fff;
   }
-  .feed-container .feed-profile {
+  .sa-feed-container .feed-profile {
     position:relative;
     display: flex;
     width: 95%;
@@ -324,7 +337,7 @@
     margin: 15px auto;
     overflow: auto;
   }
-  .feed-container .feed-profile .feed-profile-image {
+  .sa-feed-container .feed-profile .feed-profile-image {
     border-radius: 50%;
     width: 50px;
     height: 50px;
@@ -334,7 +347,7 @@
     top: 5px;
     cursor: pointer;
   }
-  .feed-container .feed-profile .feed-profile-nickname {
+  .sa-feed-container .feed-profile .feed-profile-nickname {
     width: 65%;
     max-width: 300px;
     font-weight: bold;
@@ -343,7 +356,7 @@
     top:0;
     cursor: pointer;
   }
-  .feed-container .feed-profile .feed-profile-nickname2 {
+  .sa-feed-container .feed-profile .feed-profile-nickname2 {
     width: 65%;
     max-width: 300px;
     font-weight: bold;
@@ -352,13 +365,13 @@
     top: 16px;
     cursor: pointer;
   }
-  .feed-container .feed-profile .feed-profile-mypet {
+  .sa-feed-container .feed-profile .feed-profile-mypet {
     width: auto;
     position: absolute;
     left: 65px;
     top: 40px;
   }
-  .feed-container .feed-content {
+  .sa-feed-container .feed-content {
     position: relative;
     margin: 10px auto 0px;
     width: 95%;
@@ -366,7 +379,7 @@
     overflow: hidden;
     word-break: break-all;
   }
-  .feed-container .feed-content-more-btn {
+  .sa-feed-container .feed-content-more-btn {
     position: relative;
     margin: 0px auto 20px;
     width: 95%;
@@ -374,19 +387,19 @@
     color: #ccc;
     cursor: pointer;
   }
-  .feed-container .feed-upload-date {
+  .sa-feed-container .feed-upload-date {
     position: relative;
     margin: 0 auto;
     width: 95%;
   }
-  .feed-container .like-and-comment {
+  .sa-feed-container .like-and-comment {
     position: relative;
     width: 95%;
     height:30px;
     top: 0px;
     margin: 10px auto;
   }
-  .feed-container .like-and-comment .like{
+  .sa-feed-container .like-and-comment .like{
     display:flex;
     align-items: center;
     position: absolute;
@@ -395,17 +408,17 @@
     font-size: 18px;
     gap: 5px;
   }
-  .feed-container .like-and-comment .like .material-icons.btn--like{
+  .sa-feed-container .like-and-comment .like .material-icons.btn--like{
     color: #333;
     font-size: 26px;
     cursor: pointer;
   }
-  .feed-container .like-and-comment .like .material-icons.btn--dislike{
+  .sa-feed-container .like-and-comment .like .material-icons.btn--dislike{
     color: #fa7b53;
     font-size: 26px;
     cursor: pointer;
   }
-  .feed-container .like-and-comment .comment{
+  .sa-feed-container .like-and-comment .comment{
     display:flex;
     align-items: center;
     position: absolute;
@@ -415,10 +428,10 @@
     gap: 5px;
     cursor: pointer;
   }
-  .feed-container .like-and-comment .comment .material-icons.btn--comment {
+  .sa-feed-container .like-and-comment .comment .material-icons.btn--comment {
     font-size: 26px;
   }
-  .feed-container .like-and-comment .material-icons.delete-btn{
+  .sa-feed-container .like-and-comment .material-icons.delete-btn{
     font-size:30px;
     display:flex;
     align-items: center;
@@ -426,7 +439,7 @@
     right: 0px;
     cursor: pointer;
   }
-  .feed-container .comment-list {
+  .sa-feed-container .comment-list {
     width: 95%;
     margin: 0 auto;
     min-height: 50px;
@@ -434,13 +447,13 @@
     overflow: auto;
     position: relative;
   }
-  .feed-container .comment-list .comment-item {
+  .sa-feed-container .comment-list .comment-item {
     position: relative;
     width: 100%;
     min-height: 30px;
     margin-bottom: 30px;
   }
-  .feed-container .comment-list .comment-item .comment-user-profile{
+  .sa-feed-container .comment-list .comment-item .comment-user-profile{
     position: absolute;
     left: 0px;
     width: 30px;
@@ -449,16 +462,16 @@
     border-radius: 50%;
     cursor: pointer;
   }
-  .feed-container .comment-list .comment-item .comment-user-nickname{
+  .sa-feed-container .comment-list .comment-item .comment-user-nickname{
     position: absolute;
     left: 40px;
     font-weight: bold;
     cursor: pointer;
   }
-  .feed-container .comment-list .comment-item .comment-btn-delete{
+  .sa-feed-container .comment-list .comment-item .comment-btn-delete{
     display: none;
   }
-  .feed-container .comment-list .comment-item .comment-content{
+  .sa-feed-container .comment-list .comment-item .comment-content{
     position: relative;
     left: 40px;
     top: 20px;
