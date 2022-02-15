@@ -42,7 +42,7 @@ const routes = [
     component: Signup,
   },
   {
-    path: '/taping',
+    path: '/taping/:yourUserId',
     name: 'Taping',
     component: Taping,
   },

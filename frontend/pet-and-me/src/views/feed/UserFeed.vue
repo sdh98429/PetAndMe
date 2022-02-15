@@ -57,6 +57,7 @@ import UserFeedList from '@/components/feed/UserFeedList'
 import {BASE_API_URL} from '@/config/config.js'
 import '@/css/userfeed.css'
 import move from '@/js/move.js'
+import TapingViewer from '@/components/taping/TapingViewer'
 
 
 export default {
@@ -79,6 +80,8 @@ export default {
   },
   components: {
     UserFeedList,
+    TapingViewer
+
   },
   props: {
 

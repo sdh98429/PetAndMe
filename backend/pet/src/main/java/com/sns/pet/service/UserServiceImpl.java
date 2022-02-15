@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
@@ -68,6 +69,11 @@ public class UserServiceImpl implements UserService {
         } else {
             return true;
         }
+    }
+
+    @Override
+    public boolean modifyUserNickName(Map<String, Object> user) throws Exception {
+        return sqlSession.getMapper(UserDao.class).updateUserNickName(user) == 1;
     }
 
     @Override
