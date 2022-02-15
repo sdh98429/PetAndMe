@@ -74,9 +74,6 @@ export default {
           alert('로그인 실패')
         })
     },
-    ...mapActions([
-			'loginGetToken'
-		]),
     // google
     onSignIn(googleUser){
       const profile = googleUser.getBasicProfile();

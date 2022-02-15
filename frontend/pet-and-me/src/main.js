@@ -17,5 +17,11 @@ Vue.config.productionTip = false
 new Vue({
   router,
   store,
+  created () {
+    const user = store.getters['getAccessToken']
+    if (user) {
+      this.$store.commit('SET_LOGIN', user)
+    }
+  },
   render: h => h(App)
 }).$mount('#app')

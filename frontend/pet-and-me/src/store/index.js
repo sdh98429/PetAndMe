@@ -34,9 +34,10 @@ export default new Vuex.Store({
   mutations: {
     SET_LOGIN: function (state, accessToken) {
       let decode_token = jwt_decode(accessToken);
-      console.log(decode_token)
+      
+      // console.log(decode_token)
       state.userInfo = decode_token.loginUser
-
+      
       state.accessToken = accessToken
       state.isLogin = true
 
