@@ -9,6 +9,7 @@ import com.sns.pet.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import jdk.jshell.EvalException;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -22,6 +23,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Api("User 컨트롤러")
@@ -79,6 +81,18 @@ public class UserController {
         logger.info("userModify 호출");
         if (userService.modifyUser(joinDto)) {
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>(FAIL, HttpStatus.OK);
+        }
+    }
+
+
+    @ApiOperation(value = "닉네임 수정", notes = "회원정보 중 닉네임을 수정한다. DB 성공 여부에 따라 SUCCESS, FAIL 반환")
+    @PutMapping("/nickName")
+    public ResponseEntity<String> userNickNameModify(@RequestBody @ApiParam(value = "수정할 닉네임 정보") Map<String, Object> user) throws Exception {
+        logger.info("userNickNameModify 호출");
+        if(userService.modifyUserNickName(user)) {
+            return new ResponseEntity<String>(SUCCESS,HttpStatus.OK);
         } else {
             return new ResponseEntity<String>(FAIL, HttpStatus.OK);
         }

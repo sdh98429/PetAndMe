@@ -37,6 +37,13 @@
         WHERE userNumber = #{userNumber}
     </update>
 
+    <!-- 회원정보 중 닉네임만 수정 -->
+    <update id="updateUserNickName" parameterType="map">
+        UPDATE User
+        SET userNickName = #{userNickName}
+        WHERE userNumber = #{userNumber}
+    </update>
+
     <!--  회원탈퇴  -->
     <delete id="deleteUser" parameterType="Long">
         DELETE
