@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="user-update-container">
     <div v-if="(yourUserNumber === myUserNumber)">
       <div>
         <h1>회원 정보 수정</h1>
@@ -79,7 +79,7 @@
 <script>
 import axios from 'axios'
 import {BASE_API_URL} from '@/config/config.js'
-
+import '@/css/userupdate.css'
 import DatePicker from '../../components/Signup/DatePicker'
 
 export default {
@@ -140,20 +140,46 @@ export default {
 
   },
   methods: {
-    getUserProfile: function(){ // 프로필 정보 가져오기
-      console.log(this.$route.params.yourUserId)
-      axios({
+    getUserProfile: async function(){ // 프로필 정보 가져오기
+        await axios({
         method: 'get',
-        url: 'http://i6b106.p.ssafy.io:8080/user/number/' + this.$route.params.yourUserId,
+        url: `${BASE_API_URL}/user/number/${this.$route.params.yourUserId}`,
       })
         .then(response => {
           this.yourUserNumber = response.data
-          this.credentials.userNumber = response.data
+          console.log(this.yourUserNumber)
         })
         .catch(err => {
           console.log(err)
         })
+        
+        await axios({
+          method: 'get',
+          url: `${BASE_API_URL}/user/info/${this.yourUserNumber}`,
+        })
+          .then(response => {
+            this.profile = response.data
+            // console.log(response.data)
+            // this.getPetAge()
+          })
+          .catch(err => {
+            console.log(err)
+          })
     },
+    // getUserProfile: function(){ // 프로필 정보 가져오기
+    //   console.log(this.$route.params.yourUserId)
+    //   axios({
+    //     method: 'get',
+    //     url: 'http://i6b106.p.ssafy.io:8080/user/number/' + this.$route.params.yourUserId,
+    //   })
+    //     .then(response => {
+    //       this.yourUserNumber = response.data
+    //       this.credentials.userNumber = response.data
+    //     })
+    //     .catch(err => {
+    //       console.log(err)
+    //     })
+    // },
 
     savePW() {
       if (!this.credentials.userPW || !this.credentials.passwordConfirmation) {

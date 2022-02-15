@@ -6,41 +6,19 @@
       @click="currentTab = index">{{tab}}
     </button> -->
     <div>
-      <!-- <div>최신 피드</div> -->
-      <div v-show="currentTab==0">
-        <div v-for="(feed, idx) in RecentFeedList" :key="idx">
-          <NewsFeedListItem
-          :feed="feed"
-          :feedUploadDate="getUploadDate(feed)"
-          />
-        </div>
+      <div v-for="(feed, idx) in RecentFeedList" :key="idx">
+        <NewsFeedListItem
+        :feed="feed"
+        :feedUploadDate="getUploadDate(feed)"
+        />
       </div>
-
-      <!-- <div>선호 피드</div> -->
-      <!-- <div v-show="currentTab==1">
-        <div v-for="(feed, idx) in FavFeedList" :key="idx">
-          <NewsFeedListItem
-          :feed="feed"
-          :feedUploadDate="getUploadDate(feed)"
-          />
-        </div>
-      </div> -->
-
-      <!-- <div>친구 피드</div> -->
-      <!-- <div v-show="currentTab==2">
-        <div v-for="(feed, idx) in FollowFeedList" :key="idx">
-          <NewsFeedListItem
-          :feed="feed"
-          :feedUploadDate="getUploadDate(feed)"
-          />
-        </div>
-      </div> -->
-
-      <!-- <div>인피니트 스크롤</div> -->
-      <infinite-loading :identifier="currentTab" @infinite="infiniteHandler" spinner="waveDots">
-        <div slot="no-more" style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px;"></div>
-      </infinite-loading>
     </div>
+
+
+    <!-- <div>인피니트 스크롤</div> -->
+    <infinite-loading :identifier="currentTab" @infinite="infiniteHandler" spinner="waveDots">
+      <div slot="no-more" style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px;"></div>
+    </infinite-loading>
 
   </div>
 </template>
@@ -170,9 +148,9 @@ export default {
     move('1', '10%', '#fff')
     // const footerEl = document.querySelector('#footer-container')
     // footerEl.classList.add('innewsfeed')
-    // const searchEl = document.querySelector('.search-bar')
+    // const searchEl = document.querySelector('.my-search-bar')
     // searchEl.classList.add('innewsfeed')
-    // const searchResultEl = document.querySelector('.search-result')
+    // const searchResultEl = document.querySelector('.my-search-result')
     // searchResultEl.classList.add('innewsfeed')
   },
   destroyed() {

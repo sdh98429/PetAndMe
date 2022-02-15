@@ -1,16 +1,14 @@
 <template>
-  <div>
+  <div class="follow-container">
     <h2 v-if="profile">{{profile.userNickName}}</h2>
-    <div>팔로워 : {{followerCnt}}</div>
-    <div>팔로잉 : {{followingCnt}}</div>
-    <br>
     <button v-for="(tab, index) in tabs"
       :key="index"
       v-bind="{active: currentTab === index}"
+      class=""
       @click="currentTab = index">{{tab}}</button>
     <div v-show="currentTab==0">
       <div>팔로워 리스트</div>
-      <div v-for="(follower, ind) in followerList" :key="'follower' + ind" style="border: 1px solid;">
+      <div v-for="(follower, ind) in followerList" :key="`follower${ind}`" style="border: 1px solid;">
         <img @click="toUserFeed(follower.userID)" :src="'http://i6b106.p.ssafy.io:8080/main/image?file=' + follower.saveFolder + follower.userPhotoName" alt="프로필 사진" style="width: 300px; height: 150px; object-fit: contain;">
         <div>{{follower.userNickName}}</div>
         <div>@{{follower.userID}}</div>
@@ -20,7 +18,7 @@
     </div>
     <div v-show="currentTab==1">
       <div>팔로잉 리스트</div>
-      <div v-for="(following, ind) in followingList" :key="'following' + ind" style="border: 1px solid;">
+      <div v-for="(following, ind) in followingList" :key="`following${ind}`" style="border: 1px solid;">
         <img @click="toUserFeed(following.userID)" :src="'http://i6b106.p.ssafy.io:8080/main/image?file=' + following.saveFolder + following.userPhotoName" alt="프로필 사진" style="width: 300px; height: 150px; object-fit: contain;">
         <div>{{following.userNickName}}</div>
         <div>@{{following.userID}}</div>
@@ -34,6 +32,7 @@
 
 <script>
 import axios from 'axios'
+import '@/css/followlist.css'
 
 export default {
   name: 'FollowList',
