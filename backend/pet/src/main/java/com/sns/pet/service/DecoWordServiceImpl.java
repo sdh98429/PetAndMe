@@ -18,7 +18,7 @@ public class DecoWordServiceImpl implements DecoWordService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public List<String> makeNickName(int animalNumber) throws Exception {
-        String name = sqlSession.getMapper(DecoWordDao.class).selectKoreanName(animalNumber);
+        String name = sqlSession.getMapper(DecoWordDao.class).selectAnimalName(animalNumber);
         List<String> deco = sqlSession.getMapper(DecoWordDao.class).selectDecoWord();
 
         List<String> nickName = new ArrayList<>();

@@ -7,6 +7,8 @@ import java.util.Map;
 
 public interface LoginDao {
 
-    Long selectByIdAndPw(Map<String, String> user) throws SQLException;
-    Long selectById(String userID) throws SQLException;
+    // id와 pw를 이용한 user 조회
+    UserDto selectByIdAndPw(Map<String, String> user) throws SQLException;
+    // id를 이용한 user 조회
+    UserDto selectById(String userID) throws SQLException;
 }

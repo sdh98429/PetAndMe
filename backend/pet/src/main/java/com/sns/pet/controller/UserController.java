@@ -52,10 +52,10 @@ public class UserController {
     @GetMapping("/checkID/{userID}")
     public ResponseEntity<String> userIDCheck(@PathVariable("userID") @ApiParam("입력받은 userID") String userID) throws Exception {
         logger.info("userIDCheck 호출");
-        if(userService.checkUserID(userID)){
+        if (userService.checkUserID(userID)) {
             return new ResponseEntity<String>(FAIL, HttpStatus.OK);
-        }else {
-            return new ResponseEntity<String >(SUCCESS,HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }
     }
 
@@ -144,7 +144,13 @@ public class UserController {
     public ResponseEntity<UserPetDto> sendInfo(@PathVariable("userNumber") @ApiParam("전송할 회원번호") Long userNumber) throws
             Exception {
         logger.info("sendInfo 호출");
-        UserPetDto userPetDto = userService.findUserInfo(userNumber);
+        UserDto userDto = userService.findUser(userNumber);
+        UserPetDto userPetDto;
+        if (userDto.isPetCheck()) {
+            userPetDto = userService.findUserInfo(userNumber);
+        } else {
+            userPetDto = userService.findNoPetUserInfo(userNumber);
+        }
         if (userPetDto != null) {
             return new ResponseEntity<UserPetDto>(userPetDto, HttpStatus.OK);
         }

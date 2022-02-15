@@ -15,7 +15,7 @@ public class LoginServiceImpl implements LoginService {
     private final SqlSession sqlSession;
 
     @Override
-    public Long findByIdAndPw(Map<String, String> user) throws Exception {
+    public UserDto findByIdAndPw(Map<String, String> user) throws Exception {
         String userID = user.get("userID");
         String userPW = user.get("userPW");
         if(userID == null || userPW == null) {
@@ -25,7 +25,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public Long findById(String userID) throws Exception {
+    public UserDto findById(String userID) throws Exception {
         return sqlSession.getMapper(LoginDao.class).selectById(userID);
     }
 }

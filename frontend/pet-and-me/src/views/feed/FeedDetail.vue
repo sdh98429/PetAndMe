@@ -3,8 +3,6 @@
     <!-- Feed Image -->
     <div class="feed-img">
       <span v-show="photoIndex > 0" class="material-icons left-btn" @click="leftPhoto">arrow_forward_ios</span>
-      <!-- <slide v-if="myDevice==='mobile'" :data="slide" :time="0"/>
-      <img v-else :src="`data:image/png;base64,${feedPhotoDtoList[photoIndex].photo}`" class="show-img" /> -->
       <img :src="`data:image/png;base64,${feedPhotoDtoList[photoIndex].photo}`" class="show-img" />
       <span v-show="photoIndex < feedPhotoDtoList.length-1" class="material-icons right-btn" @click="rightPhoto">arrow_forward_ios</span>
     </div>
@@ -22,7 +20,7 @@
       <div class="feed-profile-mypet">
           {{profile.petName}}({{profile.animalName}}),
           <font-awesome-icon icon="mars" v-if="profile.petGender==='M'" style="font-size:18px"></font-awesome-icon>
-          <font-awesome-icon icon="venus" v-else></font-awesome-icon>
+          <font-awesome-icon icon="venus" style="font-size:18px" v-else></font-awesome-icon>
           ,<span v-if="petMonth < 12">{{petMonth}}개월</span><span v-else>{{petAge}}살</span>
       </div>
     </div>
@@ -41,7 +39,7 @@
       </div>
       <!-- Comment Count -->
       <div class="comment">
-        <div class="material-icons btn--comment" @click="test">chat_bubble_outline</div>
+        <div class="material-icons btn--comment" @click="goToComment">chat_bubble_outline</div>
         <div class="comment-cnt">{{cntComment}}</div>
       </div>
       <div v-if="myUserNumber === feedUserNumber" class="material-icons delete-btn" @click="deleteFeedDetail">delete_outline</div>
@@ -78,22 +76,18 @@ import {BASE_API_URL} from '@/config/config.js'
 import '@/css/feeddetail.css'
 
 export default {
-  name: 'FeedListItem',
+  name: 'FeedDetail',
   components: {
-    // slide
   },
   data: function () {
     return {
       today: new Date(),
       feedUploadDate: null,
-      // Mobile Web 전용 터치슬라이드
-      slide: [],
-      myDevice: 'mobile',
       feed : null,
       profile : null,
       photoIndex : 0,
       commentContent : null,
-      myUserNumber: 1,
+
       feedUserNumber: null,
       feedContent: null,
       feedDate: null,
@@ -111,7 +105,7 @@ export default {
   props: {
   },
   methods: {
-    test() {
+    goToComment() {
       const commentInputEl = document.querySelector('.comment-input')
       const commentListEl = document.querySelector('.comment-list').offsetTop
       window.scrollTo({top:commentListEl+200, behavior:'smooth'})
@@ -307,18 +301,23 @@ export default {
     this.getComments()
   },
   mounted(){
-    const searchEl = document.querySelector('.search-bar')
-    searchEl.classList.add('inactive')
+    // const searchEl = document.querySelector('.search-bar')
+    // searchEl.classList.add('inactive')
     const footerEl = document.querySelector('#footer-container')
     footerEl.classList.add('indetail')
     move('0', '0', '#faf4e4')
   },
   destroyed() {
-    const searchEl = document.querySelector('.search-bar')
-    searchEl.classList.remove('inactive')
+    // const searchEl = document.querySelector('.search-bar')
+    // searchEl.classList.remove('inactive')
     const footerEl = document.querySelector('#footer-container')
     footerEl.classList.remove('indetail')
-  }
+  },
+  computed: {
+    myUserNumber () {
+      return this.$store.getters.getUserNumber
+    }
+  },
 }
 </script>
 
