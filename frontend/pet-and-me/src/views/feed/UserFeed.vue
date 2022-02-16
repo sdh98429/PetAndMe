@@ -103,11 +103,10 @@ export default {
     getUserProfile: async function(){ // 프로필 정보 가져오기
         await axios({
         method: 'get',
-        url: `${BASE_API_URL}/user/number/${this.$route.params.yourUserId}`,
+        url: `${BASE_API_URL}/user/number/${this.yourUserId}`,
       })
         .then(response => {
           this.yourUserNumber = response.data
-          // console.log(this.yourUserNumber)
         })
         .catch(err => {
           console.log(err)
@@ -198,7 +197,7 @@ export default {
     },
 
     profileChange: function(){
-      if (this.myUserNumber == this.profile.userNumber){
+      if (this.myUserNumber == this.yourUserNumber){
         this.$refs.image.click()
       } else {
         console.log('본인 프로필 사진만 업데이트 할 수 있습니다.')
