@@ -27,7 +27,7 @@
         ,<span v-if="petMonth < 12">{{petMonth}}개월</span><span v-else>{{petAge}}살</span>
       </div>
       <div class="taping-thumbnail">
-
+        <TapingViewer/>
       </div>
       <div class="follow-and-feed-mobile">
         <div class="feed-length">게시글<br>{{feedLength}}</div>
