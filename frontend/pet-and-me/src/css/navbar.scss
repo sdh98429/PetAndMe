@@ -57,7 +57,7 @@
     display: block;
   }
 
-  .search-bar {
+  .my-search-bar {
     width: 100%;
     position: fixed;
     bottom: 75px;
@@ -68,10 +68,10 @@
     justify-content: center;
     z-index: 3;
   }
-  .search-bar.inactive {
+  .my-search-bar.inactive {
     display: none;
   }
-  .search-bar .search-input {
+  .my-search-bar .my-search-input {
     width: 62%;
     background-color: #eee;
     outline: none;
@@ -81,14 +81,14 @@
     padding: 0 15%;
     margin:0 auto;
   }
-  .search-bar .search-placeholder {
+  .my-search-bar .my-search-placeholder {
     position: absolute;
     width: 50px;
     left: 35px;
     top: 15px;
     color: #ccc;
   }
-  .search-bar .search-placeholder .search-icon{
+  .my-search-bar .my-search-placeholder .my-search-icon{
     font-size: 20px;
   }
   // Mobile Footer bar
@@ -234,7 +234,7 @@
     display: block;
   }
   
-  .search-bar {
+  .my-search-bar {
     width: 800px;
     position: fixed;
     bottom: 75px;
@@ -250,13 +250,13 @@
     border-right: 1px solid #ccc;
     z-index: 3;
   }
-  .search-bar.innewsfeed{
+  .my-search-bar.innewsfeed{
     left: calc(50% + 1px);
   }
-  .search-bar.inactive {
+  .my-search-bar.inactive {
     display: none;
   }
-  .search-bar .search-input {
+  .my-search-bar .my-search-input {
     width: 70%;
     background-color: #eee;
     outline: none;
@@ -265,24 +265,25 @@
     height:30px;
     padding: 0 10%;
     margin:0 auto;
+    font-size: 15px;
   }
-  .search-bar .search-placeholder {
+  .my-search-bar .my-search-placeholder {
     position: absolute;
     width: 50px;
     left: 70px;
     top: 12px;
     color: #ccc;
   }
-  .search-bar .search-placeholder .search-icon{
+  .my-search-bar .my-search-placeholder .my-search-icon{
     font-size: 20px;
   }
-  .search-bar .search-result {
+  .my-search-bar .my-search-result {
     position: fixed;
     display: flex;
     overflow: scroll;
     // width: 700px;
     // padding: 0 50px;
-    width: 700px;
+    width: 800px;
     padding: 0 50px;
     left: 50%;
     transform: translateX(-50%);
@@ -295,19 +296,33 @@
     font-family: 'MinSans-Regular', sans-serif;
     border: 1px solid #ccc;
   }
-  .search-bar .search-result.newsfeed {
+  .my-search-bar .my-search-result.newsfeed {
     left: calc(50% + 1px);
   }
-  .search-bar .search-result::-webkit-scrollbar {
+  .my-search-bar .my-search-result::-webkit-scrollbar {
     display: none;
   }
-  .search-bar .close-btn{
+  .my-search-bar .close-btn{
     position: fixed;
     right: 30px;
     bottom: 210px;
     cursor: pointer;
   }
-  .search-bar .search-result-item {
+  .my-search-bar .result-right-btn{
+    position: fixed;
+    right: 0px;
+    bottom: 140px;
+    z-index: 3;
+    cursor: pointer;
+  }
+  .my-search-bar .result-left-btn{
+    position: fixed;
+    left: 0px;
+    bottom: 140px;
+    z-index: 3;
+    cursor: pointer;
+  }
+  .my-search-bar .my-search-result-item {
     width: 150px;
     height: 135px;
     font-size: 14px;
@@ -315,17 +330,17 @@
     border: 1px solid #ccc;
     cursor: pointer;
   }
-  .search-bar .search-result-item .search-result-image{
+  .my-search-bar .my-search-result-item .my-search-result-image{
     width: 75px;
     height: 75px;
     border-radius: 50%;
     margin: 10px auto;
   }
-  .search-bar .search-result-item .search-result-nickname{
+  .my-search-bar .my-search-result-item .my-search-result-nickname{
     width: 120px;
     margin: 0 auto;
   }
-  .search-bar .search-result-item .search-result-id{
+  .my-search-bar .my-search-result-item .my-search-result-id{
     width: 120px;
     margin: 0 auto;
   }

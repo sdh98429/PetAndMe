@@ -16,6 +16,7 @@ from PIL import Image, ImageOps
 import glob
 from natsort import natsorted
 import base64
+import numpy as np
 
 # path
 import os
@@ -53,6 +54,18 @@ def pet_tape(request):
             with open(filename, 'wb') as f:
                 f.write(imgdata)
 
+            if movieType == "2":
+                typeTrans = cv2.imread(filename, cv2.IMREAD_COLOR)
+                cartoon_img = cv2.stylization(typeTrans, sigma_s=100, sigma_r=0.9)
+                cv2.imwrite(filename, cartoon_img)
+
+            elif movieType == "3":
+                typeTrans = Image.open(filename)
+                newone = typeTrans.transpose(Image.FLIP_LEFT_RIGHT)
+                newone.save(filename)
+            # elif movieType == "4":
+            #     typeTrans = Image.open(filename).convert('L')
+            #     typeTrans.save(filename)
 
     origin = os.path.dirname(os.path.abspath(__file__))
     originPath = os.path.abspath(os.path.join(origin, '..'))
@@ -60,7 +73,7 @@ def pet_tape(request):
     picdir = origin + '/pics'
     videodir = origin + '/' + userId
     # userDir = request.GET.get('userNumber')
-    userdir = origin + '\\' + userId
+    userdir = origin + '/' + userId
     print(origin)
     # 폴더 내 모든 jpeg 파일 가져와서 정렬
     file_list = glob.glob(os.path.join(originPath, '*.jpg'))
@@ -135,11 +148,11 @@ def pet_tape(request):
     clips.write_videofile(videoname + '.mp4', fps=12, codec='libx264')
 
     # 유저별 경로로 이동
-    shutil.move(originPath + '\\' + videoname + '.mp4', userdir + '\\' + videoname + '.mp4')
+    shutil.move(originPath + '/' + videoname + '.mp4', userdir + '/' + videoname + '.mp4')
 
     # base64 decode한 사진 삭제
     for j in range(imageIdx):
-        removefilename = os.path.join(originPath) + '\\' + userId + str(j) + 'image.jpg'
+        removefilename = os.path.join(originPath) + '/' + userId + str(j) + 'image.jpg'
         os.remove(removefilename)
 
     # return (clips)

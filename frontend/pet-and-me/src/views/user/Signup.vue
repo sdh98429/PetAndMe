@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="signup-container">
     <h1> 단계 표시 </h1>
     <p> {{ this.level }} / 4 단계 진행중 ,,,</p>
     <hr>
@@ -39,6 +39,7 @@ import SignupEmail from '../../components/Signup/SignupEmail'
 import SignupPet from '../../components/Signup/SignupPet'
 import SignupPreference from '../../components/Signup/SignupPreference'
 import SignupNext from '../../components/Signup/SignupNext'
+import '@/css/signup.css'
 
 export default {
   name: 'Signup',

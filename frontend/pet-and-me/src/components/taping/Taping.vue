@@ -1,6 +1,5 @@
 <template>
   <div>
-    <input multiple @change='onInputImage()' accept="image/*" ref="image" type="file">
     <h3>style</h3>
       <input type="radio" id="nomal" v-model="types.type" value="1"> <label for="nomal"> 기본 </label>
       <input type="radio" id="cartoon" v-model="types.type" value="2"><label for="cartoon"> 만화풍 </label>
@@ -28,35 +27,21 @@ export default {
   name: 'Taping',
   data() {
     return {
-      files: [],
       types: {
-        type: 1,
-        bgm: 2,
-        images: 3,
+        type: null,
+        bgm: null,
       },
     }
   },
   methods: {
-      onInputImage: function(){
-      this.files = this.$refs.image.files
-      
-      if (this.$refs.image.files.length > 16){
-        this.files = []
-        this.$refs.image.value = ''
-        alert('이미지는 최대 16장까지 가능합니다.')
-      } else {
-        var step;
-        for (step = 0; step < this.files.length; step++) {
-          if (this.files[step].size/(1024*1024) > 30){
-            this.files = []
-            this.$refs.image.value = ''
-            alert('이미지 파일은 최대 30MB까지 가능합니다.')
-          }
-        }
-      }
-    },
     createTape() {
-      this.$emit("tapedata-update", this.types)
+      if (this.types.type === null) {
+        alert('영상 스타일을 선택해주세요!')
+      } else if (this.types.bgm === null) {
+        alert('영상 배경음악을 선택해주세요!')
+      } else {
+        this.$emit("tapedata-update", this.types)
+      }
 
     }
   },

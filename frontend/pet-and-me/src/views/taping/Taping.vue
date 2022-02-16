@@ -18,10 +18,25 @@
   <hr>
     <h2>Taping test용 페이지</h2>
     <Taping
+      v-if="level == 1"
       @tapedata-update="tape2"
       >
     </Taping>
-    <button @click="tape">리얼테스트</button>
+
+  <div v-if="level == 2">
+    <h1>네브바</h1>
+    <h1>네브바</h1>
+    <div v-if="this.returnVideo">
+      <video controls>
+        <source type="video/mp4" :src="`data:video/mp4;base64,${returnVideo[0]}`">
+      </video>
+    </div>
+    <button @click="tape">Taping!</button>
+    <button @click="tapingNew">Taping 페이지로 돌아가기</button>
+    <button @click="toHome">홈으로</button>
+  </div>
+
+
   </div>
 </template>
 
@@ -33,12 +48,13 @@ import {VIDEO_API_URL, BASE_API_URL} from '@/config/config.js'
 export default {
   data() {
     return {
+      level: 0,
       datas: {
-        feedPhotoDtoList: [1, 3],
+        feedPhotoDtoList: [],
         },
       tapeMovie: {
-        type: 1,
-        bgm: 5,
+        type: null,
+        bgm: null,
         images: null,
         userId: null,
       },
@@ -47,33 +63,29 @@ export default {
     }
   },
   components: {
-    Taping
+    Taping,
+    TapingFeedList,
   },
   methods: {
+    // base64 이미지 받아오기
     catchImages() {
       for (var step = 0; step < this.datas.feedPhotoDtoList.length; step++) {
-        console.log(step)
         this.datas.feedPhotoDtoList[step] = {'feedNumber' : this.datas.feedPhotoDtoList[step]}
-        console.log(this.datas.feedPhotoDtoList)
       }
-      console.log(this.datas.feedPhotoDtoList)
       axios({
         method: 'post',
-        url: 'http://i6b106.p.ssafy.io:8080/main/imagelist',
+        url: `${BASE_API_URL}/main/imagelist`,
         data: this.datas,
         })
           .then((res) => {
             this.images = res.data
             this.tapeMovie.images = res.data
-            console.log(typeof(this.tapeMovie.images))
           })
           .catch(err => {
-            console.log(this.feedPhotoDtoList)
-            console.log('구분3')
             console.log(err)
-            console.log('안돼?')
           })
     },
+    // taping
     tape() {
         axios({
         method: 'post',
@@ -81,14 +93,10 @@ export default {
         data: this.tapeMovie
       })
         .then((res) => {
-          console.log('생성요청')
           this.returnVideo = res.data
-          console.log(this.returnVideo)
-          console.log(res.data)
         })
         .catch(err => {
-          console.log(err.response)
-          console.log('에러')
+          console.log(err)
         })
     },
     // type, bgm 선정
@@ -132,6 +140,9 @@ export default {
       this.catchImages()
     },
   },
+  created: function() {
+    this.asyncCall()
+  }
 }
 </script>
 

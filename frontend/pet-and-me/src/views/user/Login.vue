@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h3>로그인</h3>
+  <div class="login-container">
+    <h2>로그인</h2>
     <form @submit.prevent="login">
       <div>
         <input type="text" id="userID" v-model="credentials.userID" placeholder="아이디 입력" >
@@ -28,6 +28,7 @@
 import axios from 'axios'
 import {mapActions} from 'vuex'
 import {BASE_API_URL} from '@/config/config.js'
+import "@/css/login.css"
 
 export default {
     name: 'Login',
@@ -58,7 +59,6 @@ export default {
           data: this.credentials
         })
         .then(res => {
-          console.log(this.credentials)
           if (res.data.message === 'success') {
             alert('로그인 성공')
             this.$emit('login')
@@ -74,9 +74,6 @@ export default {
           alert('로그인 실패')
         })
     },
-    ...mapActions([
-			'loginGetToken',
-		]),
     // google
     onSignIn(googleUser){
       const profile = googleUser.getBasicProfile();
