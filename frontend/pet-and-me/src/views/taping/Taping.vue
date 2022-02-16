@@ -1,8 +1,5 @@
 <template>
-  <div>
-
-  <h1>네브바</h1>
-  <h1>네브바</h1>
+  <v-app>
   <div v-if="level == 0">
     <h1>Taping하고싶은 피드를 추가해주세요!</h1>
     <div>
@@ -11,39 +8,37 @@
       @feedNumber-update="checkedSave"
       />
     </div>
-    <hr>
   </div>
   
-  <hr>
     <Taping
       v-if="level == 1"
       @tapedata-update="tape2"
       >
     </Taping>
 
-  <div v-if="level == 2">
-    <h1>네브바</h1>
-    <h1>네브바</h1>
+  <div v-if="level == 2" class="return-video">
     <div v-if="this.returnVideo">
       <video controls>
         <source type="video/mp4" :src="`data:video/mp4;base64,${returnVideo[0]}`">
       </video>
     </div>
-    <button @click="tape">Taping!</button>
-    <button @click="tapingNew">Taping 페이지로 돌아가기</button>
-    <button @click="toHome">홈으로</button>
+    <div class="btn-container">
+      <v-btn color="orange lighten-5" x-large @click="tape">Taping</v-btn>
+      <v-btn color="orange lighten-5" x-large @click="tapingNew">Taping 페이지로 돌아가기</v-btn>
+      <v-btn color="orange lighten-5" x-large @click="toHome">홈으로</v-btn>
+    </div>
   </div>
 
 
-  </div>
+  </v-app>
 </template>
 
 <script>
 import axios from 'axios'
 import Taping from '@/components/taping/Taping'
 import TapingFeedList from '@/components/taping/TapingFeedList'
-// import {VIDEO_API_URL, BASE_API_URL} from '@/config/config.js'
-import {BASE_API_URL} from '@/config/config.js'
+import {VIDEO_API_URL, BASE_API_URL} from '@/config/config.js'
+// import {BASE_API_URL} from '@/config/config.js'
 
 export default {
   data() {
@@ -90,8 +85,8 @@ export default {
     tape() {
         axios({
         method: 'post',
-        // url: `${VIDEO_API_URL}/api/v1/tape/`,
-        url: 'http://127.0.0.1:8000/api/v1/tape/',
+        url: `${VIDEO_API_URL}/api/v1/tape/`,
+        // url: 'http://127.0.0.1:8000/api/v1/tape/',
         data: this.tapeMovie
       })
         .then((res) => {
@@ -150,9 +145,24 @@ export default {
 </script>
 
 <style scoped>
-video { 
+.video { 
   width:90%;
-  max-width:720px;
+  max-width:520px;
   height:auto;
+}
+
+.h1 {
+  padding-top: 100px;
+  font-family: sans-serif;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.return-video {
+  margin-top: 100px;
+}
+
+.btn-container {
+  text-align: center;
 }
 </style>

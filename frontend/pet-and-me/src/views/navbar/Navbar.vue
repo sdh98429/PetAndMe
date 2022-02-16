@@ -139,7 +139,7 @@ export default {
     },
     goToTaping(){
       move('4', '70%', '#fff')
-      this.$router.push({ name: 'Taping' })
+      this.$router.push({ name: 'Taping', params: { yourUserId : this.userInfo.userID } })
     },
     goToMyPage() {
       move('5', '90%', '#fff')

@@ -1,6 +1,6 @@
 <template>
-  <div>
   <!-- feed select -->
+  <v-app>
   <div class="grid">
     <div v-for="userFeed in userFeeds" :key="userFeed.feedNumber">
       <input type="checkbox"
@@ -14,9 +14,11 @@
       </label>
     </div>
   </div>
-  <button @click="saveFeedNumber">📷선택 완료🎥</button>
-
+  <div class="btn-container">
+    <v-btn color="info" x-large @click="saveFeedNumber">선택 완료</v-btn>
   </div>
+  </v-app>
+  
 </template>
 
 <script>
@@ -81,7 +83,20 @@ input.checked + label > img {
 
 .grid {
   display: grid;
+  justify-content: center;
   grid-template-columns: repeat(3, auto);
   gap: 10px;
+  padding-bottom: 50px;
+  padding-top: 50px;
+  width: 100%;
+}
+
+.v-btn {
+  display: block;
+  padding-bottom: 100px;
+  margin: auto;
+}
+.btn-container {
+  padding-bottom: 200px;
 }
 </style>
