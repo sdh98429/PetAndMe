@@ -167,7 +167,7 @@ def pet_tape(request):
     
 @api_view(['POST'])
 def returntape(request):
-    userId = request.data.get('userId')
+    userId = request.data.get('returnUserId')
 
     origin = os.path.dirname(os.path.abspath(__file__))
     videodir = origin + '/' + userId
