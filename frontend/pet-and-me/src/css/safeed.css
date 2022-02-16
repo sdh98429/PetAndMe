@@ -30,6 +30,11 @@
     /* border-bottom: 1px solid #333;
     border-top: 1px solid #333; */
   }
+  .sa-feed-container h2 {
+    width: 100%;
+    position: absolute;
+    top: 10px;
+  }
   .sa-feed-container .feed-img {
     /* width: 400px;*/
     width: 100%;

@@ -1,25 +1,28 @@
 <template>
   <div class="user-update-container">
-    <div v-if="(yourUserNumber === myUserNumber)">
-      <div>
+    <!-- 자신의 회원 정보를 수정할 때 -->
+    <div v-if="(yourUserNumber === myUserNumber)" class="user-update-box">
         <h1>회원 정보 수정</h1>
+        <div class="userid">
           <h3>아이디</h3>
-            <div>@{{yourUserId}}</div>
+            <input type="text" disabled id="userId" v-model="yourUserId">
+        </div>
+        <div class="useremail">
           <h3>이메일</h3>
-            <div>{{userEmail}}</div>
-
+            <input type="text" disabled id="useremail" v-model.trim="userEmail">
+        </div>
+        <div class="nickname">
           <h3>닉네임</h3>
-            <input type="text" name="nickname" id="nickname" v-model="credentials.userNickName" placeholder="닉네임을 입력해주세요" style="border-style: solid;">
-
+            <input type="text" name="nickname" id="nickname" v-model.trim="credentials.userNickName" placeholder="닉네임을 입력해주세요">
+        </div>
+        <div class="user-profile">
           <h3>프로필 소개</h3>
-            <input type="text" name="userProfileContent" id="userProfileContent" v-model="credentials.userProfileContent" placeholder="자신을 소개해주세요" style="width:300px;height:200px;border-style: solid;">
-
-        <h3>선호동물 체크</h3>
-
-        <div>
-          <span v-for="(animal, index) in animalList" class="saveAnimalIndex" v-bind:key="animal">
-            <input type="checkbox" :value="animal.animalNumber" v-model="selected">{{animal.animalName}}
-            <br v-if="(index+1) % 3 == 0">
+            <input type="text" name="userProfileContent" id="userProfileContent" v-model.trim="credentials.userProfileContent" placeholder="자신을 소개해주세요">
+        </div>
+        <div class="fav-animal">
+          <h3>선호동물 체크</h3>
+          <span v-for="(animal, index) in animalList" v-bind:key="animal.animalNumber">
+            <input type="checkbox" :value="animal.animalNumber" :class="`fav-animal-${index}`" @select="test" v-model="selected">{{animal.animalName}}
           </span>
         </div>
 
@@ -28,19 +31,20 @@
         <button @click="goToMyPage()">내 페이지로 돌아가기</button>
         <br>
         <button @click="logout" class="bttn-pill bttn-md bttn-success">LogOut</button>
-      </div>
     </div>
     <!-- 다른 사람의 회원 정보를 수정하려 할 때 -->
     <div v-else>
-      내 유저 피드 페이지만 업데이트할 수 있습니다.
+      내 정보 페이지만 업데이트할 수 있습니다.
+      <button @click="goBack">이전 페이지로 돌아가기</button>
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import {BASE_API_URL} from '@/config/config.js'
 import '@/css/userupdate.css'
+// import DatePicker from '../../components/Signup/DatePicker'
+import {BASE_API_URL} from '@/config/config.js'
 import { mapActions } from "vuex"
 
 export default {
@@ -91,11 +95,16 @@ export default {
     ...mapActions([
       'logoutRemoveToekn'
       ]),
-
+    goBack(){
+      history.back()
+    },
+    test() {
+      console.log('test')
+    },
     getUserProfile: async function(){ // 프로필 정보 가져오기
         await axios({
         method: 'get',
-        url: `${BASE_API_URL}/user/number/${this.$route.params.yourUserId}`,
+        url: `${BASE_API_URL}/user/number/` + this.$route.params.yourUserId, // 유저 ID를 유저 번호로 바꿔 yourUserNumber에 저장
       })
         .then(response => {
           this.yourUserNumber = response.data
@@ -110,6 +119,7 @@ export default {
           url: `${BASE_API_URL}/user/info/${this.yourUserNumber}`,
         })
           .then(response => {
+            console.log(response)
             this.profile = response.data
           })
           .catch(err => {
@@ -191,9 +201,8 @@ export default {
     },
 
     sendData(){ // 회원 정보 수정 요청 보내기 
-    
-      this.credentials.userNickName = this.credentials.userNickName.trim() // 닉네임 공백 제거
-      this.credentials.userProfileContent = this.credentials.userProfileContent.trim() // 프로필 소개 공백 제거
+      // this.credentials.userNickName = this.credentials.userNickName // 닉네임 공백 제거
+      // this.credentials.userProfileContent = this.credentials.userProfileContent // 프로필 소개 공백 제거 > template에서 해결
       if (this.credentials.userNickName){ // 닉네임 입력값이 있다면
         if (this.credentials.userProfileContent){ // 프로필 소개 입력값이 있다면
           this.savePrefer() // 선호 동물 선택했는지 검증

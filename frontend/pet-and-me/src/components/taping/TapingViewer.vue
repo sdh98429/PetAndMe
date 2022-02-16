@@ -31,7 +31,7 @@ export default {
       returnVideo: null,
     }
   },
-  props: ['returnUserId'],
+  // props: ['returnUserId'],
   methods: {
     catchTape() {
       axios({
@@ -50,6 +50,11 @@ export default {
   },
   created() {
     this.catchTape()
+  },
+  computed: {
+    returnUserId() {
+      return this.$store.getters.getUserInfo.userID
+    }
   }
 }
 </script>

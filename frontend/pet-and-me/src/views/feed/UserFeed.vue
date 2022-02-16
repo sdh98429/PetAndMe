@@ -47,10 +47,12 @@
         <button class="follow-btn bttn-pill bttn-sm bttn-warning bttn-block" v-if="isFollow" @click="unfollowUser">언팔로우</button>
       </div>
     </div>
+    <div class="user-feed-list">
       <UserFeedList
         :your-user-number="yourUserNumber"
         @feed-length="getFeedLength"
       />
+    </div>
   </div>
 </template>
 
@@ -119,7 +121,7 @@ export default {
         })
           .then(response => {
             this.profile = response.data
-            console.log(response.data)
+            // console.log(response.data)
             this.getPetAge()
           })
           .catch(err => {
@@ -198,7 +200,7 @@ export default {
     },
 
     profileChange: function(){
-      if (this.myUserNumber == this.profile.userNumber){
+      if (this.myUserNumber == this.yourUserNumber){
         this.$refs.image.click()
       } else {
         console.log('본인 프로필 사진만 업데이트 할 수 있습니다.')
