@@ -17,20 +17,22 @@
         </div>
         <div class="user-profile">
           <h3>프로필 소개</h3>
-            <input type="text" name="userProfileContent" id="userProfileContent" v-model.trim="credentials.userProfileContent" placeholder="자신을 소개해주세요">
+            <textarea type="text" name="userProfileContent" id="userProfileContent" v-model.trim="credentials.userProfileContent" placeholder="자신을 소개해주세요"></textarea>
         </div>
         <div class="fav-animal">
           <h3>선호동물 체크</h3>
-          <span v-for="(animal, index) in animalList" v-bind:key="animal.animalNumber">
-            <input type="checkbox" :value="animal.animalNumber" :class="`fav-animal-${index}`" @select="test" v-model="selected">{{animal.animalName}}
-          </span>
+          <div class="fav-animal-box">
+            <div v-for="animal in animalList" v-bind:key="animal.animalNumber" class="fav-animal-checkbox">
+              <input type="checkbox" :value="animal.animalNumber" v-model="selected" :id="animal.animalName">
+              <label :for="animal.animalName">{{animal.animalName}}</label>
+            </div>
+          </div>
         </div>
-
-        <button @click="sendData"> 수정 완료 </button>
-        <br>
-        <button @click="goToMyPage()">내 페이지로 돌아가기</button>
-        <br>
-        <button @click="logout" class="bttn-pill bttn-md bttn-success">LogOut</button>
+        <div class="btn-box">
+          <button class="bttn-pill bttn-md bttn-warning back-btn" @click="goToMyPage()">내 페이지로 돌아가기</button>
+          <button class="bttn-pill bttn-md bttn-warning send-btn" @click="sendData"> 수정 완료 </button>
+        </div>
+        <button class="logout-btn bttn-pill bttn-md bttn-danger bttn-block" @click="logout" >LogOut</button>
     </div>
     <!-- 다른 사람의 회원 정보를 수정하려 할 때 -->
     <div v-else>
