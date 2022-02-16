@@ -1,7 +1,7 @@
 <template>
   <div class="follow-container">
     <h2>{{profile.userNickName}}</h2>
-    <button class="back-btn bttn-pill bttn-md bttn-default" @click="test">돌아가기</button>
+    <button class="back-btn bttn-pill bttn-md bttn-default" @click="goBack">돌아가기</button>
     <!-- <button v-for="(tab, index) in tabs"
       :key="index"
       v-bind="{active: currentTab === index}"
@@ -14,9 +14,11 @@
     <div v-show="currentTab==0" v-if="followerCnt" class="follow-list">
       <div v-for="(follower, ind) in followerList" :key="`follower${ind}`" class="follow-item">
         <img @click="toUserFeed(follower.userID)" class="follow-image" :src="`http://i6b106.p.ssafy.io:8080/main/image?file=${follower.saveFolder}${follower.userPhotoName}`" alt="프로필 사진">
-        <div class="follow-user">{{follower.userNickName}}<br>@{{follower.userID}}</div>
-        <button class="follow-btn bttn-pill bttn-md bttn-warning" @click="unfollowUser(follower.userNumber)" v-if="myFollowingList.includes(follower.userNumber)">언팔로우</button>
-        <button class="follow-btn bttn-pill bttn-md bttn-warning" @click="followUser(follower.userNumber)" v-else>팔로우</button>
+        <div class="follow-user" @click="toUserFeed(follower.userID)">{{follower.userNickName}}<br>@{{follower.userID}}</div>
+        <div v-if="follower.userNumber != myUserNumber">
+          <button class="follow-btn bttn-pill bttn-md bttn-warning" @click="unfollowUser(follower.userNumber)" v-if="myFollowingList.includes(follower.userNumber)">언팔로우</button>
+          <button class="follow-btn bttn-pill bttn-md bttn-warning" @click="followUser(follower.userNumber)" v-else>팔로우</button>
+        </div>
         <div class="follow-user-pet">
           {{follower.petName}}({{follower.animalName}}),
           <font-awesome-icon icon="mars" v-if="follower.petGender==='M'" style="font-size:18px"></font-awesome-icon>
@@ -28,9 +30,11 @@
     <div v-show="currentTab==1" v-if="followingCnt" class="follow-list">
       <div v-for="(following, ind) in followingList" :key="`following${ind}`" class="follow-item">
         <img @click="toUserFeed(following.userID)" class="follow-image" :src="`http://i6b106.p.ssafy.io:8080/main/image?file=${following.saveFolder}${following.userPhotoName}`" alt="프로필 사진">
-        <div class="follow-user">{{following.userNickName}}<br>@{{following.userID}}</div>
-        <button class="follow-btn bttn-pill bttn-md bttn-warning" @click="unfollowUser(following.userNumber)" v-if="myFollowingList.includes(following.userNumber)">언팔로우</button>
-        <button class="follow-btn bttn-pill bttn-md bttn-warning" @click="followUser(following.userNumber)" v-else>팔로우</button>
+        <div class="follow-user" @click="toUserFeed(following.userID)">{{following.userNickName}}<br>@{{following.userID}}</div>
+        <div v-if="following.userNumber != myUserNumber">
+          <button class="follow-btn bttn-pill bttn-md bttn-warning" @click="unfollowUser(following.userNumber)" v-if="myFollowingList.includes(following.userNumber)">언팔로우</button>
+          <button class="follow-btn bttn-pill bttn-md bttn-warning" @click="followUser(following.userNumber)" v-else>팔로우</button>
+        </div>
         <div class="follow-user-pet">
           {{following.petName}}({{following.animalName}}),
           <font-awesome-icon icon="mars" v-if="following.petGender==='M'" style="font-size:18px"></font-awesome-icon>
@@ -75,8 +79,8 @@ export default {
 
   },
   methods: {
-    test() {
-      this.$router.push({name: 'UserFeed', params: { yourUserId : this.userInfo.userID }})
+    goBack() {
+      history.back()
     },
     followView() {
       this.currentTab = 0
@@ -123,21 +127,24 @@ export default {
         })
     },
 
-    getFollowingList: function(){ // 팔로잉 리스트 가져오기
-      axios({
+    getFollowingList: async function(){ // 팔로잉 리스트 가져오기
+      await axios({
         method: 'get',
         url: 'http://i6b106.p.ssafy.io:8080/user/following/' + this.yourUserNumber,
       })
       .then(response => {
         this.followingCnt = response.data.length
         this.followingList = response.data
-        this.followingList.forEach(follow => {
+      })
+      .catch(err => {
+        console.log(err)
+      })
+      await this.followingList.forEach(follow => {
           axios({
             method: 'get',
             url: `${BASE_API_URL}/user/info/${follow.userNumber}`
           })
             .then(res =>{
-              console.log(res)
               follow.petBirth = res.data.petBirth
               follow.petGender = res.data.petGender
               follow.petName = res.data.petName
@@ -149,10 +156,6 @@ export default {
               console.log(err)
             })
         })
-      })
-      .catch(err => {
-        console.log(err)
-      })
     },
 
     getFollowerList: async function(){ // 팔로워 리스트 가져오기

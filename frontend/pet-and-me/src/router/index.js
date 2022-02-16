@@ -64,7 +64,7 @@ const routes = [
     meta: {requiresAuth: true}
   },
   {
-    path: '/feed/userfeed/:yourUserId/follow',
+    path: '/feed/userfeed/:yourUserId/follow/',
     name: 'FollowList',
     component: FollowList,
     meta: {requiresAuth: true}
