@@ -10,6 +10,16 @@
   }
   .newsfeed-container {
     width: 100%;
+    margin: 0 auto;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 70px;
+    z-index: -2;
+    padding-bottom: 100px;
+  }
+  .newsfeed-container {
+    width: 100%;
     position: relative;
     top: 65px;
     z-index: -1;
@@ -54,6 +64,7 @@
     background-color:#333; 
     border-radius:50%; 
     color: #fff;
+    cursor: pointer;
   }
   .feed-container .feed-img .material-icons.right-btn {
     position: absolute;
@@ -64,6 +75,7 @@
     background-color:#333; 
     border-radius:50%; 
     color: #fff;
+    cursor: pointer;
   }
   .feed-container .feed-profile {
     position:relative;
@@ -82,6 +94,7 @@
     position: absolute;
     left: 5px;
     top: 5px;
+    cursor: pointer;
   }
   .feed-container .feed-profile .feed-profile-nickname {
     width: 65%;
@@ -89,7 +102,8 @@
     font-weight: bold;
     position: absolute;
     left: 65px;
-    top:0
+    top:0;
+    cursor: pointer;
   }
   .feed-container .feed-profile .feed-profile-nickname2 {
     width: 65%;
@@ -98,6 +112,7 @@
     position: absolute;
     left: 65px;
     top: 16px;
+    cursor: pointer;
   }
   .feed-container .feed-profile .feed-profile-mypet {
     width: auto;
@@ -121,6 +136,7 @@
     width: 95%;
     height: 30px;
     color: #ccc;
+    cursor: pointer;
   }
   .feed-container .feed-upload-date {
     position: relative;
@@ -141,15 +157,18 @@
     top: 0px;
     left: 0px;
     font-size: 18px;
+    gap: 5px;
   }
   .feed-container .like-and-comment .like .material-icons.btn--like{
     color: #333;
     font-size: 26px;
+    cursor: pointer;
   }
   .feed-container .like-and-comment .like .material-icons.btn--dislike{
     /* color: #fa7b53;*/
     color: #fa7b53;
     font-size: 26px;
+    cursor: pointer;
   }
   .feed-container .like-and-comment .comment{
     display:flex;
@@ -158,9 +177,11 @@
     left: 60px;
     top: 1px;
     font-size: 18px;
+    gap: 5px;
   }
   .feed-container .like-and-comment .comment .material-icons.btn--comment {
     font-size: 26px;
+    cursor: pointer;
   }
   .feed-container .like-and-comment .material-icons.delete-btn{
     font-size:30px;
@@ -168,6 +189,7 @@
     align-items: center;
     position: absolute;
     right: 0px;
+    cursor: pointer;
   }
   .feed-container .comment-list {
     width: 95%;
@@ -176,12 +198,14 @@
     max-height: 300px;
     overflow: scroll;
     position: relative;
+    cursor: pointer;
   }
   .feed-container .comment-list .comment-item {
     position: relative;
     width: 100%;
     min-height: 30px;
     margin-bottom: 30px;
+    cursor: pointer;
   }
   .feed-container .comment-list .comment-item .comment-user-profile{
     position: absolute;
@@ -208,6 +232,7 @@
     top: 20px;
     width: 75%;
     word-break: break-all;
+    cursor: pointer;
   }
   /* .feed-container .comment-create {
   /   position: relative;
@@ -268,24 +293,9 @@
   img {
     display: block;
   }
-  /* .bg-container {
+  .newsfeed-container {
     width: 100%;
-    background-image: url('../assets/bg_test_2.png');
-    display: inline-block;
-    position: absolute;
-    top:0;
-    width: 100%;
-    height:100%;
-    background-repeat: repeat-y;
-    background-size: cover;
-    z-index: -10;
-  } */
-  /* min-height: 100%; */
-  /* background-attachment: fixed; */
-  /* height: 100%; */
-  .bg-container .newsfeed-container {
-    width: 100%;
-    max-width: 600px;
+    max-width: 800px;
     margin: 0 auto;
     position: absolute;
     left: 50%;
@@ -299,18 +309,13 @@
     width: 100%;
     position: relative;
     margin: 15px auto;
-    /* margin-top: 25px;
-    margin-bottom: 25px; */
     font-size: 14px;
-    /* border-bottom: 1px solid #333;
-    border-top: 1px solid #333; */
     border: 1px solid #ccc;
     background-color: #fff;
   }
   .feed-container .feed-img {
-    /* width: 400px;*/
     width: 100%;
-    max-width: 600px;
+    max-width: 800px;
     position: relative;
     margin: 0 auto 15px;
   }
@@ -318,7 +323,7 @@
     /* width: 400px; */
     width: 100%;  
     /* max-height: 300px;*/
-    height: 400px;
+    height: 600px;
     /* max-height: 40%;
     height: auto; */
     /* border-radius: 30px;*/

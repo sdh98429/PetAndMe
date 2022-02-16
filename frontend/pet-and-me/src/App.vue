@@ -30,9 +30,8 @@ export default {
     font-style: normal;
 }
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
-
 .notosanskr * { 
- font-family: 'Noto Sans KR', sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 #app{
   box-sizing: border-box;

@@ -37,6 +37,13 @@
         WHERE userNumber = #{userNumber}
     </update>
 
+    <!-- 회원정보 중 닉네임만 수정 -->
+    <update id="updateUserNickName" parameterType="map">
+        UPDATE User
+        SET userNickName = #{userNickName}
+        WHERE userNumber = #{userNumber}
+    </update>
+
     <!--  회원탈퇴  -->
     <delete id="deleteUser" parameterType="Long">
         DELETE
@@ -53,10 +60,17 @@
 
     <!--  회원정보 전송  -->
     <select id="selectUserInfo" parameterType="Long" resultType="UserPetDto">
-        SELECT u.saveFolder, u.userPhotoName, u.userNickName, u.userID, p.petName, p.petGender, p.petBirth, a.animalName_ko
+        SELECT u.saveFolder, u.userPhotoName, u.userNickName, u.userID, u.userProfileContent, p.petName, p.petGender, p.petBirth, a.animalName
         FROM User u JOIN Pet p ON u.userNumber = p.userNumber
         JOIN Animal a ON a.animalNumber = p.animalNumber
         WHERE u.userNumber = #{userNumber}
+    </select>
+
+    <!--  회원정보 전송  -->
+    <select id="selectNoPetUserInfo" parameterType="Long" resultType="UserPetDto">
+        SELECT saveFolder, userPhotoName, userNickName, userID, userProfileContent
+        FROM User
+        WHERE userNumber = #{userNumber}
     </select>
 
     <!-- 회원번호 전송 -->

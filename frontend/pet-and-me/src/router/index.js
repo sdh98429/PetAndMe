@@ -14,7 +14,8 @@ import UserFeed from '../views/feed/UserFeed'
 import FollowList from '../views/feed/FollowList'
 import UserFeedUpdate from '../views/feed/UserFeedUpdate'
 import FeedDetail from '../views/feed/FeedDetail'
-
+ 
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,7 @@ const routes = [
     path: '/',
     name: 'Landing',
     component: Landing,
+    meta: {requiresAuth: true}
   },
   {
     path: '/user/login',
@@ -40,7 +42,7 @@ const routes = [
     component: Signup,
   },
   {
-    path: '/taping',
+    path: '/taping/:yourUserId',
     name: 'Taping',
     component: Taping,
   },
@@ -69,6 +71,7 @@ const routes = [
     path: '/feed/newsfeed',
     name: 'NewsFeed',
     component: NewsFeed,
+    meta: {requiresAuth: true}
   },
   {
     path: '/feed/userfeed/:yourUserId',
@@ -98,4 +101,30 @@ const router = new VueRouter({
   routes
 })
 
+router.beforeEach((to, from, next) => {
+
+  const isLogin = store.getters['isLogin']
+  console.log(isLogin)
+  
+ // requiresAuth 체크
+  // if (to.matched.some(record => record.meta.requiresAuth)) {
+
+  //   if(to.name === 'Landing' && isLogin) {
+  //     next('/feed/newsfeed')
+  //   }
+  //   else if(to.name === 'NewsFeed') {
+  //     if(!isLogin) {
+  //       alert('로그인이 필요합니다')
+  //       next('/')
+  //     }
+
+  //     if(!store.getters['getUserInfo'].userNickName) {
+  //       next('/similar')
+  //     }
+      
+  //   }
+  // }
+  // requiresAuth가 false일 때 (권한이 필요 없는 페이지)
+  next()
+})
 export default router

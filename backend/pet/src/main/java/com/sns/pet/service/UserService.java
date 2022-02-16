@@ -6,6 +6,7 @@ import com.sns.pet.dto.UserPetDto;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
     // 회원가입
@@ -16,12 +17,16 @@ public interface UserService {
     UserDto findUser(Long userNumber) throws Exception;
     // 회원수정
     boolean modifyUser(JoinDto joinDto) throws Exception;
+    // 회원정보 중 닉네임 수정
+    boolean modifyUserNickName(Map<String, Object> user) throws Exception;
     // 회원탈퇴
     boolean removeUser(Long userNumber) throws Exception;
     // 프로필 사진 수정
     boolean modifyUserPhoto(UserDto userDto) throws Exception;
     // 회원정보 전송
     UserPetDto findUserInfo(Long userNumber) throws Exception;
+    // 회원정보 전송
+    UserPetDto findNoPetUserInfo(Long userNumber) throws Exception;
     // 회원번호 전송
     UserDto findUserNumber(String userID) throws Exception;
     // 팔로우

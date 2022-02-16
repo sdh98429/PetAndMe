@@ -4,6 +4,9 @@
   font-weight: normal;
   font-style: normal;
 }
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css);
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-jp.css);
 @media screen and (max-width:768px){
   img {
     display: block;
@@ -48,6 +51,7 @@
     background-color:#333; 
     border-radius:50%; 
     color: #fff;
+    cursor: pointer;
   }
   .feed-detail-container .feed-img .material-icons.right-btn {
     position: absolute;
@@ -58,6 +62,7 @@
     background-color:#333; 
     border-radius:50%; 
     color: #fff;
+    cursor: pointer;
   }
   .feed-detail-container .feed-profile {
     position:relative;
@@ -76,6 +81,7 @@
     position: absolute;
     left: 5px;
     top: 5px;
+    cursor: pointer;
   }
   .feed-detail-container .feed-profile .feed-profile-nickname {
     width: 65%;
@@ -83,7 +89,8 @@
     font-weight: bold;
     position: absolute;
     left: 65px;
-    top:0
+    top:0;
+    cursor: pointer;
   }
   .feed-detail-container .feed-profile .feed-profile-nickname2 {
     width: 65%;
@@ -92,6 +99,7 @@
     position: absolute;
     left: 65px;
     top: 16px;
+    cursor: pointer;
   }
   .feed-detail-container .feed-profile .feed-profile-mypet {
     width: auto;
@@ -126,15 +134,18 @@
     top: 0px;
     left: 0px;
     font-size: 18px;
+    gap: 5px;
   }
   .feed-detail-container .like-and-comment .like .material-icons.btn--like{
     color: #333;
     font-size: 26px;
+    cursor: pointer;
   }
   .feed-detail-container .like-and-comment .like .material-icons.btn--dislike{
     /* color: #fa7b53;*/
     color: #fa7b53;
     font-size: 26px;
+    cursor: pointer;
   }
   .feed-detail-container .like-and-comment .comment{
     display:flex;
@@ -143,6 +154,7 @@
     left: 60px;
     top: 1px;
     font-size: 18px;
+    gap: 5px;
   }
   .feed-detail-container .like-and-comment .comment .material-icons.btn--comment {
     font-size: 26px;
@@ -153,6 +165,7 @@
     align-items: center;
     position: absolute;
     right: 0px;
+    cursor: pointer;
   }
   .feed-detail-container .comment-list {
     width: 90%;
@@ -187,6 +200,7 @@
     position: absolute;
     right: 0;
     top:0;
+    cursor: pointer;
   }
   .feed-detail-container .comment-list .comment-item .comment-content{
     position: relative;
@@ -245,11 +259,11 @@
   .feed-detail-container{
     font-family: 'MinSans-Regular';
     width: 100%;
-    max-width: 600px;
+    max-width: 800px;
     position: relative;
     height: auto;
     top: 0px;
-    margin: 47px auto 80px;
+    margin: 47px auto 115px;
     z-index: 2;
     font-size: 14px;
     border: 1px solid #ccc;
@@ -258,7 +272,7 @@
   .feed-detail-container .feed-img {
     /* width: 400px;*/
     width: 100%;
-    max-width: 600px;
+    max-width: 800px;
     position: relative;
     margin: 0 auto 15px;
   }
@@ -432,28 +446,12 @@
     width: 75%;
     word-break: break-all;
   }
-  /* .feed-detail-container .comment-create {
-  /   position: relative;
-  /   margin: 0 auto;
-  /   width: 350px;
-  /   top: 0px;
-  /   left: 20px;
-  /   display:flex;
-  /   align-items: center;
-  /   transition: all .5s;
-  /   max-width: 95%;
-  } */
   .feed-detail-container .comment-create {
     position: relative;
     width: 90%;
-    max-width: 600px;
+    max-width: 800px;
     height:30px;
     margin: 15px auto 20px;
-    /* left: 50%;
-    margin-left: -50%;
-    display:block;
-    align-items: center;
-    transition: all .5s; */
     background: #fff;
     background-color: #fff;
     z-index: 10;
@@ -471,9 +469,8 @@
   .feed-detail-container .comment-create .comment-input {
     position: absolute;
     left: 40px;
-    width: 444px;
+    width: 610px;
     height: 30px;
-    /* border-radius: 15px; */
     outline: none;
     border: 1px solid #aaa;
   }
@@ -485,12 +482,10 @@
     top: 0px;
     right : 0px;
     font-size: 17px;
-    width: 49px;
+    width: 63px;
     height: 32px;
     border: 1px solid #aaa;
-    /* background-color: #faf4e4; */
     color: #333;
-    /* border-radius: 10px; */
     cursor: pointer;
   }
   .feed-detail-container .comment-create .comment-btn--mobile {

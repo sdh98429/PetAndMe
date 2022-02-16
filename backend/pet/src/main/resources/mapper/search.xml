@@ -31,7 +31,7 @@
         SELECT u.userNumber, u.userID, u.userNickName, u.saveFolder, u.userPhotoName
         FROM User AS u INNER JOIN Pet AS p USING(userNumber)
         INNER JOIN Animal AS a USING(animalNumber)
-        WHERE a.animalName_ko LIKE CONCAT(#{searchWord}, '%')
+        WHERE a.animalName LIKE CONCAT(#{searchWord}, '%')
     </select>
 
     <!-- 검색어 저장: 날짜는 자동으로 검색날짜로 저장 -->

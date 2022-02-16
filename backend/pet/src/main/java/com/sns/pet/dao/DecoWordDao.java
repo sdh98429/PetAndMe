@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface DecoWordDao {
     // 번호에 해당하는 동물이름 한국명 조회
-    String selectKoreanName(int animalNumber) throws SQLException;
+    String selectAnimalName(int animalNumber) throws SQLException;
     // 랜덤으로 꾸미는 말 조회
     List<String> selectDecoWord() throws SQLException;
 }
