@@ -13,10 +13,8 @@
     </div>
     <hr>
   </div>
-  {{ this.returnVideo }}
   
   <hr>
-    <h2>Taping test용 페이지</h2>
     <Taping
       v-if="level == 1"
       @tapedata-update="tape2"
@@ -43,7 +41,9 @@
 <script>
 import axios from 'axios'
 import Taping from '@/components/taping/Taping'
-import {VIDEO_API_URL, BASE_API_URL} from '@/config/config.js'
+import TapingFeedList from '@/components/taping/TapingFeedList'
+// import {VIDEO_API_URL, BASE_API_URL} from '@/config/config.js'
+import {BASE_API_URL} from '@/config/config.js'
 
 export default {
   data() {
@@ -60,6 +60,7 @@ export default {
       },
       images: null,
       returnVideo: null,
+      yourUserNumber: null,
     }
   },
   components: {
@@ -72,7 +73,6 @@ export default {
       for (var step = 0; step < this.datas.feedPhotoDtoList.length; step++) {
         this.datas.feedPhotoDtoList[step] = {'feedNumber' : this.datas.feedPhotoDtoList[step]}
       }
-      console.log(this.datas.feedPhotoDtoList)
       axios({
         method: 'post',
         url: `${BASE_API_URL}/main/imagelist`,
@@ -90,7 +90,8 @@ export default {
     tape() {
         axios({
         method: 'post',
-        url: `${VIDEO_API_URL}/api/v1/tape/`,
+        // url: `${VIDEO_API_URL}/api/v1/tape/`,
+        url: 'http://127.0.0.1:8000/api/v1/tape/',
         data: this.tapeMovie
       })
         .then((res) => {
@@ -123,7 +124,7 @@ export default {
     },
     // 유저 feed list 받아오기
     getFeed: async function() {
-      this.datas.userId = this.yourUserId
+      this.tapeMovie.userId = this.$route.params.yourUserId
       await axios({
         method: 'get',
         url: `${BASE_API_URL}/user/number/` + this.$route.params.yourUserId,
@@ -134,8 +135,9 @@ export default {
     },
     // 체크한 이미지 저장
     checkedSave(res) {
+      console.log(res)
       for (var item in res) {
-        this.datas.feedPhotoDtoList.push(item*1)
+        this.datas.feedPhotoDtoList.push(res[item])
       }
       this.level ++
       this.catchImages()

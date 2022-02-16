@@ -8,6 +8,7 @@
         alt="프로필 사진"
         class="user-profile-image"
       />
+
       <div class="nickname">
         {{profile.userNickName}}
         <div 
@@ -26,9 +27,11 @@
         <font-awesome-icon icon="venus" style="font-size:18px" v-else></font-awesome-icon>
         ,<span v-if="petMonth < 12">{{petMonth}}개월</span><span v-else>{{petAge}}살</span>
       </div>
-      <div class="taping-thumbnail">
-
-      </div>
+      <TapingViewer
+        :returnUserId="this.yourUserId"
+        class="taping-list"
+      >
+      </TapingViewer>
       <div class="follow-and-feed-mobile">
         <div class="feed-length">게시글<br>{{feedLength}}</div>
         <div class="follower" @click="toFollowList()">팔로워<br>{{followerCnt}}</div>
@@ -44,10 +47,6 @@
         <button class="follow-btn bttn-pill bttn-sm bttn-warning bttn-block" v-if="isFollow" @click="unfollowUser">언팔로우</button>
       </div>
     </div>
-      <TapingViewer
-        :returnUserId="this.yourUserId"
-      >
-      </TapingViewer>
       <UserFeedList
         :your-user-number="yourUserNumber"
         @feed-length="getFeedLength"
