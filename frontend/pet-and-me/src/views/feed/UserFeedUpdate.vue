@@ -17,17 +17,17 @@
         <h3>선호동물 체크</h3>
 
         <div>
-          <input type="checkbox" value="1" v-model="selected"> 강아지
-          <input type="checkbox" value="2" v-model="selected"> 고양이
-          <input type="checkbox" value="3" v-model="selected"> 조류
-          <input type="checkbox" value="4" v-model="selected"> 설치류
-          <input type="checkbox" value="5" v-model="selected"> 기타
+          <span v-for="(animal, index) in animalList" class="saveAnimalIndex" v-bind:key="animal">
+            <input type="checkbox" :value="animal.animalNumber" v-model="selected">{{animal.animalName}}
+            <br v-if="(index+1) % 3 == 0">
+          </span>
         </div>
 
         <button @click="sendData"> 수정 완료 </button>
         <br>
         <button @click="goToMyPage()">내 페이지로 돌아가기</button>
-
+        <br>
+        <button @click="logout" class="bttn-pill bttn-md bttn-success">LogOut</button>
       </div>
     </div>
     <!-- 다른 사람의 회원 정보를 수정하려 할 때 -->
@@ -41,7 +41,7 @@
 import axios from 'axios'
 import {BASE_API_URL} from '@/config/config.js'
 import '@/css/userupdate.css'
-import DatePicker from '../../components/Signup/DatePicker'
+import { mapActions } from "vuex"
 
 export default {
   name: 'UserFeedUpdate',
@@ -56,6 +56,12 @@ export default {
 
       selected: [], // 선호 동물 종류를 담아두는 selected
 
+      animalList: [
+        {
+          animalNumber: null,
+          animalName: null
+        }
+      ],
       credentials: {
         userNumber: null, 
         userPW: null,
@@ -82,6 +88,10 @@ export default {
 
   },
   methods: {
+    ...mapActions([
+      'logoutRemoveToekn'
+      ]),
+
     getUserProfile: async function(){ // 프로필 정보 가져오기
         await axios({
         method: 'get',
@@ -89,7 +99,7 @@ export default {
       })
         .then(response => {
           this.yourUserNumber = response.data
-          console.log(this.yourUserNumber)
+          this.credentials.userNumber = response.data
         })
         .catch(err => {
           console.log(err)
@@ -101,27 +111,11 @@ export default {
         })
           .then(response => {
             this.profile = response.data
-            // console.log(response.data)
-            // this.getPetAge()
           })
           .catch(err => {
             console.log(err)
           })
     },
-    // getUserProfile: function(){ // 프로필 정보 가져오기
-    //   console.log(this.$route.params.yourUserId)
-    //   axios({
-    //     method: 'get',
-    //     url: 'http://i6b106.p.ssafy.io:8080/user/number/' + this.$route.params.yourUserId,
-    //   })
-    //     .then(response => {
-    //       this.yourUserNumber = response.data
-    //       this.credentials.userNumber = response.data
-    //     })
-    //     .catch(err => {
-    //       console.log(err)
-    //     })
-    // },
 
     getUserChangeInfo: async function(){ // 유저 번호를 바탕으로 유저 정보 가져오기 (회원정보 수정 요청 보낼 시 필요한 모든 정보 가져오기)
       await axios({ // 닉네임, 프로필 소개, 비밀번호, 펫 여부 가져오기
@@ -167,6 +161,19 @@ export default {
         })
     },
 
+    getAnimal() {
+      axios({
+          method: 'get',
+          url: 'http://i6b106.p.ssafy.io:8080/animal',
+        })
+        .then((res) => {
+          console.log(res)
+          this.animalList = res.data
+        })
+        .catch(err => {
+          console.log(err.response) 
+        })
+    },
 
     savePrefer() { // 선호 동물 선택했는지 검증하기
       if (this.selected.length < 1) { // 선택 0마리 했다면
@@ -184,6 +191,7 @@ export default {
     },
 
     sendData(){ // 회원 정보 수정 요청 보내기 
+    
       this.credentials.userNickName = this.credentials.userNickName.trim() // 닉네임 공백 제거
       this.credentials.userProfileContent = this.credentials.userProfileContent.trim() // 프로필 소개 공백 제거
       if (this.credentials.userNickName){ // 닉네임 입력값이 있다면
@@ -196,7 +204,7 @@ export default {
               data: this.credentials
             })
               .then(() => {
-                this.$router.push({ name: 'Login' })
+                this.goToMyPage()
               })
               .catch(err => {
                 console.log(this.credentials) // 회원 정보 수정 데이터값
@@ -215,13 +223,19 @@ export default {
       this.$router.push({ name : 'UserFeed', params: { yourUserId : this.yourUserId }})
     },
 
+    logout() {
+      this.logoutRemoveToekn()
+      this.$router.push({name:'Landing'})
+    },
+
     async asyncCall(){ // url의 유저 아이디를 유저 번호로 바꾸고, 유저 번호를 토대로 정보 가져오기 (시간 순서가 지켜져야 해서 async 요청)
       await this.getUserProfile() // 아이디 -> 번호
       await this.getUserChangeInfo() // 유저 정보 가져오기
     }
   },
   created : function(){
-    this.asyncCall() // 유저 아이디 -> 번호로 변환 후 정보 가져오기
+    this.asyncCall(), // 유저 아이디 -> 번호로 변환 후 정보 가져오기
+    this.getAnimal()
   },
   computed: {
     myUserNumber () {
