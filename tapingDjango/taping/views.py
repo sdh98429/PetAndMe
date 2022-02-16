@@ -30,8 +30,7 @@ from rest_framework.decorators import api_view
 @api_view(['POST'])
 def pet_tape(request):
     # user Id
-    userId = 'person1'
-    # userId = request.data.get('userId')
+    userId = request.data.get('userId')
 
     # base64 encoded video list
     videoList = []
@@ -88,7 +87,7 @@ def pet_tape(request):
         image = ImageOps.exif_transpose(image)
         resized = image.resize((1280, 720))
         resized.save(i)
-    userID = 'person1'
+
     file_list_sorted = natsorted(file_list,reverse=False)
 
     # 각 사진당 2초의 시간을 두고 이어붙이기
@@ -172,8 +171,7 @@ def pet_tape(request):
     
 @api_view(['POST'])
 def returntape(request):
-    userId = 'person1'
-    # userId = request.data.get('userId')
+    userId = request.data.get('userId')
 
     origin = os.path.dirname(os.path.abspath(__file__))
     videodir = origin + '/' + userId
@@ -186,4 +184,5 @@ def returntape(request):
         with open(vid, "rb") as vidStr:
             convert = base64.b64encode(vidStr.read())
         vid_list.append(convert)
+
     return Response(vid_list)

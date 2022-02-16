@@ -4,7 +4,7 @@
   <h1>네브바</h1>
   <h1>네브바</h1>
   <div v-if="level == 0">
-    <h1>내 피드 리스트</h1>
+    <h1>Taping하고싶은 피드를 추가해주세요!</h1>
     <div>
       <TapingFeedList
       :your-user-number="yourUserNumber"
@@ -13,6 +13,10 @@
     </div>
     <hr>
   </div>
+  {{ this.returnVideo }}
+  
+  <hr>
+    <h2>Taping test용 페이지</h2>
     <Taping
       v-if="level == 1"
       @tapedata-update="tape2"
@@ -39,9 +43,7 @@
 <script>
 import axios from 'axios'
 import Taping from '@/components/taping/Taping'
-import TapingFeedList from '@/components/taping/TapingFeedList'
 import {VIDEO_API_URL, BASE_API_URL} from '@/config/config.js'
-// import {BASE_API_URL} from '@/config/config.js'
 
 export default {
   data() {
@@ -54,12 +56,8 @@ export default {
         type: null,
         bgm: null,
         images: null,
+        userId: null,
       },
-      yourUserId: this.$route.params.yourUserId,
-      userNumber: "null",
-      yourUserNumber: 0,
-      myUserNumber: 0,
-
       images: null,
       returnVideo: null,
     }
@@ -92,7 +90,6 @@ export default {
         axios({
         method: 'post',
         url: `${VIDEO_API_URL}/api/v1/tape/`,
-        // url: `http://i6b106.p.ssafy.io:8000/api/v1/tape/`,
         data: this.tapeMovie
       })
         .then((res) => {
@@ -125,9 +122,10 @@ export default {
     },
     // 유저 feed list 받아오기
     getFeed: async function() {
+      this.datas.userId = this.yourUserId
       await axios({
         method: 'get',
-        url: 'http://i6b106.p.ssafy.io:8080/user/number/' + this.$route.params.yourUserId,
+        url: `${BASE_API_URL}/user/number/` + this.$route.params.yourUserId,
       })
         .then(response => {
         this.yourUserNumber = response.data
@@ -140,15 +138,18 @@ export default {
       }
       this.level ++
       this.catchImages()
-    }
+    },
   },
   created: function() {
     this.asyncCall()
   }
 }
-
 </script>
 
-<style>
-
+<style scoped>
+video { 
+  width:90%;
+  max-width:720px;
+  height:auto;
+}
 </style>

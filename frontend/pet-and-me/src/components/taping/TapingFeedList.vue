@@ -1,5 +1,7 @@
 <template>
-  <div style="border: 1px solid;" class="file-preview-container">
+  <div>
+  <!-- feed select -->
+  <div class="grid">
     <div v-for="userFeed in userFeeds" :key="userFeed.feedNumber">
       <input type="checkbox"
         :id="userFeed.feedDate"
@@ -11,7 +13,9 @@
         <img class="feed-thumbnail" :src="`data:image/png;base64,${userFeed.feedThumbnail}`" />
       </label>
     </div>
-    <button @click="saveFeedNumber">피드 선택 완료</button>
+  </div>
+  <button @click="saveFeedNumber">📷선택 완료🎥</button>
+
   </div>
 </template>
 
@@ -77,5 +81,11 @@ export default {
 input.checked + label > img {
   border: 10px solid rgb(255, 242, 65);
   box-sizing: border-box;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 10px;
 }
 </style>
