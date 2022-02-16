@@ -1,7 +1,6 @@
 <template>
   <div>
-    <h1>회원가입 폼 시작 멘트</h1>
-    <span> 가입해 볼까요? 등등</span>
+    <h1>지금부터 Pet & Me에 함께 빠져볼까요?🐕</h1>
   </div>
 </template>
 

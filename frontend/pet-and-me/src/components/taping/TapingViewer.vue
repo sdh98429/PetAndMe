@@ -1,6 +1,6 @@
 <template>
   <v-app id="app">
-    <v-carousel :show-arrows="false">
+    <v-carousel hide-delimiters height="auto">
     <v-carousel-item v-for="(vid, i) in returnVideo" :key="vid">
       <v-sheet :color="white" height="100%" width="100%" tile>
         <v-row class="fill-height" align="center" justify="center">
@@ -22,7 +22,7 @@
 
 <script>
 import axios from 'axios'
-import {BASE_API_URL} from '@/config/config.js'
+import {VIDEO_API_URL} from '@/config/config.js'
 
 export default {
     data() {
@@ -36,7 +36,7 @@ export default {
     catchTape() {
       axios({
         method: 'post',
-        url: `${BASE_API_URL}/api/v1/returntape/`,
+        url: `${VIDEO_API_URL}/api/v1/returntape/`,
         data: this.returnUserId,
       })
         .then(res => {
@@ -57,7 +57,7 @@ export default {
 <style scoped>
 video { 
   width:90%;
-  max-width:720px;
+  max-width:520px;
   height:auto;
 }
 

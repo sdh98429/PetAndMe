@@ -31,23 +31,29 @@
                   :key="index"
                   :value="item.value"
                 >
-                  {{ item.text }}
+                  <!-- {{ item.text }} -->
                 </option>
               </select>
             <span v-if="checkFlag && !credentials.petGender">성별을 선택하세요</span>
           </div>
         </div>
 
-        <div>
+        <!-- <div>
           <h3>종류</h3>
             <label> <input type="radio" v-model="credentials.petType" value="1"> 강아지 </label>
             <label> <input type="radio" v-model="credentials.petType" value="2"> 고양이 </label>
             <label> <input type="radio" v-model="credentials.petType" value="3"> 조류 </label>
             <label><input type="radio" v-model="credentials.petType" value="4"> 설치류 </label>
             <label> <input type="radio" v-model="credentials.petType" value="5"> 기타 </label>
-        </div>
+        </div> -->
 
-        <p>{{ this.credentials }}</p>
+        <div>
+          <h3>종류</h3>
+          <span v-for="(animal, index) in animalList" class="saveAnimalIndex" v-bind:key="animal">
+            <input type="radio" :value="animal.animalNumber" v-model="credentials.petType">{{animal.animalName}}
+            <br v-if="(index+1) % 3 == 0">
+          </span>
+        </div>
       </div>
         <!-- emit -->
         <button @click="saveData"> 다음 </button>
@@ -57,7 +63,7 @@
 
 <script>
 import DatePicker from '../../components/Signup/DatePicker'
-
+import axios from 'axios'
 export default {
   filters: {
     comma(val) {
@@ -73,6 +79,12 @@ export default {
         petGender: '',
         petType: '',
       },
+      animalList: [
+        {
+          animalNumber: null,
+          animalName: null
+        }
+      ],
       checkFlag: false,
       genderList: [
         {
@@ -85,6 +97,9 @@ export default {
         },
       ],
     };
+  },
+  created() {
+    this.getAnimal()
   },
   computed: {
 
@@ -128,6 +143,20 @@ export default {
         return false;
       }
     },
+
+    getAnimal() {
+      axios({
+          method: 'get',
+          url: 'http://i6b106.p.ssafy.io:8080/animal',
+        })
+        .then((res) => {
+          // console.log(res)
+          this.animalList = res.data
+        })
+        .catch(err => {
+          console.log(err.response) 
+        })
+    }
   },
   components: {
     DatePicker

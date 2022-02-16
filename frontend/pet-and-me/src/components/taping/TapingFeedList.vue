@@ -56,11 +56,7 @@ export default {
     return index >= 0 ? { checked: true } : { checked: false }
     },
     saveFeedNumber() {
-      for (var feedNum in this.feedArr){
-        this.updateNumber.push(feedNum*=1)
-      }
-      this.$emit("feedNumber-update", this.updateNumber)
-      console.log(this.feedArr)
+      this.$emit("feedNumber-update", this.feedArr)
     }
   },
   watch: {
