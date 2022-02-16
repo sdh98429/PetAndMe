@@ -200,7 +200,7 @@ export default {
     },
 
     profileChange: function(){
-      if (this.myUserNumber == this.profile.userNumber){
+      if (this.myUserNumber == this.yourUserNumber){
         this.$refs.image.click()
       } else {
         console.log('본인 프로필 사진만 업데이트 할 수 있습니다.')

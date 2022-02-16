@@ -13,4 +13,22 @@
     left: 50%;
     transform: translateX(-50%);
   }
+  .user-update-container .user-update-box {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .user-update-container .user-update-box .userid{
+    font-size: 30px;
+    text-align: center;
+  }
+  .user-update-container .user-update-box .useremail{
+  }
+  .user-update-container .user-update-box .nickname{
+  }
+  .user-update-container .user-update-box .user-profile{
+  }
+  .user-update-container .user-update-box .fav-animal{
+  }
+
 }

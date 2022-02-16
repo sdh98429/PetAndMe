@@ -42,12 +42,8 @@
 import axios from 'axios'
 import Taping from '@/components/taping/Taping'
 import TapingFeedList from '@/components/taping/TapingFeedList'
-<<<<<<< HEAD
-import {VIDEO_API_URL, BASE_API_URL} from '@/config/config.js'
-=======
 // import {VIDEO_API_URL, BASE_API_URL} from '@/config/config.js'
 import {BASE_API_URL} from '@/config/config.js'
->>>>>>> develop
 
 export default {
   data() {
