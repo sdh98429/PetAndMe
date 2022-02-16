@@ -41,12 +41,9 @@
 <script>
 import axios from 'axios'
 import '@/css/userupdate.css'
-<<<<<<< HEAD
 // import DatePicker from '../../components/Signup/DatePicker'
 import {BASE_API_URL} from '@/config/config.js'
-=======
 import { mapActions } from "vuex"
->>>>>>> develop
 
 export default {
   name: 'UserFeedUpdate',
@@ -93,17 +90,12 @@ export default {
 
   },
   methods: {
-<<<<<<< HEAD
-    getUserProfile: async function(){ // url을 토대로 업데이트할 유저의 번호 가져오기 
-      await axios({
-=======
     ...mapActions([
       'logoutRemoveToekn'
       ]),
 
     getUserProfile: async function(){ // 프로필 정보 가져오기
         await axios({
->>>>>>> develop
         method: 'get',
         url: `${BASE_API_URL}/user/number/` + this.$route.params.yourUserId, // 유저 ID를 유저 번호로 바꿔 yourUserNumber에 저장
       })
@@ -114,8 +106,6 @@ export default {
         .catch(err => {
           console.log(err)
         })
-<<<<<<< HEAD
-=======
         
         await axios({
           method: 'get',
@@ -127,7 +117,6 @@ export default {
           .catch(err => {
             console.log(err)
           })
->>>>>>> develop
     },
 
     getUserChangeInfo: async function(){ // 유저 번호를 바탕으로 유저 정보 가져오기 (회원정보 수정 요청 보낼 시 필요한 모든 정보 가져오기)
