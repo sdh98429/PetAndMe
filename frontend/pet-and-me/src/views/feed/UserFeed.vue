@@ -44,6 +44,10 @@
         <button class="follow-btn bttn-pill bttn-sm bttn-warning bttn-block" v-if="isFollow" @click="unfollowUser">언팔로우</button>
       </div>
     </div>
+      <TapingViewer
+        :returnUserId="this.yourUserId"
+      >
+      </TapingViewer>
       <UserFeedList
         :your-user-number="yourUserNumber"
         @feed-length="getFeedLength"
