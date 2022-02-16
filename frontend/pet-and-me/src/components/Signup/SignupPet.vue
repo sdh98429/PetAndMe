@@ -46,8 +46,6 @@
             <label><input type="radio" v-model="credentials.petType" value="4"> 설치류 </label>
             <label> <input type="radio" v-model="credentials.petType" value="5"> 기타 </label>
         </div>
-
-        <p>{{ this.credentials }}</p>
       </div>
         <!-- emit -->
         <button @click="saveData"> 다음 </button>

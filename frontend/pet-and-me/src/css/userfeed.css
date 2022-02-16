@@ -227,12 +227,11 @@
     width: 150px;
     cursor: pointer;
   }
-  .user-feed-container .user-profile .taping-thumbnail {
+  .user-feed-container .user-profile .taping-list {
     position: absolute;
     top: 270px;
     width: 100%;
     height: 250px;
-    background-color: orange;
   }
   .user-feed-container .file-preview-container {
     position: absolute;
