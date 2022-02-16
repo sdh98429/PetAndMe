@@ -70,9 +70,7 @@ def pet_tape(request):
     origin = os.path.dirname(os.path.abspath(__file__))
     originPath = os.path.abspath(os.path.join(origin, '..'))
     audiodir = origin + '/audiofiles'
-    picdir = origin + '/pics'
     videodir = origin + '/' + userId
-    # userDir = request.GET.get('userNumber')
     userdir = origin + '/' + userId
     print(origin)
     # 폴더 내 모든 jpeg 파일 가져와서 정렬
@@ -159,10 +157,8 @@ def pet_tape(request):
     # 폴더 내 모든 mp4 파일 가져와서 정렬
     video_list = glob.glob(os.path.join(videodir, '*.mp4'))
     video_list_sorted = natsorted(video_list,reverse=False)
-
     # video encode
-    vid_list = []
-    
+    vid_list = [] 
     with open(video_list_sorted[-1], "rb") as vidStr:
         convert = base64.b64encode(vidStr.read())
     vid_list.append(convert)

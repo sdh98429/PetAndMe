@@ -13,10 +13,8 @@
     </div>
     <hr>
   </div>
-  {{ this.returnVideo }}
   
   <hr>
-    <h2>Taping test용 페이지</h2>
     <Taping
       v-if="level == 1"
       @tapedata-update="tape2"
@@ -44,7 +42,12 @@
 import axios from 'axios'
 import Taping from '@/components/taping/Taping'
 import TapingFeedList from '@/components/taping/TapingFeedList'
+<<<<<<< HEAD
 import {VIDEO_API_URL, BASE_API_URL} from '@/config/config.js'
+=======
+// import {VIDEO_API_URL, BASE_API_URL} from '@/config/config.js'
+import {BASE_API_URL} from '@/config/config.js'
+>>>>>>> develop
 
 export default {
   data() {
@@ -61,6 +64,7 @@ export default {
       },
       images: null,
       returnVideo: null,
+      yourUserNumber: null,
     }
   },
   components: {
@@ -90,7 +94,8 @@ export default {
     tape() {
         axios({
         method: 'post',
-        url: `${VIDEO_API_URL}/api/v1/tape/`,
+        // url: `${VIDEO_API_URL}/api/v1/tape/`,
+        url: 'http://127.0.0.1:8000/api/v1/tape/',
         data: this.tapeMovie
       })
         .then((res) => {
@@ -123,7 +128,7 @@ export default {
     },
     // 유저 feed list 받아오기
     getFeed: async function() {
-      this.datas.userId = this.yourUserId
+      this.tapeMovie.userId = this.$route.params.yourUserId
       await axios({
         method: 'get',
         url: `${BASE_API_URL}/user/number/` + this.$route.params.yourUserId,
@@ -134,8 +139,9 @@ export default {
     },
     // 체크한 이미지 저장
     checkedSave(res) {
+      console.log(res)
       for (var item in res) {
-        this.datas.feedPhotoDtoList.push(item*1)
+        this.datas.feedPhotoDtoList.push(res[item])
       }
       this.level ++
       this.catchImages()

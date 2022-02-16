@@ -14,7 +14,7 @@ import UserFeed from '../views/feed/UserFeed'
 import FollowList from '../views/feed/FollowList'
 import UserFeedUpdate from '../views/feed/UserFeedUpdate'
 import FeedDetail from '../views/feed/FeedDetail'
- 
+
 import store from '../store'
 
 Vue.use(VueRouter)
