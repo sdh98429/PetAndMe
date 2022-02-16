@@ -72,7 +72,6 @@ export default {
       for (var step = 0; step < this.datas.feedPhotoDtoList.length; step++) {
         this.datas.feedPhotoDtoList[step] = {'feedNumber' : this.datas.feedPhotoDtoList[step]}
       }
-      console.log(this.datas.feedPhotoDtoList)
       axios({
         method: 'post',
         url: `${BASE_API_URL}/main/imagelist`,
