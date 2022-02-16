@@ -168,7 +168,6 @@ def pet_tape(request):
 @api_view(['POST'])
 def returntape(request):
     userId = request.data.get('returnUserId')
-
     origin = os.path.dirname(os.path.abspath(__file__))
     videodir = origin + '/' + userId
 
@@ -180,5 +179,4 @@ def returntape(request):
         with open(vid, "rb") as vidStr:
             convert = base64.b64encode(vidStr.read())
         vid_list.append(convert)
-
     return Response(vid_list)
