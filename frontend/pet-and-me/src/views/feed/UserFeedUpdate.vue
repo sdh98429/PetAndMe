@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <!-- 자신의 회원 정보를 수정할 때 -->
-    <div v-if="(yourUserNumber === myUserNumber)"> 
+  <div class="user-update-container">
+    <div v-if="(yourUserNumber === myUserNumber)">
       <div>
         <h1>회원 정보 수정</h1>
           <h3>아이디</h3>
@@ -41,6 +40,8 @@
 <script>
 import axios from 'axios'
 import {BASE_API_URL} from '@/config/config.js'
+import '@/css/userupdate.css'
+import DatePicker from '../../components/Signup/DatePicker'
 
 export default {
   name: 'UserFeedUpdate',
@@ -81,19 +82,46 @@ export default {
 
   },
   methods: {
-    getUserProfile: async function(){ // url을 토대로 업데이트할 유저의 번호 가져오기 
-      await axios({
+    getUserProfile: async function(){ // 프로필 정보 가져오기
+        await axios({
         method: 'get',
-        url: `${BASE_API_URL}/user/number/` + this.$route.params.yourUserId, // 유저 ID를 유저 번호로 바꿔 yourUserNumber에 저장
+        url: `${BASE_API_URL}/user/number/${this.$route.params.yourUserId}`,
       })
         .then(response => {
           this.yourUserNumber = response.data
-          this.credentials.userNumber = response.data
+          console.log(this.yourUserNumber)
         })
         .catch(err => {
           console.log(err)
         })
+        
+        await axios({
+          method: 'get',
+          url: `${BASE_API_URL}/user/info/${this.yourUserNumber}`,
+        })
+          .then(response => {
+            this.profile = response.data
+            // console.log(response.data)
+            // this.getPetAge()
+          })
+          .catch(err => {
+            console.log(err)
+          })
     },
+    // getUserProfile: function(){ // 프로필 정보 가져오기
+    //   console.log(this.$route.params.yourUserId)
+    //   axios({
+    //     method: 'get',
+    //     url: 'http://i6b106.p.ssafy.io:8080/user/number/' + this.$route.params.yourUserId,
+    //   })
+    //     .then(response => {
+    //       this.yourUserNumber = response.data
+    //       this.credentials.userNumber = response.data
+    //     })
+    //     .catch(err => {
+    //       console.log(err)
+    //     })
+    // },
 
     getUserChangeInfo: async function(){ // 유저 번호를 바탕으로 유저 정보 가져오기 (회원정보 수정 요청 보낼 시 필요한 모든 정보 가져오기)
       await axios({ // 닉네임, 프로필 소개, 비밀번호, 펫 여부 가져오기

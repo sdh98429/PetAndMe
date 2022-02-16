@@ -1,5 +1,5 @@
 <template>
-  <div class="sa-container">
+  <div class="similar-container">
     <div v-show="step===0">
       <div class="spinner-box">
         <div class="pulse-container">  
@@ -19,28 +19,31 @@
         <input class="input-image" id="input-image" type="file" ref="inputImage" accept="image/*" @change="fileRead">
         <img class="accept-image" :src="inputfile" alt="input img" id="face-img" />
       </div>
-      <button class="bttn-pill bttn-md bttn-warning next-step-btn" @click="nextStep">다음 단계</button>
+      <button class="bttn-pill bttn-md bttn-default next-step-btn" @click="nextStep">다음 단계</button>
     </div>
     
     <similar-animal-result 
       v-show="step===2"
       :propData="propData"
       @re-try="reTry" 
-      @go-to-nickname="test1"
-      @go-to-search-result="test2"
-      @go-to-feed="test3"
+      @go-to-nickname="goToNickname"
+      @go-to-search-result="goToSearchResult"
+      @go-to-feed="goToFeed"
     />
     <similar-animal-nickname
       v-show="step==='nickname'"
+      @go-back="step=2"
       :propData="propData"
     />
     <similar-animal-feed-list
       v-show="step==='feedList'"
-      :propData="propData"
-
+      @go-back="step=2"
+      :feedList="propData.feedList"
+      :animal="propData.myAnimal"
     />
     <similar-animal-search-result
       v-show="step==='searchResult'"
+      @go-back="step=2"
       :propData="propData"
     />
   </div>
@@ -81,7 +84,7 @@ export default {
       propData: {
         animalNumber: 1,
         recommendNicknameList: null,
-        feedList: null,
+        feedList: [],
         myAnimal: null,
         searchAnimalList: null,
         examImage: null,
@@ -92,23 +95,24 @@ export default {
     reTry() {
       this.step = 1
     },
-    test1(){
-
+    goToNickname(){
+      this.step = 'nickname'
     },
-    test2(){
-
+    goToSearchResult(){
+      this.step = 'searchResult'
     },
-    test3(){
-
+    goToFeed(){
+      this.step = 'feedList'
     },
     nextStep() {
       if(this.inputAccept){
-        this.step = 2
-        this.getNicknameList()
-        this.getSAFeed()
-        this.getAnimalName()
-        console.log(this.propData)
-        this.getSearchResult()
+        setTimeout(() => {
+          this.getNicknameList()
+          this.getSAFeed()
+          this.getAnimalName()
+          this.getSearchResult()
+        }, 200);
+          this.step = 2
       } else {
         alert('사진을 선택해주세요')
       }
@@ -164,10 +168,11 @@ export default {
           console.log(err)
         })
     },
-    getSearchResult() {
+    getSearchResult() { 
       axios({
         method: 'get',
         url: `${BASE_API_URL}/search/animal/${this.propData.myAnimal}`,
+        // url: `${BASE_API_URL}/search/animal/개`,
       })
         .then(res => {
           this.propData.searchAnimalList = res.data
@@ -180,7 +185,7 @@ export default {
       // this.propData.examImage = `@/assets/animalexam/${this.propData.animalNumber}/${_.random(0,11)}.jpg`
       switch(this.propData.animalNumber){
         case '1':
-          this.propData.myAnimal = '강아지';
+          this.propData.myAnimal = '개';
           break;
         case '2':
           this.propData.myAnimal = '고양이';
@@ -227,7 +232,7 @@ export default {
       }
       reader.readAsDataURL(this.$refs.inputImage.files[0])
       // 사진 업로드하면 자동으로 결과제공
-      setTimeout(() => { this.predict() }, 300)
+      setTimeout(() => { this.predict() }, 500)
     },
   },
   created() {
@@ -244,6 +249,18 @@ export default {
       return this.$store.getters.getUserNumber
     }
   },
+  watch: {
+    inputAccept(val){
+      const nextStepBtn = document.querySelector('.next-step-btn')
+      if (val===true){
+        nextStepBtn.classList.remove('bttn-default')
+        nextStepBtn.classList.add('bttn-warning')
+      } else{
+        nextStepBtn.classList.add('bttn-default')
+        nextStepBtn.classList.remove('bttn-warning')
+      }
+    }
+  }
 }
 </script>
 
