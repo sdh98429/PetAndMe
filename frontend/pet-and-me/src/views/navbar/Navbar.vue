@@ -10,33 +10,33 @@
     </nav>
 
     <!-- Search Bar -->
-    <div class="search-bar">
-      <input v-model="searchWord" type="text" class="search-input" placeholder="검색" @focus="onFocus" @keyup.enter="goToSearchResult" @input="getRealTimeSearch" />
+    <div class="my-search-bar">
+      <input v-model="searchWord" class="my-search-input" type="text"  placeholder="검색 (ex 닉네임, @아이디, #동물종류)" @focus="onFocus" @keyup.enter="goToSearchResult" @input="getRealTimeSearch" />
       <!-- <div v-if="isRecent">
         <div v-for="(recent, idx) in resultRecent" :key="idx">
           <div @click="goToSearchResult(recent)" style="border: 1px solid;">{{recent}}</div>
         </div>
       </div> -->
       
-      <div class="search-placeholder">
-        <font-awesome-icon icon="search" class="search-icon"></font-awesome-icon>
+      <div class="my-search-placeholder">
+        <font-awesome-icon icon="search" class="my-search-icon"></font-awesome-icon>
       </div>
-      <div class="search-btn"></div>
+      <div class="my-search-btn"></div>
 
-      <div v-if="searchState" class="search-result">
+      <div v-if="searchState" class="my-search-result">
         <div 
           v-for="(real, idx) in realTimeSearch" 
           :key="idx" 
-          class="search-result-item"
+          class="my-search-result-item"
           @click="toUserFeed(real.userID)" 
         >
           <img 
-            class="search-result-image"
-            :src="`http://i6b106.p.ssafy.io:8080/main/image?file=${real.saveFolder}${real.userPhotoName}`" 
+            class="my-search-result-image"
+            :src="`http://i6b106.p.ssafy.io:8080/main/image?file=${real.saveFolder}${real.userPhotoName}`"
             alt="프로필 사진" 
           />
-          <div class="search-result-nickname">{{real.userNickName}}</div>
-          <div class="search-result-id">@{{real.userID}}</div>
+          <div class="my-search-result-nickname">{{real.userNickName}}</div>
+          <div class="my-search-result-id">@{{real.userID}}</div>
         </div>
       </div>
       <div v-if="searchState" class="result-left-btn material-icons" @click="resultGoLeft">arrow_back_ios</div>
@@ -103,12 +103,12 @@ export default {
   },
   methods: {
     resultGoLeft(){
-      const el = document.querySelector('.search-result')
+      const el = document.querySelector('.my-search-result')
       console.log(el.scrollLeft)
       el.scrollTo({left:el.scrollLeft - 200, behavior:'smooth'})
     },
     resultGoRight(){
-      const el = document.querySelector('.search-result')
+      const el = document.querySelector('.my-search-result')
       console.log(el.scrollLeft)
       el.scrollTo({left:el.scrollLeft + 200, behavior:'smooth'})
     },
@@ -143,7 +143,8 @@ export default {
     },
     goToMyPage() {
       move('5', '90%', '#fff')
-      this.$router.push({ name : 'UserFeed', params: { yourUserId : this.myId }})
+      console.log(this.userInfo)
+      this.$router.push({ name : 'UserFeed', params: { yourUserId : this.userInfo.userID }})
     },
     
     goToSearchResult: function(){ // 검색 결과 페이지로 이동
@@ -167,6 +168,7 @@ export default {
         })
           .then(response => {
             this.realTimeSearch = response.data
+            console.log(this.realTimeSearch)
           })
           .catch(err => {
             console.log(err)
@@ -175,7 +177,7 @@ export default {
         this.isRecent = false
         axios({
           method: 'get',
-          url: `${BASE_API_URL}/search/rt/userName/${this.searchWord}`,
+          url: `${BASE_API_URL}/search/rt/userName/${encodeURIComponent(this.searchWord)}`,
         })
           .then(response => {
             this.realTimeSearch = response.data
@@ -187,7 +189,7 @@ export default {
         this.isRecent = false
         axios({
           method: 'get',
-          url: `${BASE_API_URL}/search/animal/${this.searchWord.slice(1)}`,
+          url: `${BASE_API_URL}/search/animal/${encodeURIComponent(this.searchWord.slice(1))}`,
         })
           .then(response => {
             this.realTimeSearch = response.data
@@ -222,6 +224,9 @@ export default {
   computed: {
     myUserNumber () {
       return this.$store.getters.getUserNumber
+    },
+    userInfo() {
+      return this.$store.getters.getUserInfo
     }
   },
   created() {
