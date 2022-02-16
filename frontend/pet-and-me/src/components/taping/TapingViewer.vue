@@ -22,22 +22,22 @@
 
 <script>
 import axios from 'axios'
-import {VIDEO_API_URL} from '@/config/config.js'
+import {BASE_API_URL} from '@/config/config.js'
 
 export default {
     data() {
     return {
       model: 0,
-      userId: null,
       returnVideo: null,
     }
   },
+  props: ['returnUserId'],
   methods: {
     catchTape() {
       axios({
         method: 'post',
-        url: `${VIDEO_API_URL}/api/v1/returntape/`,
-        data: this.userId,
+        url: `${BASE_API_URL}/api/v1/returntape/`,
+        data: this.returnUserId,
       })
         .then(res => {
           this.returnVideo = res.data
