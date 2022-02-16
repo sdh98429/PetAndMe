@@ -18,10 +18,10 @@
         <button class="follow-btn bttn-pill bttn-md bttn-warning" @click="unfollowUser(follower.userNumber)" v-if="myFollowingList.includes(follower.userNumber)">언팔로우</button>
         <button class="follow-btn bttn-pill bttn-md bttn-warning" @click="followUser(follower.userNumber)" v-else>팔로우</button>
         <div class="follow-user-pet">
-          {{profile.petName}}({{profile.animalName}}),
-          <font-awesome-icon icon="mars" v-if="profile.petGender==='M'" style="font-size:18px"></font-awesome-icon>
+          {{follower.petName}}({{follower.animalName}}),
+          <font-awesome-icon icon="mars" v-if="follower.petGender==='M'" style="font-size:18px"></font-awesome-icon>
           <font-awesome-icon icon="venus" style="font-size:18px" v-else></font-awesome-icon>
-          ,<span v-if="petMonth < 12">{{petMonth}}개월</span><span v-else>{{petAge}}살</span>
+          ,<span v-if="follower.petMonth < 12">{{follower.petMonth}}개월</span><span v-else>{{follower.petAge}}살</span>
         </div>
       </div>
     </div>
@@ -32,10 +32,10 @@
         <button class="follow-btn bttn-pill bttn-md bttn-warning" @click="unfollowUser(following.userNumber)" v-if="myFollowingList.includes(following.userNumber)">언팔로우</button>
         <button class="follow-btn bttn-pill bttn-md bttn-warning" @click="followUser(following.userNumber)" v-else>팔로우</button>
         <div class="follow-user-pet">
-          {{profile.petName}}({{profile.animalName}}),
-          <font-awesome-icon icon="mars" v-if="profile.petGender==='M'" style="font-size:18px"></font-awesome-icon>
+          {{following.petName}}({{following.animalName}}),
+          <font-awesome-icon icon="mars" v-if="following.petGender==='M'" style="font-size:18px"></font-awesome-icon>
           <font-awesome-icon icon="venus" style="font-size:18px" v-else></font-awesome-icon>
-          ,<span v-if="petMonth < 12">{{petMonth}}개월</span><span v-else>{{petAge}}살</span>
+          ,<span v-if="following.petMonth < 12">{{following.petMonth}}개월</span><span v-else>{{following.petAge}}살</span>
         </div>
       </div>
     </div>
@@ -45,6 +45,7 @@
 <script>
 import axios from 'axios'
 import '@/css/followlist.css'
+import { BASE_API_URL } from '@/config/config.js'
 
 export default {
   name: 'FollowList',
@@ -91,11 +92,11 @@ export default {
       btn1El.classList.remove('isactive')
       btn2El.classList.add('isactive')
     },
-    getPetAge() {
+    getPetAge(user) {
       // const tempdate = new Date(`${this.profile.petBirth.slice(0,4)}-${this.profile.petBirth.slice(4,6)}-${this.profile.petBirth.slice(6,8)}`)
-      const tempdate = new Date(this.profile.petBirth);
-      this.petMonth = parseInt(Math.floor((this.today.getTime()-tempdate.getTime())/(24 * 60 * 60 * 1000 * 30)))
-      this.petAge = parseInt(this.petMonth/12)
+      const tempdate = new Date(user.petBirth);
+      user.petMonth = parseInt(Math.floor((this.today.getTime()-tempdate.getTime())/(24 * 60 * 60 * 1000 * 30)))
+      user.petAge = parseInt(user.petMonth/12)
     },
     getUserProfile: async function(){ // 프로필 정보 가져오기
       await axios({
@@ -130,32 +131,60 @@ export default {
       .then(response => {
         this.followingCnt = response.data.length
         this.followingList = response.data
-        console.log(response)
-        // var ind;
-        // for (ind = 0; ind < response.data.length; ind++) {
-        //   if (this.yourUserNumber == response.data[ind].userNumber){
-        //     this.isFollow = true
-        //   }
-        // }
+        this.followingList.forEach(follow => {
+          axios({
+            method: 'get',
+            url: `${BASE_API_URL}/user/info/${follow.userNumber}`
+          })
+            .then(res =>{
+              console.log(res)
+              follow.petBirth = res.data.petBirth
+              follow.petGender = res.data.petGender
+              follow.petName = res.data.petName
+              follow.animalName = res.data.animalName
+              this.getPetAge(follow)
+              // console.log(follow)
+            })
+            .catch(err =>{
+              console.log(err)
+            })
+        })
       })
       .catch(err => {
         console.log(err)
       })
     },
 
-    getFollowerList: function(){ // 팔로워 리스트 가져오기
-      console.log(typeof(localStorage.getItem('vuex')));
-      axios({
+    getFollowerList: async function(){ // 팔로워 리스트 가져오기
+      // console.log(typeof(localStorage.getItem('vuex')));
+      await axios({
         method: 'get',
         url: 'http://i6b106.p.ssafy.io:8080/user/follower/' + this.yourUserNumber,
       })
       .then(response => {
         this.followerCnt = response.data.length
         this.followerList = response.data
+        
       })
       .catch(err => {
         console.log(err)
       })
+      await this.followerList.forEach(follow => {
+          axios({
+            method: 'get',
+            url: `${BASE_API_URL}/user/info/${follow.userNumber}`
+          })
+            .then(res =>{
+              follow.petBirth = res.data.petBirth
+              follow.petGender = res.data.petGender
+              follow.petName = res.data.petName
+              follow.animalName = res.data.animalName
+              this.getPetAge(follow)
+            })
+            .catch(err =>{
+              console.log(err)
+            })
+        })
     },
 
     getMyFollowingList: function(){ // 내 팔로잉 리스트 가져오기

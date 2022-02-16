@@ -99,7 +99,7 @@ export default {
       for (var step=0; step < res.selected.length; step++) {
         this.credentials.userPreference[step] = {'animalNumber' : res.selected[step]*=1}
       }
-      console.log(this.credentials.userPreference)
+      // console.log(this.credentials.userPreference)
         axios({
           method: 'post',
           url: 'http://i6b106.p.ssafy.io:8080/user',

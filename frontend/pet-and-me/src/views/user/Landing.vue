@@ -56,8 +56,8 @@ export default {
       this.$router.push({name:'NewsFeed'})
     },
     logout() {
-      console.log(this.getUserNumber)
-      console.log(this.getUserInfo)
+      // console.log(this.getUserNumber)
+      // console.log(this.getUserInfo)
       this.logoutRemoveToekn()
       this.$router.push({name:'Landing'})
     }

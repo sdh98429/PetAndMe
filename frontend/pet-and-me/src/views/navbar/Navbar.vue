@@ -104,12 +104,12 @@ export default {
   methods: {
     resultGoLeft(){
       const el = document.querySelector('.my-search-result')
-      console.log(el.scrollLeft)
+      // console.log(el.scrollLeft)
       el.scrollTo({left:el.scrollLeft - 200, behavior:'smooth'})
     },
     resultGoRight(){
       const el = document.querySelector('.my-search-result')
-      console.log(el.scrollLeft)
+      // console.log(el.scrollLeft)
       el.scrollTo({left:el.scrollLeft + 200, behavior:'smooth'})
     },
     onFocus() {
@@ -143,7 +143,7 @@ export default {
     },
     goToMyPage() {
       move('5', '90%', '#fff')
-      console.log(this.userInfo)
+      // console.log(this.userInfo)
       this.$router.push({ name : 'UserFeed', params: { yourUserId : this.userInfo.userID }})
     },
     
@@ -168,7 +168,7 @@ export default {
         })
           .then(response => {
             this.realTimeSearch = response.data
-            console.log(this.realTimeSearch)
+            // console.log(this.realTimeSearch)
           })
           .catch(err => {
             console.log(err)

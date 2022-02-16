@@ -100,9 +100,6 @@ export default {
     goBack(){
       history.back()
     },
-    test() {
-      console.log('test')
-    },
     getUserProfile: async function(){ // 프로필 정보 가져오기
         await axios({
         method: 'get',
@@ -121,7 +118,6 @@ export default {
           url: `${BASE_API_URL}/user/info/${this.yourUserNumber}`,
         })
           .then(response => {
-            console.log(response)
             this.profile = response.data
           })
           .catch(err => {
@@ -179,7 +175,6 @@ export default {
           url: 'http://i6b106.p.ssafy.io:8080/animal',
         })
         .then((res) => {
-          console.log(res)
           this.animalList = res.data
         })
         .catch(err => {
@@ -196,8 +191,8 @@ export default {
           for (var step=0; step < this.selected.length; step++) { // selected에 있는 선호동물 하나씩 담아주기
             this.credentials.userPreference[step] = {'animalNumber' : this.selected[step]*=1}
           }
-          console.log('선호 동물')
-          console.log(this.credentials.userPreference)
+          // console.log('선호 동물')
+          // console.log(this.credentials.userPreference)
           this.preferFlag = true
         } 
     },

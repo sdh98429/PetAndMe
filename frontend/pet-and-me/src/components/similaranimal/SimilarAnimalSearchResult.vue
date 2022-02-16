@@ -5,6 +5,7 @@
       v-for="(user,idx) in propData.searchAnimalList"
       :key="idx"
       class="sa-search-item"
+      @click="goToUserFeed(user.userID)"
     >
       <img class="sa-user-image" :src="`http://i6b106.p.ssafy.io:8080/main/image?file=${user.saveFolder}${user.userPhotoName}`" alt="프로필 사진" />
       <div class="sa-user-nickname">{{user.userNickName}}</div>
@@ -26,6 +27,9 @@ export default {
     goBack(){
       this.$emit('go-back')
     },
+    goToUserFeed(userID){
+      this.$router.push({name:'UserFeed', params:{yourUserId:userID}})
+    }
   },
   watch:{
     propData(){
