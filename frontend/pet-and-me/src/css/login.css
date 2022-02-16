@@ -2,16 +2,7 @@
   
 }
 @media screen and (min-width:768px){
-  .login-container {
-    position: relative;
-    top: 50px;
-    width: 800px;
-    margin: 0 auto;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    font-size:30px;
-  }
-  .login-container h2{
-    font-size: 30px;
-  }
+  
+  /* basic stylings ------------------------------------------ */
+  
 }

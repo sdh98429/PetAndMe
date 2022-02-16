@@ -1,6 +1,7 @@
 <template>
   <div class="feed-create-container">
-    <h2 class="feed-create-header"> 피드 만들기 </h2>
+    <h2>피드 만들기</h2>
+    <h3>피드를 생성할 사진을 선택해주세요</h3>
     <ul> 
       <li>
         <input multiple @change='onInputImage()' accept="image/*" ref="image" type="file">
@@ -8,15 +9,15 @@
     </ul>
 
     <div>
-      <button @click="toNewsFeed">X</button>
-    </div>
-    <div>
       <ContentsForm
         :is-create="isCreate"
         @form-to-create="createFeedContent"
       />
     </div>
-    <button @create-click="createFeed">생성</button>
+    <div class="form-footer">
+      <button class="bttn-pill bttn-sm bttn-warning back-btn" @click="toBack">돌아가기</button>
+      <button class="bttn-pill bttn-sm bttn-warning create-btn" @create-click="createFeed">생성</button>
+    </div>
   </div>
 </template>
 
@@ -68,8 +69,9 @@ export default {
       this.feedContent = inputData
       this.isArrive = this.isArrive + 1
     },
-    toNewsFeed: function(){ // NewsFeed 페이지로 이동
-      this.$router.push({name: "NewsFeed"})
+    toBack: function(){ // NewsFeed 페이지로 이동
+      history.back()
+      // this.$router.push({name: "NewsFeed"})
     }
   },
   mounted() {
@@ -97,7 +99,7 @@ export default {
             formData.append("feedContent", this.feedContent);
             formData.append("userNumber", JSON.stringify(this.myUserNumber));
 
-            console.log(formData);
+            // console.log(formData);
             axios({
                 method: 'post',
                 url: 'http://i6b106.p.ssafy.io:8080/main/feed',
@@ -131,22 +133,5 @@ export default {
 }
 </script>
 
-<style scoped>
-.feed-create-container {
-  font-family: 'MinSans-Regular';
-  width: 100%;
-  position: relative;
-  top: 70px;
-  margin: 0 auto;
-  font-size: 20px;
-}
-.feed-create-container h2 {
-  margin: 0;
-}
-.feed-create-container ul {
-  
-}
-.feed-create-container ul li {
-
-}
+<style>
 </style>

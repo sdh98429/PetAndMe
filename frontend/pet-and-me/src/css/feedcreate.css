@@ -4,20 +4,93 @@
   font-weight: normal;
   font-style: normal;
 }
+.feed-create-container{
+  font-family: 'MinSans-Regular', sans-serif;
+}
 @media screen and (max-width:768px){
-  
+  .feed-create-container {
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+    top: 60px;
+    margin: 0 auto;
+    background-color: #fff;
+  }
+  .feed-create-container h2 {
+    text-align: center;
+    margin : 0 auto;
+    font-weight: bold;
+    font-size: 24px;
+  }
+  .feed-create-container h3 {
+    font-size: 20px;
+    text-align: center;
+    margin : 0 auto;
+  }
+  .feed-create-container input {
+    font-size: 20px;
+    text-align: center;
+    margin : 0 auto;
+  }
+  .feed-create-container textarea {
+    resize: none;
+    position: relative;
+    width: 90%;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 200px;
+    border: 1px solid #ccc;
+  }
+  .feed-create-container .form-footer {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+  } 
+  .feed-create-container .back-btn {
+    position: a;
+    width: 200px;
+  }
+  .feed-create-container .create-btn {
+    position: relative;
+    width: 200px;
+  }
 }
 @media screen and (min-width:768px){
   .feed-create-container {
     width: 800px;
     position: relative;
-    top: 0;
+    top: 60px;
     margin: 0 auto;
     background-color: #fff;
   }
   .feed-create-container h2 {
-    
+    width: 300px;
+    text-align: center;
+    margin: 0 auto;
+    font-weight: bold;
+  }
+  .feed-create-container h3 {
+    width: 300px;
     text-align: center;
     margin : 0 auto;
+  }
+  .feed-create-container textarea {
+    resize: none;
+    width: 100%;
+    height: 200px;
+    border: 1px solid #ccc;
+  }
+  .feed-create-container .form-footer {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+  } 
+  .feed-create-container .back-btn {
+    position: a;
+    width: 200px;
+  }
+  .feed-create-container .create-btn {
+    position: relative;
+    width: 200px;
   }
 }

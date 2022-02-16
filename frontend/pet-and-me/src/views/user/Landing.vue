@@ -56,8 +56,8 @@ export default {
       this.$router.push({name:'NewsFeed'})
     },
     logout() {
-      console.log(this.getUserNumber)
-      console.log(this.getUserInfo)
+      // console.log(this.getUserNumber)
+      // console.log(this.getUserInfo)
       this.logoutRemoveToekn()
       this.$router.push({name:'Landing'})
     }
@@ -73,7 +73,7 @@ export default {
     //   });
     const footerEl = document.querySelector('#footer-container')
     footerEl.classList.add('inactive')
-    const inputEl = document.querySelector('.search-bar')
+    const inputEl = document.querySelector('.my-search-bar')
     inputEl.classList.add('inactive')
   }
 }

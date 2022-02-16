@@ -1,47 +1,53 @@
 <template>
   <div class="user-update-container">
-    <div v-if="(yourUserNumber === myUserNumber)">
-      <div>
+    <!-- 자신의 회원 정보를 수정할 때 -->
+    <div v-if="(yourUserNumber === myUserNumber)" class="user-update-box">
         <h1>회원 정보 수정</h1>
+        <div class="userid">
           <h3>아이디</h3>
-            <div>@{{yourUserId}}</div>
-          <h3>이메일</h3>
-            <div>{{userEmail}}</div>
-
-          <h3>닉네임</h3>
-            <input type="text" name="nickname" id="nickname" v-model="credentials.userNickName" placeholder="닉네임을 입력해주세요" style="border-style: solid;">
-
-          <h3>프로필 소개</h3>
-            <input type="text" name="userProfileContent" id="userProfileContent" v-model="credentials.userProfileContent" placeholder="자신을 소개해주세요" style="width:300px;height:200px;border-style: solid;">
-
-        <h3>선호동물 체크</h3>
-
-        <div>
-          <input type="checkbox" value="1" v-model="selected"> 강아지
-          <input type="checkbox" value="2" v-model="selected"> 고양이
-          <input type="checkbox" value="3" v-model="selected"> 조류
-          <input type="checkbox" value="4" v-model="selected"> 설치류
-          <input type="checkbox" value="5" v-model="selected"> 기타
+            <input type="text" disabled id="userId" v-model="yourUserId">
         </div>
-
-        <button @click="sendData"> 수정 완료 </button>
-        <br>
-        <button @click="goToMyPage()">내 페이지로 돌아가기</button>
-
-      </div>
+        <div class="useremail">
+          <h3>이메일</h3>
+            <input type="text" disabled id="useremail" v-model.trim="userEmail">
+        </div>
+        <div class="nickname">
+          <h3>닉네임</h3>
+            <input type="text" name="nickname" id="nickname" v-model.trim="credentials.userNickName" placeholder="닉네임을 입력해주세요">
+        </div>
+        <div class="user-profile">
+          <h3>프로필 소개</h3>
+            <textarea type="text" name="userProfileContent" id="userProfileContent" v-model.trim="credentials.userProfileContent" placeholder="자신을 소개해주세요"></textarea>
+        </div>
+        <div class="fav-animal">
+          <h3>선호동물 체크</h3>
+          <div class="fav-animal-box">
+            <div v-for="animal in animalList" v-bind:key="animal.animalNumber" class="fav-animal-checkbox">
+              <input type="checkbox" :value="animal.animalNumber" v-model="selected" :id="animal.animalName">
+              <label :for="animal.animalName">{{animal.animalName}}</label>
+            </div>
+          </div>
+        </div>
+        <div class="btn-box">
+          <button class="bttn-pill bttn-md bttn-warning back-btn" @click="goToMyPage()">내 페이지로 돌아가기</button>
+          <button class="bttn-pill bttn-md bttn-warning send-btn" @click="sendData"> 수정 완료 </button>
+        </div>
+        <button class="logout-btn bttn-pill bttn-md bttn-danger bttn-block" @click="logout" >LogOut</button>
     </div>
     <!-- 다른 사람의 회원 정보를 수정하려 할 때 -->
     <div v-else>
-      내 유저 피드 페이지만 업데이트할 수 있습니다.
+      내 정보 페이지만 업데이트할 수 있습니다.
+      <button @click="goBack">이전 페이지로 돌아가기</button>
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import {BASE_API_URL} from '@/config/config.js'
 import '@/css/userupdate.css'
 // import DatePicker from '../../components/Signup/DatePicker'
+import {BASE_API_URL} from '@/config/config.js'
+import { mapActions } from "vuex"
 
 export default {
   name: 'UserFeedUpdate',
@@ -56,6 +62,12 @@ export default {
 
       selected: [], // 선호 동물 종류를 담아두는 selected
 
+      animalList: [
+        {
+          animalNumber: null,
+          animalName: null
+        }
+      ],
       credentials: {
         userNumber: null, 
         userPW: null,
@@ -82,14 +94,20 @@ export default {
 
   },
   methods: {
+    ...mapActions([
+      'logoutRemoveToekn'
+      ]),
+    goBack(){
+      history.back()
+    },
     getUserProfile: async function(){ // 프로필 정보 가져오기
         await axios({
         method: 'get',
-        url: `${BASE_API_URL}/user/number/${this.$route.params.yourUserId}`,
+        url: `${BASE_API_URL}/user/number/` + this.$route.params.yourUserId, // 유저 ID를 유저 번호로 바꿔 yourUserNumber에 저장
       })
         .then(response => {
           this.yourUserNumber = response.data
-          console.log(this.yourUserNumber)
+          this.credentials.userNumber = response.data
         })
         .catch(err => {
           console.log(err)
@@ -101,27 +119,11 @@ export default {
         })
           .then(response => {
             this.profile = response.data
-            // console.log(response.data)
-            // this.getPetAge()
           })
           .catch(err => {
             console.log(err)
           })
     },
-    // getUserProfile: function(){ // 프로필 정보 가져오기
-    //   console.log(this.$route.params.yourUserId)
-    //   axios({
-    //     method: 'get',
-    //     url: 'http://i6b106.p.ssafy.io:8080/user/number/' + this.$route.params.yourUserId,
-    //   })
-    //     .then(response => {
-    //       this.yourUserNumber = response.data
-    //       this.credentials.userNumber = response.data
-    //     })
-    //     .catch(err => {
-    //       console.log(err)
-    //     })
-    // },
 
     getUserChangeInfo: async function(){ // 유저 번호를 바탕으로 유저 정보 가져오기 (회원정보 수정 요청 보낼 시 필요한 모든 정보 가져오기)
       await axios({ // 닉네임, 프로필 소개, 비밀번호, 펫 여부 가져오기
@@ -167,6 +169,18 @@ export default {
         })
     },
 
+    getAnimal() {
+      axios({
+          method: 'get',
+          url: 'http://i6b106.p.ssafy.io:8080/animal',
+        })
+        .then((res) => {
+          this.animalList = res.data
+        })
+        .catch(err => {
+          console.log(err.response) 
+        })
+    },
 
     savePrefer() { // 선호 동물 선택했는지 검증하기
       if (this.selected.length < 1) { // 선택 0마리 했다면
@@ -177,15 +191,15 @@ export default {
           for (var step=0; step < this.selected.length; step++) { // selected에 있는 선호동물 하나씩 담아주기
             this.credentials.userPreference[step] = {'animalNumber' : this.selected[step]*=1}
           }
-          console.log('선호 동물')
-          console.log(this.credentials.userPreference)
+          // console.log('선호 동물')
+          // console.log(this.credentials.userPreference)
           this.preferFlag = true
         } 
     },
 
     sendData(){ // 회원 정보 수정 요청 보내기 
-      this.credentials.userNickName = this.credentials.userNickName.trim() // 닉네임 공백 제거
-      this.credentials.userProfileContent = this.credentials.userProfileContent.trim() // 프로필 소개 공백 제거
+      // this.credentials.userNickName = this.credentials.userNickName // 닉네임 공백 제거
+      // this.credentials.userProfileContent = this.credentials.userProfileContent // 프로필 소개 공백 제거 > template에서 해결
       if (this.credentials.userNickName){ // 닉네임 입력값이 있다면
         if (this.credentials.userProfileContent){ // 프로필 소개 입력값이 있다면
           this.savePrefer() // 선호 동물 선택했는지 검증
@@ -196,7 +210,7 @@ export default {
               data: this.credentials
             })
               .then(() => {
-                this.$router.push({ name: 'Login' })
+                this.goToMyPage()
               })
               .catch(err => {
                 console.log(this.credentials) // 회원 정보 수정 데이터값
@@ -215,13 +229,19 @@ export default {
       this.$router.push({ name : 'UserFeed', params: { yourUserId : this.yourUserId }})
     },
 
+    logout() {
+      this.logoutRemoveToekn()
+      this.$router.push({name:'Landing'})
+    },
+
     async asyncCall(){ // url의 유저 아이디를 유저 번호로 바꾸고, 유저 번호를 토대로 정보 가져오기 (시간 순서가 지켜져야 해서 async 요청)
       await this.getUserProfile() // 아이디 -> 번호
       await this.getUserChangeInfo() // 유저 정보 가져오기
     }
   },
   created : function(){
-    this.asyncCall() // 유저 아이디 -> 번호로 변환 후 정보 가져오기
+    this.asyncCall(), // 유저 아이디 -> 번호로 변환 후 정보 가져오기
+    this.getAnimal()
   },
   computed: {
     myUserNumber () {

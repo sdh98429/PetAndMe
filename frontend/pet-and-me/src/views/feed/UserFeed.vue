@@ -44,13 +44,15 @@
       </div>
       <div v-if="yourUserNumber != myUserNumber">
         <button class="follow-btn bttn-pill bttn-sm bttn-warning bttn-block" v-if="!isFollow" @click="followUser">팔로우</button>
-        <button class="follow-btn bttn-pill bttn-sm bttn-warning bttn-block" v-if="isFollow" @click="unfollowUser">언팔로우</button>
+        <button class="follow-btn bttn-pill bttn-sm bttn-warning bttn-block" v-else @click="unfollowUser">언팔로우</button>
       </div>
     </div>
+    <div class="user-feed-list">
       <UserFeedList
         :your-user-number="yourUserNumber"
         @feed-length="getFeedLength"
       />
+    </div>
   </div>
 </template>
 
@@ -74,7 +76,7 @@ export default {
       userNumber: "null",
       yourUserId: this.$route.params.yourUserId,
       yourUserNumber: 0,
-      isFollow : false,
+      isFollow : null,
       followerCnt : 0,
       followingCnt : 0,
       feedLength: null,
@@ -119,7 +121,7 @@ export default {
         })
           .then(response => {
             this.profile = response.data
-            console.log(response.data)
+            // console.log(response.data)
             this.getPetAge()
           })
           .catch(err => {
@@ -134,12 +136,12 @@ export default {
       })
       .then(response => {
         this.followingCnt = response.data.length
-        var ind;
-        for (ind = 0; ind < response.data.length; ind++) {
-          if (this.yourUserNumber == response.data[ind].userNumber){
-            this.isFollow = true
-          }
-        }
+        // var ind;
+        // for (ind = 0; ind < response.data.length; ind++) {
+        //   if (this.yourUserNumber == response.data[ind].userNumber){
+        //     this.isFollow = true
+        //   }
+        // }
       })
       .catch(err => {
         console.log(err)
@@ -153,6 +155,12 @@ export default {
       })
       .then(response => {
         this.followerCnt = response.data.length
+        var ind;
+        for (ind = 0; ind < response.data.length; ind++) {
+          if (this.yourUserNumber == response.data[ind].userNumber){
+            this.isFollow = true
+          }
+        }
       })
       .catch(err => {
         console.log(err)
@@ -160,6 +168,8 @@ export default {
     },
 
     followUser: function(){
+      console.log(this.isFollow)
+      console.log()
       axios({
         method: 'post',
         url: `${BASE_API_URL}/user/follow/${this.myUserNumber}/${this.yourUserNumber}`,
@@ -198,7 +208,7 @@ export default {
     },
 
     profileChange: function(){
-      if (this.myUserNumber == this.profile.userNumber){
+      if (this.myUserNumber == this.yourUserNumber){
         this.$refs.image.click()
       } else {
         console.log('본인 프로필 사진만 업데이트 할 수 있습니다.')

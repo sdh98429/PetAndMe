@@ -146,20 +146,8 @@ export default {
   },
   mounted() {
     move('1', '10%', '#fff')
-    // const footerEl = document.querySelector('#footer-container')
-    // footerEl.classList.add('innewsfeed')
-    // const searchEl = document.querySelector('.my-search-bar')
-    // searchEl.classList.add('innewsfeed')
-    // const searchResultEl = document.querySelector('.my-search-result')
-    // searchResultEl.classList.add('innewsfeed')
   },
   destroyed() {
-    // const searchResultEl = document.querySelector('.search-result')
-    // searchResultEl.classList.remove('innewsfeed')
-    // const footerEl = document.querySelector('#footer-container')
-    // footerEl.classList.remove('innewsfeed')
-    // const searchEl = document.querySelector('.search-bar')
-    // searchEl.classList.remove('innewsfeed')
     const footerEl = document.querySelector('#footer-container')
     const searchEl = document.querySelector('.search-bar')
     searchEl.classList.remove('innewsfeed')

@@ -185,7 +185,7 @@ export default {
       // this.propData.examImage = `@/assets/animalexam/${this.propData.animalNumber}/${_.random(0,11)}.jpg`
       switch(this.propData.animalNumber){
         case '1':
-          this.propData.myAnimal = '개';
+          this.propData.myAnimal = '강아지';
           break;
         case '2':
           this.propData.myAnimal = '고양이';

@@ -2,12 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Landing from '../views/user/Landing'
 import Login from '../views/user/Login'
-import PasswordChange from '../views/user/PasswordChange'
 import Signup from '../views/user/Signup'
 import Taping from '../views/taping/Taping'
 import SimilarAnimal from '../views/similaranimal/SimilarAnimal'
-import Search from '../views/search/Search'
-import SearchResult from '../views/search/SearchResult'
 import FeedCreate from '../views/feed/FeedCreate'
 import NewsFeed from '../views/feed/NewsFeed'
 import UserFeed from '../views/feed/UserFeed'
@@ -27,17 +24,12 @@ const routes = [
     meta: {requiresAuth: true}
   },
   {
-    path: '/user/login',
+    path: '/login',
     name: 'Login',
     component: Login,
   },
   {
-    path: '/user/find',
-    name: 'Find',
-    component: PasswordChange,
-  },
-  {
-    path: '/user/signup',
+    path: '/signup',
     name: 'Signup',
     component: Signup,
   },
@@ -45,27 +37,19 @@ const routes = [
     path: '/taping/:yourUserId',
     name: 'Taping',
     component: Taping,
+    meta: {requiresAuth: true}
   },
   {
     path: '/similar/',
     name: 'SimilarAnimal',
     component: SimilarAnimal,
-  },
-  {
-    path: '/search',
-    name: 'Search',
-    component: Search,
-  },
-
-  {
-    path: '/search/:searchWord',
-    name: 'SearchResult',
-    component: SearchResult,
+    meta: {requiresAuth: true}
   },
   {
     path: '/feed/create',
     name: 'FeedCreate',
     component: FeedCreate,
+    meta: {requiresAuth: true}
   },
   {
     path: '/feed/newsfeed',
@@ -77,21 +61,25 @@ const routes = [
     path: '/feed/userfeed/:yourUserId',
     name: 'UserFeed',
     component: UserFeed,
+    meta: {requiresAuth: true}
   },
   {
-    path: '/feed/userfeed/:yourUserId/follow',
+    path: '/feed/userfeed/:yourUserId/follow/',
     name: 'FollowList',
     component: FollowList,
+    meta: {requiresAuth: true}
   },
   {
     path: '/feed/userfeed/:yourUserId/update',
     name: 'UserFeedUpdate',
     component: UserFeedUpdate,
+    meta: {requiresAuth: true}
   },
   {
     path: '/feed/:feedNumber',
     name: 'FeedDetail',
     component: FeedDetail,
+    meta: {requiresAuth: true}
   },
 ]
 
@@ -107,23 +95,24 @@ router.beforeEach((to, from, next) => {
   console.log(isLogin)
   
  // requiresAuth 체크
-  // if (to.matched.some(record => record.meta.requiresAuth)) {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    console.log(to.matched)
+    if(to.name === 'Landing' && isLogin) {
+      next('/feed/newsfeed')
+    }
+    // else if(to.name === 'NewsFeed') {
+    else if(to.name !== 'Landing') {
+      if(!isLogin) {
+        alert('로그인이 필요합니다')
+        next('/login')
+      }
 
-  //   if(to.name === 'Landing' && isLogin) {
-  //     next('/feed/newsfeed')
-  //   }
-  //   else if(to.name === 'NewsFeed') {
-  //     if(!isLogin) {
-  //       alert('로그인이 필요합니다')
-  //       next('/')
-  //     }
-
-  //     if(!store.getters['getUserInfo'].userNickName) {
-  //       next('/similar')
-  //     }
+      if(!store.getters['getUserInfo'].userNickName) {
+        next('/similar')
+      }
       
-  //   }
-  // }
+    }
+  }
   // requiresAuth가 false일 때 (권한이 필요 없는 페이지)
   next()
 })
