@@ -29,7 +29,8 @@ from rest_framework.decorators import api_view
 @api_view(['POST'])
 def pet_tape(request):
     # user Id
-    userId = 'person1'
+    userId = request.data.get('userId')
+
     # base64 encoded video list
     videoList = []
 
@@ -73,7 +74,7 @@ def pet_tape(request):
         image = ImageOps.exif_transpose(image)
         resized = image.resize((1280, 720))
         resized.save(i)
-    userID = 'person1'
+
     file_list_sorted = natsorted(file_list,reverse=False)
 
     # 각 사진당 2초의 시간을 두고 이어붙이기
@@ -148,16 +149,27 @@ def pet_tape(request):
 
     # video encode
     vid_list = []
+    
+    with open(video_list_sorted[-1], "rb") as vidStr:
+        convert = base64.b64encode(vidStr.read())
+    vid_list.append(convert)
+
+    return Response(vid_list)
+    
+@api_view(['POST'])
+def returntape(request):
+    userId = request.data.get('userId')
+
+    origin = os.path.dirname(os.path.abspath(__file__))
+    videodir = origin + '/' + userId
+
+    video_list = glob.glob(os.path.join(videodir, '*.mp4'))
+    video_list_sorted = natsorted(video_list,reverse=False)
+    # video encode
+    vid_list = []
     for vid in video_list_sorted:
         with open(vid, "rb") as vidStr:
             convert = base64.b64encode(vidStr.read())
         vid_list.append(convert)
 
     return Response(vid_list)
-
-@api_view(['GET'])
-def test(request):
-    li = request.GET.get("/test/data", None)
-    print(li)
-    print('타입은')
-    print(type(li))

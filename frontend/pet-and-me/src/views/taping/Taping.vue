@@ -1,30 +1,19 @@
 <template>
   <div>
-  <p>awef</p>
-  <p>asef</p>
-  <p>asef</p>
-  <p>asef</p>
-  <p>asef</p>
-  <button @click="catchImages">가져오기</button>
-  <hr>
-  <button>list형식 test</button>
-  <!-- <div v-for="(file, idx) in images" :key="'photo' + idx">
-    <img v-show="idx == 0" :src="`data:image/png;base64,${images[idx].photo}`" />
-  </div> -->
-  {{ this.images }}
-  <div v-for="(file, idx) in images" :key="'photo' + idx">
-    <img :src="`data:image/png;base64,${images[idx]}`" />
-  </div>
-  <div v-if="this.returnVideo">
-    <video controls>
-      <source type="video/mp4" :src="`data:video/mp4;base64,${returnVideo[0]}`">
-    </video>
+
+  <h1>네브바</h1>
+  <h1>네브바</h1>
+  <div v-if="level == 0">
+    <h1>Taping하고싶은 피드를 추가해주세요!</h1>
+    <div>
+      <TapingFeedList
+      :your-user-number="yourUserNumber"
+      @feedNumber-update="checkedSave"
+      />
+    </div>
+    <hr>
   </div>
   {{ this.returnVideo }}
-  <!-- <div v-for="(file, idx) in returnVideo" :key="'video' + idx">
-    <video :src="`data:video/mp4;base64,${returnVideo[idx]}`" />
-  </div> -->
-  <!-- <video :src="`data:video/mp4;base64,${returnVideo[0]}`" /> -->
   
   <hr>
     <h2>Taping test용 페이지</h2>
@@ -38,7 +27,8 @@
 
 <script>
 import axios from 'axios'
-import Taping from '../../components/taping/Taping'
+import Taping from '@/components/taping/Taping'
+import {VIDEO_API_URL, BASE_API_URL} from '@/config/config.js'
 
 export default {
   data() {
@@ -50,10 +40,8 @@ export default {
         type: 1,
         bgm: 5,
         images: null,
+        userId: null,
       },
-      // feedNumbers: {
-      //   feedNumbers: "1"
-      // },
       images: null,
       returnVideo: null,
     }
@@ -63,16 +51,11 @@ export default {
   },
   methods: {
     catchImages() {
-      console.log('구분4')
-      // console.log(this.feedPhotoDtoList[1]*1)
-      // console.log(this.feedPhotoDtoList.length)
-      console.log('구분2')
       for (var step = 0; step < this.datas.feedPhotoDtoList.length; step++) {
         console.log(step)
         this.datas.feedPhotoDtoList[step] = {'feedNumber' : this.datas.feedPhotoDtoList[step]}
         console.log(this.datas.feedPhotoDtoList)
       }
-      console.log('구분')
       console.log(this.datas.feedPhotoDtoList)
       axios({
         method: 'post',
@@ -80,9 +63,6 @@ export default {
         data: this.datas,
         })
           .then((res) => {
-            // this.images = res.data
-            // console.log(res)
-            // console.log('pass')
             this.images = res.data
             this.tapeMovie.images = res.data
             console.log(typeof(this.tapeMovie.images))
@@ -97,7 +77,7 @@ export default {
     tape() {
         axios({
         method: 'post',
-        url: 'http://127.0.0.1:8000/api/v1/tape/',
+        url: `${VIDEO_API_URL}/api/v1/tape/`,
         data: this.tapeMovie
       })
         .then((res) => {
@@ -111,23 +91,54 @@ export default {
           console.log('에러')
         })
     },
-    tape2() {
-      console.log('tape2버튼')
-    }
+    // type, bgm 선정
+    tape2(res) {
+      this.tapeMovie.type = res.type
+      this.tapeMovie.bgm = res.bgm
+      this.level++
+    },
+    getUserNumber() {
+      this.myUserNumber = 2
+    },
+    asyncCall : async function(){
+      await this.getUserNumber();
+      await this.getFeed();
+    },
+    // 다시 만들기
+    tapingNew() {
+      this.$router.go()
+    },
+    // 홈으로
+    toHome() {
+      this.$router.push({ name: 'Landing' })
+    },
+    // 유저 feed list 받아오기
+    getFeed: async function() {
+      this.datas.userId = this.yourUserId
+      await axios({
+        method: 'get',
+        url: `${BASE_API_URL}/user/number/` + this.$route.params.yourUserId,
+      })
+        .then(response => {
+        this.yourUserNumber = response.data
+        })
+    },
+    // 체크한 이미지 저장
+    checkedSave(res) {
+      for (var item in res) {
+        this.datas.feedPhotoDtoList.push(item*1)
+      }
+      this.level ++
+      this.catchImages()
+    },
   },
 }
-            // axios.get('http://i6b106.p.ssafy.io:8080/main/imagelist', {
-            //   params: {
-            //     feedNumbers: 1,
-            //   }
-            // }).then(res => {
-            //   console.log(res)
-            // }).catch(err => {
-            //   console.log(err)
-            //   console.log('안돼')
-            // })
 </script>
 
-<style>
-
+<style scoped>
+video { 
+  width:90%;
+  max-width:720px;
+  height:auto;
+}
 </style>
