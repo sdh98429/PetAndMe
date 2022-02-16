@@ -1,32 +1,44 @@
 <template>
   <div class="follow-container">
-    <h2 v-if="profile">{{profile.userNickName}}</h2>
-    <button v-for="(tab, index) in tabs"
+    <h2>{{profile.userNickName}}</h2>
+    <button class="back-btn bttn-pill bttn-md bttn-default" @click="test">돌아가기</button>
+    <!-- <button v-for="(tab, index) in tabs"
       :key="index"
       v-bind="{active: currentTab === index}"
-      class=""
-      @click="currentTab = index">{{tab}}</button>
-    <div v-show="currentTab==0">
-      <div>팔로워 리스트</div>
-      <div v-for="(follower, ind) in followerList" :key="`follower${ind}`" style="border: 1px solid;">
-        <img @click="toUserFeed(follower.userID)" :src="'http://i6b106.p.ssafy.io:8080/main/image?file=' + follower.saveFolder + follower.userPhotoName" alt="프로필 사진" style="width: 300px; height: 150px; object-fit: contain;">
-        <div>{{follower.userNickName}}</div>
-        <div>@{{follower.userID}}</div>
-        <button @click="unfollowUser(follower.userNumber)" v-if="myFollowingList.includes(follower.userNumber)">언팔로우</button>
-        <button @click="followUser(follower.userNumber)" v-else>팔로우</button>
+      class="follow-toggle-btn"
+      @click="currentTab = index">{{tab}}</button> -->
+    <div class="follow-toggle-btn">
+      <button class="follow-list-btn isactive" @click="followView">팔로우</button>
+      <button class="following-list-btn" @click="followingView">팔로잉</button>
+    </div>
+    <div v-show="currentTab==0" v-if="followerCnt" class="follow-list">
+      <div v-for="(follower, ind) in followerList" :key="`follower${ind}`" class="follow-item">
+        <img @click="toUserFeed(follower.userID)" class="follow-image" :src="`http://i6b106.p.ssafy.io:8080/main/image?file=${follower.saveFolder}${follower.userPhotoName}`" alt="프로필 사진">
+        <div class="follow-user">{{follower.userNickName}}<br>@{{follower.userID}}</div>
+        <button class="follow-btn bttn-pill bttn-md bttn-warning" @click="unfollowUser(follower.userNumber)" v-if="myFollowingList.includes(follower.userNumber)">언팔로우</button>
+        <button class="follow-btn bttn-pill bttn-md bttn-warning" @click="followUser(follower.userNumber)" v-else>팔로우</button>
+        <div class="follow-user-pet">
+          {{profile.petName}}({{profile.animalName}}),
+          <font-awesome-icon icon="mars" v-if="profile.petGender==='M'" style="font-size:18px"></font-awesome-icon>
+          <font-awesome-icon icon="venus" style="font-size:18px" v-else></font-awesome-icon>
+          ,<span v-if="petMonth < 12">{{petMonth}}개월</span><span v-else>{{petAge}}살</span>
+        </div>
       </div>
     </div>
-    <div v-show="currentTab==1">
-      <div>팔로잉 리스트</div>
-      <div v-for="(following, ind) in followingList" :key="`following${ind}`" style="border: 1px solid;">
-        <img @click="toUserFeed(following.userID)" :src="'http://i6b106.p.ssafy.io:8080/main/image?file=' + following.saveFolder + following.userPhotoName" alt="프로필 사진" style="width: 300px; height: 150px; object-fit: contain;">
-        <div>{{following.userNickName}}</div>
-        <div>@{{following.userID}}</div>
-        <button @click="unfollowUser(following.userNumber)" v-if="myFollowingList.includes(following.userNumber)">언팔로우</button>
-        <button @click="followUser(following.userNumber)" v-else>팔로우</button>
+    <div v-show="currentTab==1" v-if="followingCnt" class="follow-list">
+      <div v-for="(following, ind) in followingList" :key="`following${ind}`" class="follow-item">
+        <img @click="toUserFeed(following.userID)" class="follow-image" :src="`http://i6b106.p.ssafy.io:8080/main/image?file=${following.saveFolder}${following.userPhotoName}`" alt="프로필 사진">
+        <div class="follow-user">{{following.userNickName}}<br>@{{following.userID}}</div>
+        <button class="follow-btn bttn-pill bttn-md bttn-warning" @click="unfollowUser(following.userNumber)" v-if="myFollowingList.includes(following.userNumber)">언팔로우</button>
+        <button class="follow-btn bttn-pill bttn-md bttn-warning" @click="followUser(following.userNumber)" v-else>팔로우</button>
+        <div class="follow-user-pet">
+          {{profile.petName}}({{profile.animalName}}),
+          <font-awesome-icon icon="mars" v-if="profile.petGender==='M'" style="font-size:18px"></font-awesome-icon>
+          <font-awesome-icon icon="venus" style="font-size:18px" v-else></font-awesome-icon>
+          ,<span v-if="petMonth < 12">{{petMonth}}개월</span><span v-else>{{petAge}}살</span>
+        </div>
       </div>
     </div>
-    <div></div>
   </div>
 </template>
 
@@ -38,7 +50,10 @@ export default {
   name: 'FollowList',
   data: function () {
     return {
+      today: new Date(),
       profile : null,
+      petMonth: null,
+      petAge: null,
       followingList : null, // 팔로잉 리스트
       followerList : null, // 팔로워 리스트
       followerCnt: 0, // 팔로워 수
@@ -59,6 +74,29 @@ export default {
 
   },
   methods: {
+    test() {
+      this.$router.push({name: 'UserFeed', params: { yourUserId : this.userInfo.userID }})
+    },
+    followView() {
+      this.currentTab = 0
+      const btn1El = document.querySelector('.follow-list-btn')
+      const btn2El = document.querySelector('.following-list-btn')
+      btn1El.classList.add('isactive')
+      btn2El.classList.remove('isactive')
+    },
+    followingView() {
+      this.currentTab = 1
+      const btn1El = document.querySelector('.follow-list-btn')
+      const btn2El = document.querySelector('.following-list-btn')
+      btn1El.classList.remove('isactive')
+      btn2El.classList.add('isactive')
+    },
+    getPetAge() {
+      // const tempdate = new Date(`${this.profile.petBirth.slice(0,4)}-${this.profile.petBirth.slice(4,6)}-${this.profile.petBirth.slice(6,8)}`)
+      const tempdate = new Date(this.profile.petBirth);
+      this.petMonth = parseInt(Math.floor((this.today.getTime()-tempdate.getTime())/(24 * 60 * 60 * 1000 * 30)))
+      this.petAge = parseInt(this.petMonth/12)
+    },
     getUserProfile: async function(){ // 프로필 정보 가져오기
       await axios({
         method: 'get',
@@ -77,6 +115,7 @@ export default {
       })
         .then(response => {
           this.profile = response.data
+          this.getPetAge()
         })
         .catch(err => {
           console.log(err)
@@ -91,6 +130,7 @@ export default {
       .then(response => {
         this.followingCnt = response.data.length
         this.followingList = response.data
+        console.log(response)
         // var ind;
         // for (ind = 0; ind < response.data.length; ind++) {
         //   if (this.yourUserNumber == response.data[ind].userNumber){
@@ -181,6 +221,9 @@ export default {
   computed: {
     myUserNumber () {
       return this.$store.getters.getUserNumber
+    },
+    userInfo() {
+      return this.$store.getters.getUserInfo
     }
   },
 }

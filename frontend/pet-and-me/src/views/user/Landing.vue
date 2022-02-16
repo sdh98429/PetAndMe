@@ -73,7 +73,7 @@ export default {
     //   });
     const footerEl = document.querySelector('#footer-container')
     footerEl.classList.add('inactive')
-    const inputEl = document.querySelector('.search-bar')
+    const inputEl = document.querySelector('.my-search-bar')
     inputEl.classList.add('inactive')
   }
 }

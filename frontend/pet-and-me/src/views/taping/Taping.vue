@@ -43,6 +43,7 @@
 <script>
 import axios from 'axios'
 import Taping from '@/components/taping/Taping'
+import TapingFeedList from '@/components/taping/TapingFeedList'
 import {VIDEO_API_URL, BASE_API_URL} from '@/config/config.js'
 
 export default {

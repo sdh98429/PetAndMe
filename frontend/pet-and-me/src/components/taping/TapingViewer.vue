@@ -22,7 +22,8 @@
 
 <script>
 import axios from 'axios'
-import {BASE_API_URL} from '@/config/config.js'
+// import {BASE_API_URL, VIDEO_API_URL} from '@/config/config.js'
+import {VIDEO_API_URL} from '@/config/config.js'
 
 export default {
     data() {
@@ -31,12 +32,13 @@ export default {
       returnVideo: null,
     }
   },
-  props: ['returnUserId'],
+  // props: ['returnUserId'],
   methods: {
     catchTape() {
       axios({
         method: 'post',
-        url: `${BASE_API_URL}/api/v1/returntape/`,
+        // url: `${BASE_API_URL}/api/v1/returntape/`,
+        url: `${VIDEO_API_URL}/api/v1/returntape/`,
         data: this.returnUserId,
       })
         .then(res => {
@@ -50,6 +52,11 @@ export default {
   },
   created() {
     this.catchTape()
+  },
+  computed: {
+    returnUserId() {
+      return this.$store.getters.getUserInfo.userID
+    }
   }
 }
 </script>

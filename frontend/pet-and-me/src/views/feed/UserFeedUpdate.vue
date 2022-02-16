@@ -1,13 +1,13 @@
 <template>
-  <div>
+  <div class="user-update-container">
     <!-- 자신의 회원 정보를 수정할 때 -->
     <div v-if="(yourUserNumber === myUserNumber)"> 
       <div>
         <h1>회원 정보 수정</h1>
           <h3>아이디</h3>
-            <div>@{{yourUserId}}</div>
+            <h4>@{{yourUserId}}</h4>
           <h3>이메일</h3>
-            <div>{{userEmail}}</div>
+            <h4>{{userEmail}}</h4>
 
           <h3>닉네임</h3>
             <input type="text" name="nickname" id="nickname" v-model="credentials.userNickName" placeholder="닉네임을 입력해주세요" style="border-style: solid;">

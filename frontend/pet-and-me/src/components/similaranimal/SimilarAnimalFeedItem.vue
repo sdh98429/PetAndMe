@@ -61,7 +61,6 @@
       </div>
     </div>
   </div>
-  <button class="bttn-pill bttn-md bttn-warning next-step-btn" @click="goBack" style="top:500px; position:relative;">돌아가기</button>
   </div>
 </template>
 

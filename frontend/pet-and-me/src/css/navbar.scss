@@ -43,7 +43,7 @@
   .my-nav span.logo div {
     text-decoration: none;
     color: #333;
-    font-size: 3.4rem;
+    font-size: 2.5rem;
   }
   .navTrigger {
     display: block;
@@ -72,14 +72,15 @@
     display: none;
   }
   .my-search-bar .my-search-input {
-    width: 62%;
+    width: 80%;
     background-color: #eee;
     outline: none;
     border-radius: 10px;
     border:none;
     height:30px;
-    padding: 0 15%;
-    margin:0 auto;
+    padding: 0 10%;
+    margin-left: 10%;
+    font-size: 13px;
   }
   .my-search-bar .my-search-placeholder {
     position: absolute;
@@ -90,6 +91,68 @@
   }
   .my-search-bar .my-search-placeholder .my-search-icon{
     font-size: 20px;
+  }
+  .my-search-bar .my-search-result {
+    position: fixed;
+    display: flex;
+    overflow: scroll;
+    // width: 700px;
+    // padding: 0 50px;
+    width: 100%;
+    padding: 0 25px;
+    height: 200px;
+    bottom: 120px;
+    scrollbar-width: none;
+    background-color: #fff;
+    align-items: center;
+    gap: 15px;
+    font-family: 'MinSans-Regular', sans-serif;
+    border: 1px solid #ccc;
+  }
+  .my-search-bar .my-search-result::-webkit-scrollbar {
+    display: none;
+  }
+  .my-search-bar .close-btn{
+    position: fixed;
+    right: 30px;
+    bottom: 280px;
+    cursor: pointer;
+  }
+  .my-search-bar .result-right-btn{
+    position: fixed;
+    right: 0px;
+    bottom: 210px;
+    z-index: 3;
+    cursor: pointer;
+  }
+  .my-search-bar .result-left-btn{
+    position: fixed;
+    left: 0px;
+    bottom: 210px;
+    z-index: 3;
+    cursor: pointer;
+  }
+  .my-search-bar .my-search-result-item {
+    width: 150px;
+    height: 135px;
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+  .my-search-bar .my-search-result-item .my-search-result-image{
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    margin: 10px auto;
+  }
+  .my-search-bar .my-search-result-item .my-search-result-nickname{
+    width: 120px;
+    margin: 0 auto;
+  }
+  .my-search-bar .my-search-result-item .my-search-result-id{
+    width: 120px;
+    margin: 0 auto;
   }
   // Mobile Footer bar
   #footer-container{

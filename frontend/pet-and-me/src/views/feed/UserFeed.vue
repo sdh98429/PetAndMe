@@ -27,7 +27,10 @@
         ,<span v-if="petMonth < 12">{{petMonth}}개월</span><span v-else>{{petAge}}살</span>
       </div>
       <div class="taping-thumbnail">
-        <TapingViewer/>
+        <TapingViewer
+          :returnUserId="this.yourUserId"
+          style="display:none;"
+        />
       </div>
       <div class="follow-and-feed-mobile">
         <div class="feed-length">게시글<br>{{feedLength}}</div>
@@ -44,14 +47,12 @@
         <button class="follow-btn bttn-pill bttn-sm bttn-warning bttn-block" v-if="isFollow" @click="unfollowUser">언팔로우</button>
       </div>
     </div>
-      <TapingViewer
-        :returnUserId="this.yourUserId"
-      >
-      </TapingViewer>
+    <div class="user-feed-list">
       <UserFeedList
         :your-user-number="yourUserNumber"
         @feed-length="getFeedLength"
       />
+    </div>
   </div>
 </template>
 
@@ -120,7 +121,7 @@ export default {
         })
           .then(response => {
             this.profile = response.data
-            console.log(response.data)
+            // console.log(response.data)
             this.getPetAge()
           })
           .catch(err => {

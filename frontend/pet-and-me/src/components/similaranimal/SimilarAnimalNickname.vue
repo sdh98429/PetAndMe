@@ -1,15 +1,15 @@
 <template>
   <div class="second-step">
-    <h2>원하는 닉네임을 클릭하시면 닉네임이 변경됩니다.</h2>
+    <h2>원하는 닉네임을 클릭하시면 <br> 닉네임이 변경됩니다.</h2>
     <div class="nickname-box">
       <div 
         v-for="(nickname, idx) in propData.recommendNicknameList"
         :key="idx"
         class="nickname-result bttn-pill bttn-sm bttn-default"
         :id="`nickname-btn${idx}`"
-        @click="mymethod(idx)"
-        @mouseover="test(idx)"
-        @mouseleave="test2(idx)"
+        @click="changeNickname(idx)"
+        @mouseover="onHover(idx)"
+        @mouseleave="onBlur(idx)"
       >
         {{nickname}}
       </div>
@@ -45,9 +45,8 @@ export default {
     goBack(){
       this.$emit('go-back')
     },
-    mymethod(idx){
+    changeNickname(idx){
       const checkNickname = this.propData.recommendNicknameList[idx]
-      console.log('go')
       axios({
         url: `${BASE_API_URL}/user/nickName`,
         method: 'put',
@@ -64,12 +63,12 @@ export default {
           console.log(err)
         })
     },
-    test(idx){
+    onHover(idx){
       const btnEl = document.querySelector(`#nickname-btn${idx}`)
       btnEl.classList.remove('bttn-default')
       btnEl.classList.add('bttn-warning')
     },
-    test2(idx){
+    onBlur(idx){
       const btnEl = document.querySelector(`#nickname-btn${idx}`)
       btnEl.classList.remove('bttn-warning')
       btnEl.classList.add('bttn-default')
