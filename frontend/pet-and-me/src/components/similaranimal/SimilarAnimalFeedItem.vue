@@ -1,5 +1,6 @@
 <template>
-  <!-- NewsFeed Item -->
+  <div>
+    <!-- NewsFeed Item -->
   <div class="feed-container">
     <!-- Feed User Profile -->
     <div class="feed-profile" @click="toUserFeed(profile.userID)">
@@ -60,16 +61,15 @@
       </div>
     </div>
   </div>
+  <button class="bttn-pill bttn-md bttn-warning next-step-btn" @click="goBack" style="top:500px; position:relative;">돌아가기</button>
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
-import move from '@/js/move.js'
 import {BASE_API_URL} from '@/config/config.js'
-
-
+import move from '@/js/move.js'
 export default {
-  name: 'NewsFeedListItem',
   data: function () {
     return {
       today: new Date(),
@@ -90,14 +90,14 @@ export default {
       highlightComment: null,
     }
   },
-  components: {
-
-  },
   props: {
     feed : Object,
     feedUploadDate : String,
   },
   methods: {
+    goBack(){
+      this.$emit('go-back')
+    },
     goToComment() {
       this.$router.push({name: 'FeedDetail', params: { feedNumber: this.feedNumber }})
       window.scrollTo({top:300, behavior:'smooth'})
@@ -202,25 +202,27 @@ export default {
       this.$router.push({name: `UserFeed`, params : {yourUserId: userId}})
     }
   },
-  created() {
-      this.getUserProfile()
-      if(this.feedContent.length > 130){
-        this.isOver = true
-      } else {
-        this.isOver = false
-      }
-      this.getComments()
+  created(){
+    this.getUserProfile()
+    if(this.feedContent.length > 130){
+      this.isOver = true
+    } else {
+      this.isOver = false
+    }
+    this.getComments()
   },
-  mounted() {
-  },
-  computed: {
-    myUserNumber () {
-      return this.$store.getters.getUserNumber
+  watch:{
+    feed(){
     }
   },
+  computed:{
+    myUserNumber(){
+      return this.$store.getters.getUserNumber
+    }
+  }
 }
 </script>
 
-<style scoped src="../../css/newsfeed.css">
+<style>
 
 </style>

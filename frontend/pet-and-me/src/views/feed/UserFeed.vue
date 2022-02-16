@@ -1,7 +1,7 @@
 <template>
   <div class="user-feed-container">
     <div class="user-profile">
-      <input v-if="(myUserNumber == yourUserNumber)" @change='onInputImage()' accept="image/*" ref="image" type="file" style="display : none">
+      <input v-if="(yourUserNumber == myUserNumber)" @change='onInputImage()' accept="image/*" ref="image" type="file" style="display : none">
       <img 
         @click="profileChange()" 
         :src="`http://i6b106.p.ssafy.io:8080/main/image?file=${profile.saveFolder}${profile.userPhotoName}`" 
@@ -44,10 +44,14 @@
         <button class="follow-btn bttn-pill bttn-sm bttn-warning bttn-block" v-if="isFollow" @click="unfollowUser">언팔로우</button>
       </div>
     </div>
+      <TapingViewer
+        :returnUserId="this.yourUserId"
+      >
+      </TapingViewer>
       <UserFeedList
         :your-user-number="yourUserNumber"
         @feed-length="getFeedLength"
-        />
+      />
   </div>
 </template>
 
@@ -64,8 +68,8 @@ export default {
   name: 'UserFeed',
   data: function () {
     return {
-      profile : null,
       today: new Date(),
+      profile: null,
       petMonth: null,
       petAge: null,
       userNumber: "null",
@@ -96,9 +100,6 @@ export default {
     getFeedLength(length) {
       this.feedLength = length
     },
-    getUserNumber : function (){ // 로그인한 유저 넘버 가져오기
-      this.myUserNumber = 2 // 현재 페이지의 유저로 userNumber 가져오는 로직
-    },
 
     getUserProfile: async function(){ // 프로필 정보 가져오기
         await axios({
@@ -107,6 +108,7 @@ export default {
       })
         .then(response => {
           this.yourUserNumber = response.data
+          // console.log(this.yourUserNumber)
         })
         .catch(err => {
           console.log(err)
@@ -118,6 +120,7 @@ export default {
         })
           .then(response => {
             this.profile = response.data
+            console.log(response.data)
             this.getPetAge()
           })
           .catch(err => {
@@ -196,7 +199,7 @@ export default {
     },
 
     profileChange: function(){
-      if (this.myUserNumber == this.yourUserNumber){
+      if (this.myUserNumber == this.profile.userNumber){
         this.$refs.image.click()
       } else {
         console.log('본인 프로필 사진만 업데이트 할 수 있습니다.')
@@ -228,6 +231,7 @@ export default {
           })
           .then(() => {
               this.getUserProfile()
+              alert('프로필 사진이 변경되었습니다.')
           })
           .catch( (err) => {
               console.log(err);
@@ -255,7 +259,10 @@ export default {
   computed: {
     myUserNumber () {
       return this.$store.getters.getUserNumber
-    }
+    },
+    // getUserInfo() {
+    //   return this.$store.getters.getUserInfo
+    // }
   },
 }
 </script>

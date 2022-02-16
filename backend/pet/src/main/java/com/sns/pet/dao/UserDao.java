@@ -3,12 +3,12 @@ package com.sns.pet.dao;
 import com.sns.pet.dto.JoinDto;
 import com.sns.pet.dto.UserDto;
 import com.sns.pet.dto.UserPetDto;
-import io.swagger.annotations.ApiParam;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface UserDao {
@@ -20,6 +20,8 @@ public interface UserDao {
     UserDto selectUser(Long userNumber) throws SQLException;
     // 회원정보 수정
     int updateUser(JoinDto joinDto) throws SQLException;
+    // 회원정보 중 닉네임 수정
+    int updateUserNickName(Map<String, Object> user) throws SQLException;
     // 회원정보 삭제
     int deleteUser(Long userNumber) throws SQLException;
     // 회원 프로필 사진 수정
