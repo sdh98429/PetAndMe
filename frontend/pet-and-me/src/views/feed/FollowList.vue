@@ -150,7 +150,6 @@ export default {
               follow.petName = res.data.petName
               follow.animalName = res.data.animalName
               this.getPetAge(follow)
-              // console.log(follow)
             })
             .catch(err =>{
               console.log(err)
@@ -159,7 +158,6 @@ export default {
     },
 
     getFollowerList: async function(){ // 팔로워 리스트 가져오기
-      // console.log(typeof(localStorage.getItem('vuex')));
       await axios({
         method: 'get',
         url: `${BASE_API_URL}/user/follower/${this.yourUserNumber}`,

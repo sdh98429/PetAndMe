@@ -259,6 +259,7 @@
     flex-wrap: wrap;
     background-color: #fff;
     border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
   }
   .user-feed-container .user-feed-list .file-preview-container .feed-thumbnail{
     width: 33.3vw;

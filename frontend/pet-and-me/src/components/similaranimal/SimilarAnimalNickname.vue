@@ -80,7 +80,6 @@ export default {
     myUserNumber() {
       return this.$store.getters.getUserNumber
     },
-    ...mapGetters(['getUserInfo'])
   }
 }
 </script>

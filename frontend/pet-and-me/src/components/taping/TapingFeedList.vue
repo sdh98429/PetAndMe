@@ -1,22 +1,22 @@
 <template>
   <!-- feed select -->
-  <v-app>
-  <div class="grid">
-    <div v-for="userFeed in userFeeds" :key="userFeed.feedNumber">
-      <input type="checkbox"
-        :id="userFeed.feedDate"
-        v-model="feedArr"
-        :value="userFeed.feedNumber"
-        :class="checked(userFeed.feedNumber)"
-      >
-      <label :for="userFeed.feedDate">
-        <img class="feed-thumbnail" :src="`data:image/png;base64,${userFeed.feedThumbnail}`" />
-      </label>
+  <v-app class="taping-create-container">
+    <div class="grid">
+      <div v-for="(userFeed,index) in userFeeds" :key="userFeed.feedNumber">
+        <input type="checkbox"
+          :id="`feedItem${index}`"
+          v-model="feedArr"
+          :value="userFeed.feedNumber"
+          :class="checked(userFeed.feedNumber)"
+          style="display:none;"
+        >
+        <label :for="`feedItem${index}`">
+          <img class="feed-thumbnail" :src="`data:image/png;base64,${userFeed.feedThumbnail}`" />
+        </label>
+      </div>
     </div>
-  </div>
-  <div class="btn-container">
-    <v-btn color="info" x-large @click="saveFeedNumber">선택 완료</v-btn>
-  </div>
+    <!-- <v-btn color="info" x-large @click="saveFeedNumber">다음단계</v-btn> -->
+    <button class="bttn-pill bttn-md bttn-warning next-step-btn" @click="saveFeedNumber">다음단계</button>
   </v-app>
   
 </template>
@@ -48,6 +48,7 @@ export default {
       })
         .then(res => {
           this.userFeeds = res.data
+          console.log(res)
         })
         .catch(err => {
           console.log(err)
@@ -70,25 +71,72 @@ export default {
 </script>
 
 <style scoped>
-.feed-thumbnail{
-  display:block;
-  width:150px;
-  height:150px;
+@media screen and (max-width:768px){
+  .taping-create-container {
+    width: 100%;
+    max-width: 600px;
+    border: 1px solid #ccc;
+    position: relative;
+    padding-bottom: 150px;
+    font-family: 'MinSans-Regular', 'Quicksand';
+  }
+  
+  input.checked + label > img {
+    border: 10px solid rgb(255, 242, 65);
+    box-sizing: border-box;
+  }
+  
+  /* .grid {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(3, auto);
+    gap: 10px;
+    padding-bottom: 50px;
+    padding-top: 50px;
+    width: 100%;
+  } */
+  .grid {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 600px;
+  }
+  .feed-thumbnail{
+    display:block;
+    width:32.8vw;
+    max-width: 198px;
+    height:32.8vw;
+    max-height: 198px;
+  }
 }
-
-input.checked + label > img {
-  border: 10px solid rgb(255, 242, 65);
-  box-sizing: border-box;
-}
-
-.grid {
-  display: grid;
-  justify-content: center;
-  grid-template-columns: repeat(3, auto);
-  gap: 10px;
-  padding-bottom: 50px;
-  padding-top: 50px;
-  width: 100%;
+@media screen and (min-width:768px){
+  .taping-create-container {
+    width: 800px;
+    border: 1px solid #ccc;
+    position: relative;
+    left: -1px;
+    padding-bottom: 150px;
+    font-family: 'MinSans-Regular', 'Quicksand';
+  }
+  input.checked + label > img {
+    border: 10px solid rgb(255, 242, 65);
+    box-sizing: border-box;
+  }
+  .grid {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    width: 800px;
+    gap: 1px;
+  }
+  .feed-thumbnail{
+    display:block;
+    width:33vw;
+    max-width: 265px;
+    height:33vw;
+    max-height: 265px;
+  }
 }
 
 .v-btn {
@@ -96,7 +144,10 @@ input.checked + label > img {
   padding-bottom: 100px;
   margin: auto;
 }
-.btn-container {
-  padding-bottom: 200px;
+.next-step-btn {
+  position: relative;
+  width: 200px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style>

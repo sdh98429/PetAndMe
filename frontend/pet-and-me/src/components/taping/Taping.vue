@@ -1,10 +1,9 @@
 <template>
   <v-app>
-    <div class="taping-container">
-
+    <div class="select-container">
       <div class="radio1">
-      <h1>style 선택</h1>
-        <div class="form_radio_group">
+      <h1 style="text-align:center">영상 스타일을 선택해주세요</h1>
+        <div class="form_radio_group-1">
           <div class="form_radio_group-item">
             <input id="radio-1" type="radio" name="radio" value="1" v-model="types.type" checked>
             <label for="radio-1">기본</label>
@@ -21,8 +20,8 @@
       </div>
       
       <div class="radio2">
-      <h1>bgm 선택</h1>
-        <div class="form_radio_group">
+      <h1 style="text-align:center">배경음악을 선택해주세요</h1>
+        <div class="form_radio_group-2">
           <div class="form_radio_group-item">
             <input id="bgm-radio-1" type="radio" name="radio1" value="1" v-model="types.bgm" checked>
             <label for="bgm-radio-1">밝은</label>
@@ -66,9 +65,8 @@
         </div>
       </div>
 
-      <div class="btn-taping-">
-        <v-btn color="orange lighten-5" x-large @click="createTape">스타일 및 bgm 선택 완료</v-btn>
-      </div>
+      <!-- <v-btn color="orange lighten-5" x-large @click="createTape"></v-btn> -->
+      <button class="bttn-pill bttn-md bttn-warning next-step-btn" @click="createTape">스타일 및 bgm 선택 완료</button>
     </div>
     
     
@@ -104,68 +102,276 @@ export default {
 </script>
 
 <style scoped>
-.taping-container {
-  width: 800px;
-  border: 1px solid #ccc;
-  padding-top: 100px;
-  text-align: center;
+@media screen and (max-width:768px){
+  .select-container {
+    width: 100%;
+    max-width: 600px;
+    padding-top: 25%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'MinSans-Regular', 'Quicksand';
+  }
+  .form_radio_group-1 {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-block;
+  }
+  .form_radio_group-2 {
+    position: relative;
+    left: 50%;
+    width: 300px;
+    transform: translateX(-50%);
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .form_radio_group-item {
+    display: inline-block;
+  }
+  input[type=radio] {
+    display: none;
+  }
+  .form_radio_group-1 label {
+    display: inline-block;
+    cursor: pointer;
+    width: 120px;
+    max-width: 180px;
+    height: 50px;
+    text-align: center;
+    font-size: 20px;
+    padding: 0px 15px;
+    line-height: 50px;
+    border: 1px solid #999;
+    border-right: none;
+    user-select: none;
+  }
+  .form_radio_group-2 label {
+    cursor: pointer;
+    width: 150px;
+    height: 50px;
+    text-align: center;
+    font-size: 20px;
+    line-height: 50px;
+    border: 1px solid #999;
+    border-right: none;
+    user-select: none;
+  }
+  
+  .form_radio_group-1 .form_radio_group-item:first-child label {
+    border-radius: 6px 0 0 6px;
+  }
+  .form_radio_group-1 .form_radio_group-item:last-child label {
+    border-radius: 0 6px 6px 0;
+    border-right: 1px solid #999;
+  }
+  .form_radio_group-2 .form_radio_group-item:nth-child(2n+1) label {
+    border-radius: 6px 0 0 6px;
+  }
+  .form_radio_group-2 .form_radio_group-item:nth-child(2n) label {
+    border-radius: 0 6px 6px 0;
+    border-right: 1px solid #999;
+  }
+  
+  /* Checked */
+  input[type=radio]:checked + label {
+    background: #faf4e4;
+  }
+  
+  /* Hover */
+  label:hover {
+    background-color: #ccc;
+  }
+  
+  /* Disabled */
+  .form_radio_group input[type=radio]:disabled + label {
+    background: #efefef;
+    color: #666;
+  }
+  
+  .next-step-btn {
+    position: relative;
+    width: 300px;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
+@media screen and (min-width:768px){
+  .select-container {
+    width: 800px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'MinSans-Regular', 'Quicksand';
+  }
+  .form_radio_group-1 {
+    display: inline-block;
+    overflow: hidden;
+  }
+  .form_radio_group-2 {
+    display: inline-block;
+    overflow: hidden;
+  }
+  .form_radio_group-item {
+    display: inline-block;
+  }
+  input[type=radio] {
+    display: none;
+  }
+  .form_radio_group-1 label {
+    display: inline-block;
+    cursor: pointer;
+    width: 250px;
+    height: 100px;
+    text-align: center;
+    font-size: 20px;
+    padding: 0px 15px;
+    line-height: 100px;
+    border: 1px solid #999;
+    border-right: none;
+    user-select: none;
+  }
+  .form_radio_group-2 label {
+    display: inline-block;
+    cursor: pointer;
+    width: 150px;
+    height: 100px;
+    text-align: center;
+    font-size: 20px;
+    line-height: 100px;
+    padding: 0px 15px;
+    border: 1px solid #999;
+    border-right: none;
+    user-select: none;
+  }
+  
+  .form_radio_group-1 .form_radio_group-item:first-child label {
+    border-radius: 6px 0 0 6px;
+  }
+  .form_radio_group-1 .form_radio_group-item:last-child label {
+    border-radius: 0 6px 6px 0;
+    border-right: 1px solid #999;
+  }
+  .form_radio_group-2 .form_radio_group-item:nth-child(5n+1) label {
+    border-radius: 6px 0 0 6px;
+  }
+  .form_radio_group-2 .form_radio_group-item:nth-child(5n) label {
+    border-radius: 0 6px 6px 0;
+    border-right: 1px solid #999;
+  }
+  
+  /* Checked */
+  input[type=radio]:checked + label {
+    background: #faf4e4;
+  }
+  
+  /* Hover */
+  label:hover {
+    background-color: #ccc;
+  }
+  
+  /* Disabled */
+  .form_radio_group input[type=radio]:disabled + label {
+    background: #efefef;
+    color: #666;
 
-.form_radio_group {
-	display: inline-block;
-	overflow: hidden;
-}
-.form_radio_group-item {
-	display: inline-block;
-	float: left;    
-}
-.form_radio_group input[type=radio] {
-	display: none;
-}
-.form_radio_group label {
-	display: inline-block;
-	cursor: pointer;
-	padding: 0px 15px;
-	line-height: 34px;
-	border: 1px solid #999;
-	border-right: none;
-	user-select: none;
-}
- 
-.form_radio_group .form_radio_group-item:first-child label {
-	border-radius: 6px 0 0 6px;
-}
-.form_radio_group .form_radio_group-item:last-child label {
-	border-radius: 0 6px 6px 0;
-	border-right: 1px solid #999;
-}
- 
-/* Checked */
-.form_radio_group input[type=radio]:checked + label {
-	background: #ffe0a6;
-}
- 
-/* Hover */
-.form_radio_group label:hover {
-	color: #666;
-}
- 
-/* Disabled */
-.form_radio_group input[type=radio]:disabled + label {
-	background: #efefef;
-	color: #666;
-}
+  }
+  .select-container {
+    width: 800px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'MinSans-Regular', 'Quicksand';
+  }
+  .form_radio_group-1 {
+    display: inline-block;
+    overflow: hidden;
+  }
+  .form_radio_group-2 {
+    display: inline-block;
+    overflow: hidden;
+  }
+  .form_radio_group-item {
+    display: inline-block;
+  }
+  input[type=radio] {
+    display: none;
+  }
+  .form_radio_group-1 label {
+    display: inline-block;
+    cursor: pointer;
+    width: 250px;
+    height: 100px;
+    text-align: center;
+    font-size: 20px;
+    padding: 0px 15px;
+    line-height: 100px;
+    border: 1px solid #999;
+    border-right: none;
+    user-select: none;
+  }
+  .form_radio_group-2 label {
+    display: inline-block;
+    cursor: pointer;
+    width: 150px;
+    height: 100px;
+    text-align: center;
+    font-size: 20px;
+    line-height: 100px;
+    padding: 0px 15px;
+    border: 1px solid #999;
+    border-right: none;
+    user-select: none;
+  }
+  
+  .form_radio_group-1 .form_radio_group-item:first-child label {
+    border-radius: 6px 0 0 6px;
+  }
+  .form_radio_group-1 .form_radio_group-item:last-child label {
+    border-radius: 0 6px 6px 0;
+    border-right: 1px solid #999;
+  }
+  .form_radio_group-2 .form_radio_group-item:nth-child(5n+1) label {
+    border-radius: 6px 0 0 6px;
+  }
+  .form_radio_group-2 .form_radio_group-item:nth-child(5n) label {
+    border-radius: 0 6px 6px 0;
+    border-right: 1px solid #999;
+  }
+  
+  /* Checked */
+  input[type=radio]:checked + label {
+    background: #faf4e4;
+  }
+  
+  /* Hover */
+  label:hover {
+    background-color: #ccc;
+  }
+  
+  /* Disabled */
+  .form_radio_group input[type=radio]:disabled + label {
+    background: #efefef;
+    color: #666;
+  }
 
-.btn-container {
-  padding: 2em;
-}
+  .btn-container {
+  }
 
-.radio1 {
-  padding: 2em;
-}
+  .radio1 {
+    padding: 2em;
+  }
 
-.radio2 {
-  padding: 2em;
+  .radio2 {
+    padding: 2em;
+  }
+  .next-step-btn {
+    position: relative;
+    width: 400px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 </style>
