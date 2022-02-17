@@ -243,6 +243,10 @@ export default {
   },
   mounted() {
     move('2', '30%', '#fff')
+    const footerEl = document.querySelector('#footer-container')
+    footerEl.classList.remove('inactive')
+    const inputEl = document.querySelector('.my-search-bar')
+    inputEl.classList.remove('inactive')
   },
   computed: {
     myUserNumber () {

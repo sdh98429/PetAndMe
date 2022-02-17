@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <h2>로그인</h2>
-    <form @submit.prevent="login">
+    <form @submit.prevent>
       <div class="group">      
         <input type="text" id="userID" v-model="credentials.userID">
         <label>ID</label>
@@ -15,17 +15,15 @@
         <span class="highlight"></span>
         <span class="bar"></span>
       </div>
-      <button>로그인</button>
+      <button class="login-btn bttn-pill bttn-md bttn-warning" @click="login">로그인</button>
     </form>
     <div>
-      <span> 계정이 없다면? <router-link :to="{ name: 'Signup' }">가입하러가기</router-link></span>
+      <button class="signup-btn bttn-pill bttn-md bttn-warning">가입하기</button>
     </div>
-    <div>
-      <span><router-link :to="{ name: 'Signup' }">비밀번호를 찾고 계신가요?</router-link></span>
-    </div>
-    <h2> - O R - </h2>
+    <!-- <h2> - O R - </h2> -->
     <!-- google -->
-    <div class="g-signin2" id="google-signin-btn" data-onsuccess="onSignIn" data-width="385" data-longtitle="true"></div>
+    <!-- <div class="g-signin2" id="google-signin-btn" data-onsuccess="onSignIn" data-width="385" data-longtitle="true"
+    ></div> -->
   </div>
 </template>
 
@@ -91,6 +89,12 @@ export default {
       console.log(authInst);
     },
   },
+  mounted() {
+    const footerEl = document.querySelector('#footer-container')
+    footerEl.classList.add('inactive')
+    const inputEl = document.querySelector('.my-search-bar')
+    inputEl.classList.add('inactive')
+  }
 }
 </script>
 
@@ -98,16 +102,31 @@ export default {
 @media screen and (max-width:768px){
   .login-container {
     position: relative;
+    font-family: 'MinSans-Regular', 'Quicksand';
     top: 60px;
-    width: 800px;
+    width: 100%;
+    max-width: 600px;
     height: 80vh;
+    padding-top: 25%;
     padding-bottom: 200px;
     margin: 0 auto;
-    border: 1px solid #ccc;
     background-color: #fff;
   }
   .login-container h2{
     font-size: 30px;
+  }
+  .login-btn{
+    width: 300px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 50px;
+  }
+  .signup-btn{
+    width: 300px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
   }
   h2 { 
     text-align:center; 
@@ -118,13 +137,13 @@ export default {
     color:#888; 
     display:block; 
   }
-  .footer 	{ text-align:center; }
-  .footer a  { color:#53B2C8; }
 
-  /* form starting stylings ------------------------------- */
   .group 			  { 
     position:relative; 
     margin-bottom:45px; 
+    width: 300px;
+    left: 50%;
+    transform: translateX(-50%);
   }
   input 				{
     font-size:18px;
@@ -136,7 +155,6 @@ export default {
   }
   input:focus 		{ outline:none; }
 
-  /* LABEL ======================================= */
   label 				 {
     color:#999; 
     font-size:18px;
@@ -160,9 +178,11 @@ export default {
 @media screen and (min-width:768px){
   .login-container {
     position: relative;
+    font-family: 'MinSans-Regular', 'Quicksand';
     top: 60px;
     width: 800px;
-    height: 80vh;
+    height: calc(100vh - 60px);
+    padding-top: 25%;
     padding-bottom: 200px;
     margin: 0 auto;
     border: 1px solid #ccc;
@@ -170,6 +190,19 @@ export default {
   }
   .login-container h2{
     font-size: 30px;
+  }
+  .login-btn{
+    width: 300px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 50px;
+  }
+  .signup-btn{
+    width: 300px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
   }
   h2 { 
     text-align:center; 
@@ -180,13 +213,13 @@ export default {
     color:#888; 
     display:block; 
   }
-  .footer 	{ text-align:center; }
-  .footer a  { color:#53B2C8; }
 
-  /* form starting stylings ------------------------------- */
   .group 			  { 
     position:relative; 
     margin-bottom:45px; 
+    width: 300px;
+    left: 50%;
+    transform: translateX(-50%);
   }
   input 				{
     font-size:18px;
@@ -198,7 +231,6 @@ export default {
   }
   input:focus 		{ outline:none; }
 
-  /* LABEL ======================================= */
   label 				 {
     color:#999; 
     font-size:18px;
