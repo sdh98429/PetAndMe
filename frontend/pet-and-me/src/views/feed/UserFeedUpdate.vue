@@ -29,10 +29,10 @@
           </div>
         </div>
         <div class="btn-box">
-          <button class="bttn-pill bttn-md bttn-warning back-btn" @click="goToMyPage()">내 페이지로 돌아가기</button>
-          <button class="bttn-pill bttn-md bttn-warning send-btn" @click="sendData"> 수정 완료 </button>
+          <button class="bttn-gradient bttn-md bttn-warning back-btn" @click="goToMyPage()">내 페이지로 돌아가기</button>
+          <button class="bttn-gradient bttn-md bttn-warning send-btn" @click="sendData"> 수정 완료 </button>
         </div>
-        <button class="logout-btn bttn-pill bttn-md bttn-danger bttn-block" @click="logout" >LogOut</button>
+        <button class="logout-btn bttn-gradient bttn-md bttn-danger bttn-block" @click="logout" >LogOut</button>
     </div>
     <!-- 다른 사람의 회원 정보를 수정하려 할 때 -->
     <div v-else>

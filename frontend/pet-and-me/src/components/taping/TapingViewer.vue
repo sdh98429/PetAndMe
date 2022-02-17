@@ -9,7 +9,7 @@
             <video controls>
               <source type="video/mp4" :src="`data:video/mp4;base64,${returnVideo[i]}`">
             </video>
-            <h3>총{{returnVideo.length}}개의 추억중 {{ i + 1}}번째 Tape📽</h3>
+            <!-- <h3>총{{returnVideo.length}}개의 추억중 {{ i + 1}}번째 Tape📽</h3> -->
           </div>
           
         </v-row>

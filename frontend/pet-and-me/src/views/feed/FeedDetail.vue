@@ -305,11 +305,15 @@ export default {
     // searchEl.classList.add('inactive')
     const footerEl = document.querySelector('#footer-container')
     footerEl.classList.add('indetail')
+    const searchEl = document.querySelector('.my-search-bar')
+    searchEl.classList.add('inactive')
     move('0', '0', '#faf4e4')
   },
   destroyed() {
     // const searchEl = document.querySelector('.search-bar')
     // searchEl.classList.remove('inactive')
+    const searchEl = document.querySelector('.my-search-bar')
+    searchEl.classList.remove('inactive')
     const footerEl = document.querySelector('#footer-container')
     footerEl.classList.remove('indetail')
   },

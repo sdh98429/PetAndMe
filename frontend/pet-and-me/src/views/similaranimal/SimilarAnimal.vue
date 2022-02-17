@@ -1,13 +1,14 @@
 <template>
   <div class="similar-container">
     <div v-show="step===0">
-      <div class="spinner-box">
+      <!-- <div class="spinner-box">
         <div class="pulse-container">  
           <div class="pulse-bubble pulse-bubble-1"></div>
           <div class="pulse-bubble pulse-bubble-2"></div>
           <div class="pulse-bubble pulse-bubble-3"></div>
         </div>
-      </div>
+      </div> -->
+      <div v-show="step===0" class="loader"></div>
     </div>
 
     <div v-show="step===1" class="first-step">
@@ -19,7 +20,7 @@
         <input class="input-image" id="input-image" type="file" ref="inputImage" accept="image/*" @change="fileRead">
         <img class="accept-image" :src="inputfile" alt="input img" id="face-img" />
       </div>
-      <button class="bttn-pill bttn-md bttn-default next-step-btn" @click="nextStep">다음 단계</button>
+      <button class="bttn-gradient bttn-md bttn-default next-step-btn" @click="nextStep">다음 단계</button>
     </div>
     
     <similar-animal-result 
@@ -239,7 +240,7 @@ export default {
     this.init()
     setTimeout(()=> {
       this.step=1
-    }, 1500)
+    }, 2000)
   },
   mounted() {
     move('2', '30%', '#fff')
@@ -268,9 +269,6 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-img{
-  display: block;
-}
+<style>
 
 </style>
