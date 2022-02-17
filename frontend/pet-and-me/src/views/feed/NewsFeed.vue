@@ -141,7 +141,7 @@ export default {
     // this.getNewsFeeds()
     const footerEl = document.querySelector('#footer-container')
     footerEl.classList.remove('inactive')
-    const searchEl = document.querySelector('.search-bar')
+    const searchEl = document.querySelector('.my-search-bar')
     searchEl.classList.remove('inactive')
   },
   mounted() {
@@ -149,9 +149,9 @@ export default {
   },
   destroyed() {
     const footerEl = document.querySelector('#footer-container')
-    const searchEl = document.querySelector('.search-bar')
-    searchEl.classList.remove('innewsfeed')
-    footerEl.classList.remove('innewsfeed')
+    const searchEl = document.querySelector('.my-search-bar')
+    searchEl.classList.remove('inactive')
+    footerEl.classList.remove('inactive')
   },
   computed: {
     myUserNumber () {
