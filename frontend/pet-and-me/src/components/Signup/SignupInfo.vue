@@ -1,15 +1,27 @@
 <template>
-  <div>
-    <h1>signup info</h1>
-      <div>아이디</div>
-        <input type="text" name="userId" id="userId" v-model="credentials.userId" placeholder="6~16자 이내" required />
-        <button @click="duplicateCheck">중복체크</button>
-      <div>비밀번호</div>
-        <input type="password" name="password" id="password" v-model="credentials.password" placeholder="영문 숫자를 포함한 8~16자 이내">
-      <div>비밀번호 확인</div>
-        <input type="password" name="passwordConfirmation" id="passwordConfirmation" v-model="credentials.passwordConfirmation" placeholder="비밀번호를 확인합니다">
-    <!-- emit -->
-    <button @click="saveData"> 다음 </button>
+  <div class="first-step">
+    <h1>기본정보입력</h1>
+      <div class="group">
+        <input class="my-input" type="text" id="userID" v-model="credentials.userId" placeholder="6~16자 이내">
+        <label for="userID">ID</label>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <button class="check-btn" @click="duplicateCheck">중복체크</button>
+      </div>
+        
+      <div class="group">      
+        <input class="my-input"  type="password" id="userPW" v-model="credentials.password" placeholder="영문 숫자를 포함한 8~16자 이내">
+        <label for="userPW">PASSWORD</label>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+      </div>
+      <div class="group">      
+        <input class="my-input"  type="password" id="userPWConf" v-model="credentials.passwordConfirmation" placeholder="비밀번호를 확인합니다">
+        <label for="userPWConf">PASSWORD CHECK</label>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+      </div>
+      <button class="next-btn bttn-gradient bttn-md bttn-warning" @click="saveData">Next</button>
   </div>
 </template>
 

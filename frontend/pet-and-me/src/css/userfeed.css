@@ -118,7 +118,6 @@
   .user-feed-container .user-feed-list {
     position: relative;
     top: 0px;
-    padding-bottom: 150px;
     z-index: 0;
     width: 100%;
   }
@@ -266,7 +265,8 @@
     display: flex;
     flex-wrap: wrap;
     background-color: #fff;
-    border-bottom: 1px solid #ccc;
+    border-top: none;
+    /* border-bottom: 1px solid #ccc; */
     border-right: 1px solid #ccc;
   }
   .user-feed-container .user-feed-list .file-preview-container .feed-thumbnail{

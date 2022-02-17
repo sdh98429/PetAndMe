@@ -11,7 +11,7 @@ import UserFeed from '../views/feed/UserFeed'
 import FollowList from '../views/feed/FollowList'
 import UserFeedUpdate from '../views/feed/UserFeedUpdate'
 import FeedDetail from '../views/feed/FeedDetail'
-
+import Search from'../views/search/Search.vue'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -22,6 +22,11 @@ const routes = [
     name: 'Landing',
     component: Landing,
     meta: {requiresAuth: true}
+  },
+  {
+    path: '/test',
+    name: 'Search',
+    component: Search,
   },
   {
     path: '/login',
