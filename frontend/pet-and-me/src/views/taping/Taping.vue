@@ -53,7 +53,6 @@
           <button class="bttn-pill bttn-md bttn-warning gohome-btn" @click="toHome">뉴스피드로 가기</button>
         </div>
       </div>
-    </div>
   </v-app>
 </template>
 
