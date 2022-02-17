@@ -1,7 +1,7 @@
 <template>
   <div>
   <div class="center">
-    <h2>반려동물 생년월일</h2>
+    <h3 style="font-size: 20px; position: relative; margin-top:25px;" >반려동물 생년월일</h3>
     <datepicker
       id="datepicker"
       @input="formatPicker()"
@@ -12,7 +12,6 @@
     >
     </datepicker>
     </div>
-    {{ this.model.date }}
   </div>
 </template>
 
@@ -49,9 +48,10 @@ export default {
 </script>
 
 <style>
-.center {
-    width: 30%;
-    margin: 0 auto;
+input#datepicker {
+  width: 90%;
+  margin-left: 5%;
+  border: 1px solid #ccc;
 }
 </style>
 

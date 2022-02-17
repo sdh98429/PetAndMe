@@ -31,7 +31,6 @@
 import axios from 'axios'
 import {mapActions} from 'vuex'
 import {BASE_API_URL} from '@/config/config.js'
-import "@/css/login.css"
 
 export default {
     name: 'Login',
@@ -185,7 +184,7 @@ export default {
     top: 60px;
     width: 800px;
     height: calc(100vh - 60px);
-    padding-top: 20%;
+    padding-top: 10%;
     margin: 0 auto;
     border: 1px solid #ccc;
     background-color: #fff;

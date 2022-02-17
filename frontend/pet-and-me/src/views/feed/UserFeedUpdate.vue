@@ -231,8 +231,8 @@ export default {
     },
 
     logout() {
-      this.logoutRemoveToekn()
       this.$router.push({name:'Landing'})
+      this.logoutRemoveToekn()
     },
 
     async asyncCall(){ // url의 유저 아이디를 유저 번호로 바꾸고, 유저 번호를 토대로 정보 가져오기 (시간 순서가 지켜져야 해서 async 요청)

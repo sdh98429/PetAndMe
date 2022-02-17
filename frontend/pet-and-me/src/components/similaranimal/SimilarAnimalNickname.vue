@@ -24,6 +24,7 @@
 <script>
 import axios from 'axios'
 import { BASE_API_URL } from '@/config/config.js'
+import {mapActions} from 'vuex'
 
 export default {
   name: 'SimilarAnimalResult',
@@ -31,6 +32,9 @@ export default {
     propData: Object,
   },
   methods: {
+    ...mapActions([
+      'nicknameRenew'
+    ]),
     getNicknameList() {
       axios({
         method: 'get',
@@ -48,6 +52,7 @@ export default {
     },
     changeNickname(idx){
       const checkNickname = this.propData.recommendNicknameList[idx]
+      this.nicknameRenew(checkNickname)
       axios({
         url: `${BASE_API_URL}/user/nickName`,
         method: 'put',
