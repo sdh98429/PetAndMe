@@ -104,7 +104,7 @@ router.beforeEach((to, from, next) => {
         alert('로그인이 필요합니다')
         next('/login')
       }
-      else if(to.name !== 'SimilarAnimal' && !store.getters['getUserInfo'].userNickName) {
+      else if(to.name !== 'SimilarAnimal' && !store.getters['getUserInfo'].userNickName && !store.getters['getUserNickName']) {
         next('/similar')
       }      
     }

@@ -24,6 +24,7 @@
 <script>
 import axios from 'axios'
 import { BASE_API_URL } from '@/config/config.js'
+
 export default {
   name: 'SimilarAnimalResult',
   props: {
@@ -58,6 +59,7 @@ export default {
         .then(res => {
           console.log(res)
           alert('닉네임이 변경되었습니다.')
+          localStorage.setItem('nickName', checkNickname)
         })
         .catch(err =>{
           console.log(err)
@@ -77,7 +79,8 @@ export default {
   computed: {
     myUserNumber() {
       return this.$store.getters.getUserNumber
-    }
+    },
+    ...mapGetters(['getUserInfo'])
   }
 }
 </script>

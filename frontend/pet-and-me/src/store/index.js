@@ -29,6 +29,9 @@ export default new Vuex.Store({
     },
     getUserInfo: function (state) {
       return state.userInfo;
+    },
+    getUserNickName: function () {
+      return localStorage.getItem('nickName')
     }
   },
   mutations: {
@@ -48,6 +51,7 @@ export default new Vuex.Store({
       state.isLogin = false
       state.myuserNumber = null
       localStorage.removeItem('accessToken')
+      localStorage.removeItem('nickName')
       location.reload();
     },
   },

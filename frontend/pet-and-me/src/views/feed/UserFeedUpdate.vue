@@ -210,6 +210,7 @@ export default {
               data: this.credentials
             })
               .then(() => {
+                localStorage.setItem('nickName', this.credentials.userNickName)
                 this.goToMyPage()
               })
               .catch(err => {
