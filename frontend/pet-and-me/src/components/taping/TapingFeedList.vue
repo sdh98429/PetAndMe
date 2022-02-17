@@ -1,6 +1,13 @@
 <template>
   <!-- feed select -->
   <v-app class="taping-create-container">
+    <div calss="return-circular" style="text-align: center;" v-if="!returnFeeds">
+      <v-progress-circular
+        :size="150"
+        color="amber"
+        indeterminate
+      ></v-progress-circular>
+    </div>
     <div class="grid">
       <div v-for="(userFeed,index) in userFeeds" :key="userFeed.feedNumber">
         <input type="checkbox"
@@ -30,7 +37,8 @@ export default {
     return {
       userFeeds: [],
       feedArr: [],
-      updateNumber: []
+      updateNumber: [],
+      returnFeeds: false,
     }
   },
   components: {
@@ -47,6 +55,7 @@ export default {
       })
         .then(res => {
           this.userFeeds = res.data
+          this.returnFeeds = true
           console.log(res)
         })
         .catch(err => {
