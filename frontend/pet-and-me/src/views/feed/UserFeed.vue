@@ -105,11 +105,10 @@ export default {
     getUserProfile: async function(){ // 프로필 정보 가져오기
         await axios({
         method: 'get',
-        url: `${BASE_API_URL}/user/number/${this.$route.params.yourUserId}`,
+        url: `${BASE_API_URL}/user/number/${this.yourUserId}`,
       })
         .then(response => {
           this.yourUserNumber = response.data
-          // console.log(this.yourUserNumber)
         })
         .catch(err => {
           console.log(err)
