@@ -23,7 +23,7 @@
 
 <script>
 import axios from 'axios'
-// import {VIDEO_API_URL} from '@/config/config.js'
+import {VIDEO_API_URL} from '@/config/config.js'
 
 export default {
     data() {
@@ -41,8 +41,8 @@ export default {
       this.userId.returnUserId = this.returnUserId
       axios({
         method: 'post',
-        // url: `${VIDEO_API_URL}/api/v1/returntape/`,
-        url: 'http://127.0.0.1:8000/api/v1/returntape/',
+        url: `${VIDEO_API_URL}/api/v1/returntape/`,
+        // url: 'http://127.0.0.1:8000/api/v1/returntape/',
         data: this.userId,
       })
         .then(res => {

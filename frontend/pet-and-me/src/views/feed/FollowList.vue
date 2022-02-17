@@ -8,7 +8,7 @@
       class="follow-toggle-btn"
       @click="currentTab = index">{{tab}}</button> -->
     <div class="follow-toggle-btn">
-      <button class="follow-list-btn isactive" @click="followView">팔로우</button>
+      <button class="follow-list-btn isactive" @click="followView">팔로워</button>
       <button class="following-list-btn" @click="followingView">팔로잉</button>
     </div>
     <div v-show="currentTab==0" v-if="followerCnt" class="follow-list">
@@ -105,7 +105,7 @@ export default {
     getUserProfile: async function(){ // 프로필 정보 가져오기
       await axios({
         method: 'get',
-        url: 'http://i6b106.p.ssafy.io:8080/user/number/' + this.$route.params.yourUserId,
+        url: `${BASE_API_URL}/user/number/${this.$route.params.yourUserId}`,
       })
         .then(response => {
           this.yourUserNumber = response.data
@@ -116,7 +116,7 @@ export default {
 
       await axios({
         method: 'get',
-        url: 'http://i6b106.p.ssafy.io:8080/user/info/' + this.yourUserNumber,
+        url: `${BASE_API_URL}/user/info/${this.yourUserNumber}`,
       })
         .then(response => {
           this.profile = response.data
@@ -130,7 +130,7 @@ export default {
     getFollowingList: async function(){ // 팔로잉 리스트 가져오기
       await axios({
         method: 'get',
-        url: 'http://i6b106.p.ssafy.io:8080/user/following/' + this.yourUserNumber,
+        url: `${BASE_API_URL}/user/following/${this.yourUserNumber}`,
       })
       .then(response => {
         this.followingCnt = response.data.length
@@ -162,7 +162,7 @@ export default {
       // console.log(typeof(localStorage.getItem('vuex')));
       await axios({
         method: 'get',
-        url: 'http://i6b106.p.ssafy.io:8080/user/follower/' + this.yourUserNumber,
+        url: `${BASE_API_URL}/user/follower/${this.yourUserNumber}`,
       })
       .then(response => {
         this.followerCnt = response.data.length
@@ -194,14 +194,12 @@ export default {
       this.myFollowingList = []
       axios({
         method: 'get',
-        url: 'http://i6b106.p.ssafy.io:8080/user/following/' + this.myUserNumber,
+        url: `${BASE_API_URL}/user/following/${this.myUserNumber}`,
       })
       .then(response => {
-        var ind;
-        for (ind=0;ind < response.data.length; ind++){
-          this.myFollowingList.push(response.data[ind].userNumber);
-        }
-
+        response.data.forEach(user => {
+          this.myFollowingList.push(user.userNumber)
+        })
       })
       .catch(err => {
         console.log(err)
@@ -211,11 +209,10 @@ export default {
     followUser: function(toUserNumber){ // 유저 팔로우하기
       axios({
         method: 'post',
-        url: 'http://i6b106.p.ssafy.io:8080/user/follow/' + this.myUserNumber + '/' + toUserNumber,
+        url: `${BASE_API_URL}/user/follow/${this.myUserNumber}/${toUserNumber}`,
       })
       .then(() => {
-        // this.isFollow = true
-        this.asyncCall()
+        this.myFollowingList.push(toUserNumber)
       })
       .catch(err => {
         console.log(err)
@@ -225,11 +222,12 @@ export default {
     unfollowUser: function(toUserNumber){ // 유저 언팔로우하기
       axios({
         method: 'delete',
-        url: 'http://i6b106.p.ssafy.io:8080/user/follow/' + this.myUserNumber + '/' + toUserNumber,
+        url: `${BASE_API_URL}/user/follow/${this.myUserNumber}/${toUserNumber}`,
       })
       .then(() => {
-        // this.isFollow = false
-        this.asyncCall()
+        this.myFollowingList = this.myFollowingList.filter(user => {
+          return user != toUserNumber
+        })
       })
       .catch(err => {
         console.log(err)
