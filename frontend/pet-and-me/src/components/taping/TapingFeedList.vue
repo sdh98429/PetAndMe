@@ -18,7 +18,6 @@
     <!-- <v-btn color="info" x-large @click="saveFeedNumber">다음단계</v-btn> -->
     <button class="bttn-pill bttn-md bttn-warning next-step-btn" @click="saveFeedNumber">다음단계</button>
   </v-app>
-  
 </template>
 
 <script>

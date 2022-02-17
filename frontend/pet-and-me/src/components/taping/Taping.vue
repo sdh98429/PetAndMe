@@ -1,6 +1,16 @@
 <template>
+<<<<<<< Updated upstream
   <v-app>
+<<<<<<< HEAD
     <div class="select-container">
+=======
+    <div class="container">
+
+=======
+  <v-container>
+    <div class="select-container">
+>>>>>>> Stashed changes
+>>>>>>> feature/tapingfinal
       <div class="radio1">
       <h1 style="text-align:center">영상 스타일을 선택해주세요</h1>
         <div class="form_radio_group-1">
@@ -70,7 +80,7 @@
     </div>
     
     
-  </v-app>
+  </v-container>
 </template>
 
 <script>

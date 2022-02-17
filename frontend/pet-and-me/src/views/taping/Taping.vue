@@ -66,6 +66,7 @@ export default {
       images: null,
       returnVideo: null,
       yourUserNumber: null,
+      tapingChecked: false,
     }
   },
   components: {
@@ -93,6 +94,7 @@ export default {
     },
     // taping
     tape() {
+      this.tapingChecked = true
         axios({
         method: 'post',
         url: `${VIDEO_API_URL}/api/v1/tape/`,
