@@ -54,6 +54,9 @@ export default new Vuex.Store({
       localStorage.removeItem('nickName')
       location.reload();
     },
+    SET_NICKNAME: function (state, nickname){
+      state.userInfo.userNickName= nickname
+    }
   },
   actions: {
     loginGetToken: function ({commit}, token) {
@@ -61,6 +64,9 @@ export default new Vuex.Store({
     },
     logoutRemoveToekn: function ({commit}) {
       commit("SET_LOGOUT")
+    },
+    nicknameRenew({commit}, nickname){
+      commit("SET_NICKNAME",nickname)
     }
   },
   modules: {

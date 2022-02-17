@@ -1,63 +1,59 @@
 <template>
-  <div class>
-    <h1>단계표시 3 / 4 진행 중 (Progress bar)</h1>
-    <h1>회원가입 - 반려동물 </h1>
+  <div class="third-step">
+    <h1>반려동물을 기르고 계신가요?</h1>
 
-      <div>
-        <h3>반려동물 있는지 여부 체크</h3>
-        <button @click="isYes()">Yes</button>
-        <button @click="isNo()">No</button>
+      <div class="btn-container">
+        <button style="width:150px;" class="bttn-gradient bttn-sm bttn-warning" @click="isYes()">Yes</button>
+        <button style="width:150px;" class="bttn-gradient bttn-sm bttn-warning" @click="isNo()">No</button>
       </div>
       <div v-if="credentials.petCheck">
         <div>
-          <div>
-            <h3>이름</h3>
-              <input v-model="credentials.petName" type="text" placeholder="이름을 입력해주세요" maxlength="20" @focus="checkFlag = false"/>
-            <span v-if="checkFlag && !credentials.petName">이름을 입력하세요</span>
+          
+          <div class="group">
+            <input class="my-input" type="text" id="petName" v-model="credentials.petName" placeholder="반려동물이름을 적어주세요" maxlength="20" @focus="checkFlag=false">
+            <label for="petName">이름</label>
+            <span class="highlight"></span>
+            <span class="bar"></span>
           </div>
+          <!-- <input v-model="credentials.petName" type="text" placeholder="이름을 입력해주세요" maxlength="20" @focus="checkFlag = false"/> -->
+          <!-- <span v-if="checkFlag && !credentials.petName">이름을 입력하세요</span> -->
 
           <!-- datepicker -->
           <DatePicker v-model="credentials.petBirth" @date-update="dateSave"></DatePicker>
-
-          <div>
-            <h3>성별</h3>
-              <select
-                v-model="credentials.petGender"
-                @focus="checkFlag = false"
-              >
-                <option value="">성별</option>
-                <option
-                  v-for="(item, index) in genderList"
-                  :key="index"
-                  :value="item.value"
+          <h3 style="margin-top:50px;">성별</h3>
+            <div class="select-box">
+                <!-- <select
+                  class="select-input"
+                  v-model="credentials.petGender"
+                  @focus="checkFlag = false"
                 >
-                  <!-- {{ item.text }} -->
-                </option>
-              </select>
-            <span v-if="checkFlag && !credentials.petGender">성별을 선택하세요</span>
-          </div>
+                  <option value="">성별</option>
+                  <option
+                    v-for="(item, index) in genderList"
+                    :key="index"
+                    :value="item.value"
+                  >
+                  </option>
+                </select>
+                    {{ item.text }} -->
+                <div v-for="(gender, index) in genderList" class="select-input" v-bind:key="index">
+                  <input type="radio" :value="gender.value" v-model="credentials.petGender" :id="gender.value">
+                  <label :for="gender.value">{{gender.text}}</label>
+                </div>
+              <span v-if="checkFlag && !credentials.petGender">성별을 선택하세요</span>
+            </div>
         </div>
 
-        <!-- <div>
-          <h3>종류</h3>
-            <label> <input type="radio" v-model="credentials.petType" value="1"> 강아지 </label>
-            <label> <input type="radio" v-model="credentials.petType" value="2"> 고양이 </label>
-            <label> <input type="radio" v-model="credentials.petType" value="3"> 조류 </label>
-            <label><input type="radio" v-model="credentials.petType" value="4"> 설치류 </label>
-            <label> <input type="radio" v-model="credentials.petType" value="5"> 기타 </label>
-        </div> -->
-
-        <div>
-          <h3>종류</h3>
-          <span v-for="(animal, index) in animalList" class="saveAnimalIndex" v-bind:key="animal">
-            <input type="radio" :value="animal.animalNumber" v-model="credentials.petType">{{animal.animalName}}
-            <br v-if="(index+1) % 3 == 0">
-          </span>
+        <h3 style="margin-top:50px;">종류</h3>
+        <div class="save-animal-box">
+          <div v-for="animal in animalList" class="save-animal-checkbox" v-bind:key="animal">
+            <input type="radio" :value="animal.animalNumber" v-model="credentials.petType" :id="animal.animalName">
+            <label :for="animal.animalName">{{animal.animalName}}</label>
+          </div>
         </div>
       </div>
         <!-- emit -->
-        <button @click="saveData"> 다음 </button>
-
+      <button class="next-btn bttn-gradient bttn-md bttn-warning" @click="saveData">Next</button>
   </div>
 </template>
 
@@ -72,6 +68,7 @@ export default {
   },
   data() {
     return {
+      acceptNext: false,
       credentials: {
         petCheck: false,
         petName: '',
@@ -110,9 +107,11 @@ export default {
   methods: {
     isYes () {
       this.credentials.petCheck = true;
+      this.acceptNext = true;
     },
     isNo () {
       this.credentials.petCheck = false;
+      this.acceptNext = true;
     },
     dateSave(datePickerString) {
       this.credentials.petBirth = datePickerString

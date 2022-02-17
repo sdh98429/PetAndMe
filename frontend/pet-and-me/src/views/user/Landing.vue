@@ -1,6 +1,7 @@
 <template>
   
 <div>
+  <button @click="login">login</button>
   <div class='subject'>DailyUI #003 <strong>Landing Page</strong></div>
 
   <div class='screen'>
@@ -8,14 +9,12 @@
     <div class='page'>
       <section class='hero'>
         <div class='cta'>2018 :<span>The year you'll launch your own business</span></div>
-        <button class='button-cta'>START NOW</button>
+        <button class='button-cta' @click="login">START NOW</button>
       </section>
       <section class='features'>
         <div class='section-name' id='sec-features'>FEATURES</div>
         <div class='section-title'>15 steps to consider</div>
-        <div class='section-subtitle'><a
-            href='https://medium.com/@christianreber/15-steps-to-launch-your-own-startup-74e945869ca4#.vn1j6yaa5'
-            target='_blank'>Based on the article '15 steps to launch your own startup' by Christian Reber</a></div>
+        <div class='section-subtitle'>Based on the article '15 steps to launch your own startup' by Christian Reber</div>
         <div class='features-container'>
           <div class='features-item'>
             <div class='item-number'>01</div>
@@ -24,10 +23,6 @@
           <div class='features-item'>
             <div class='item-number'>02</div>
             <div class='item-text'>Work to learn, not to earn</div>
-          </div>
-          <div class='features-item'>
-            <div class='item-number'>03</div>
-            <div class='item-text'>Join the community</div>
           </div>
           <div class='features-item'>
             <div class='item-number'>04</div>
@@ -88,30 +83,34 @@
                 <p class='speech'><span></span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                   tempor incididunt ut labore et dolore magna aliqua.</p>
                 <div class='id-client'>John DoeFoo Startup</div>
-              						</div>
-    				       </li>
-           				<li><div class='box-clients'>
-    						            <p class='speech'><span></span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    						            <div class='id-client'>John DoeFoo Startup</div>
-    					          </div>
-    				       </li>
-           				<li><div class='box-clients'>
-    					            	<p class='speech'><span></span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    						            <div class='id-client'>John DoeFoo Startup</div>
-              					 </div>
-           				</li>
-        			</ul>
-      			</div>
-    </section>
-    <section class='second-cta'>
-      <div class='section-name' id='sec-contact'></div>
-      <div class='section-title negative'>Let's get started</div>
-      <button class='button-sec-cta' @click="login">GO!</button>
-    </section>
-    <section class='footer'>
-      <div class='copy'>&copy;2016. All rights reserved.</div>
-    </section>
-  </div>
+              </div>
+            </li>
+            <li>
+              <div class='box-clients'>
+                <p class='speech'><span></span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                  tempor incididunt ut labore et dolore magna aliqua.</p>
+                <div class='id-client'>John DoeFoo Startup</div>
+              </div>
+            </li>
+            <li>
+              <div class='box-clients'>
+                <p class='speech'><span></span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                  tempor incididunt ut labore et dolore magna aliqua.</p>
+                <div class='id-client'>John DoeFoo Startup</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section class='second-cta'>
+        <div class='section-name' id='sec-contact'></div>
+        <div class='section-title negative'>Let's get started</div>
+        <button class='button-sec-cta' @click="login">GO!</button>
+      </section>
+      <section class='footer'>
+        <div class='copy'>&copy;2016. All rights reserved.</div>
+      </section>
+    </div>
 </div>
 
 <div class='icon-credits'>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
@@ -140,13 +139,6 @@ export default {
   mounted() {
     $(document).ready( function() {
     $('.page').scroll( function (){
-      if ($(this).scrollTop() > 70) {
-        $('.nav').css("background-color","rgba(243,191,2,0.98)");
-        $('.nav').css("border-bottom","1px solid #f3bf02");
-      } else {
-        $('.nav').css("background-color","transparent");
-        $('.nav').css("border-bottom","none");
-      }
       if ($(this).scrollTop() > 340) {
         $('.button-nav-cta').css("display","block");
         $(".button-nav-cta").removeClass("anim_fadeInLeft");
@@ -162,7 +154,7 @@ export default {
       $('.page').animate({ scrollTop: 0 }, 800);
     });
     
-    $('.page').animate({ scrollTop: 2200 }, 0).animate({ scrollTop: 0 }, 4000);
+    // $('.page').animate({ scrollTop: 2200 }, 0).animate({ scrollTop: 0 }, 4000);
   });
 
     const footerEl = document.querySelector('#footer-container')
@@ -174,36 +166,36 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .landing-container {
-//   position: relative;
-//   top:100px;
-//   z-index: 3;
-// }
-// // .home {
-// //   width: 100%;
-// //   height: 130vh;
-// //   background-image: url('../../assets/background.jpg');
-// //   background-position: center top;
-// //   background-size: cover;
-// // }
-
-// .myH2 {
-//   text-align: center;
-//   font-size: 4rem;
+.landing-container {
+  position: relative;
+  top:100px;
+  z-index: 3;
+}
+// .home {
+//   width: 100%;
+//   height: 130vh;
+//   background-image: url('../../assets/background.jpg');
+//   background-position: center top;
+//   background-size: cover;
 // }
 
-// .myP {
-//   text-align: justify;
-//   padding-left: 15%;
-//   padding-right: 15%;
-//   font-size: 20px; 
-//   background-color: #fff;
-// }
-// @media all and (max-width:700px) {
-//   .myP {
-//     padding: 2%;
-//   }
-// }
+.myH2 {
+  text-align: center;
+  font-size: 4rem;
+}
+
+.myP {
+  text-align: justify;
+  padding-left: 15%;
+  padding-right: 15%;
+  font-size: 20px; 
+  background-color: #fff;
+}
+@media all and (max-width:700px) {
+  .myP {
+    padding: 2%;
+  }
+}
 /*--------------------
 General Style
 ---------------------*/
@@ -213,6 +205,9 @@ General Style
   box-sizing: border-box;
 }
 
+  .screen::-webkit-scrollbar {
+    display: none;
+  }
 body,
 html {
   height: 100%;
@@ -243,6 +238,7 @@ Screen
 .screen {
   width: 800px;
   height: 100%;
+    scrollbar-width: none;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -326,7 +322,9 @@ Page
   overflow-y: auto;
   overflow-wrap: normal;
 }
-
+.page::-webkit-scrollbar{
+  display: none;
+}
 .section-name {
   font-size: 12px;
   letter-spacing: 1px;

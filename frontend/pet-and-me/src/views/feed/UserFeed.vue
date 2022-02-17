@@ -33,7 +33,7 @@
         class="taping-list"
       >
       </TapingViewer> -->
-      <div class="taping-thumbnail">
+      <div class="taping-thumbnail" v-if="returnVideo[0]">
         <video controls>
           <source :src="`data:video/mp4;base64,${returnVideo[0]}`" type="video/mp4">
         </video>
@@ -75,7 +75,7 @@ export default {
   name: 'UserFeed',
   data: function () {
     return {
-      ready: false,
+      ready: true,
       today: new Date(),
       profile: null,
       petMonth: null,
@@ -303,9 +303,6 @@ export default {
   created: function(){
     this.asyncCall()
     this.catchTape()
-    setTimeout(() => {
-      this.ready = true
-    }, 2000);
   },
   mounted() {
     move('5','90%','#fff')

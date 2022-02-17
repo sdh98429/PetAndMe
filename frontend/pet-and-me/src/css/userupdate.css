@@ -148,11 +148,6 @@
     top: 5px;
     left: 5px;
   }
-  .user-update-container .user-update-box .fav-animal .fav-animal-box .fav-animal-checkbox label{
-    position: relative;
-    top: 5px;
-    left: 10px;
-  }
 }
 @media screen and (min-width:768px){
   .user-update-container {
