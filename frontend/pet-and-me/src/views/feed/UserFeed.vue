@@ -76,7 +76,7 @@ export default {
       userNumber: "null",
       yourUserId: this.$route.params.yourUserId,
       yourUserNumber: 0,
-      isFollow : null,
+      isFollow : false,
       followerCnt : 0,
       followingCnt : 0,
       feedLength: null,
@@ -129,6 +129,20 @@ export default {
           })
     },
 
+    getMyFollow() {
+      axios({
+        method: 'get',
+        url: `${BASE_API_URL}/user/following/${this.myUserNumber}`
+      })
+        .then(res => {
+          res.data.forEach(user => {
+            if (user.userNumber == this.yourUserNumber){
+              this.isFollow=true
+            }
+          })
+        })
+    },
+
     getFollowing: function(){
       axios({
         method: 'get',
@@ -142,6 +156,7 @@ export default {
         //     this.isFollow = true
         //   }
         // }
+        // console.log(response.data)
       })
       .catch(err => {
         console.log(err)
@@ -155,12 +170,12 @@ export default {
       })
       .then(response => {
         this.followerCnt = response.data.length
-        var ind;
-        for (ind = 0; ind < response.data.length; ind++) {
-          if (this.yourUserNumber == response.data[ind].userNumber){
-            this.isFollow = true
-          }
-        }
+        // var ind;
+        // for (ind = 0; ind < response.data.length; ind++) {
+        //   if (this.yourUserNumber == response.data[ind].userNumber){
+        //     this.isFollow = true
+        //   }
+        // }
       })
       .catch(err => {
         console.log(err)
@@ -178,6 +193,7 @@ export default {
         this.isFollow = true
         this.getFollowing()
         this.getFollower()
+        this.getMyFollow()
       })
       .catch(err => {
         console.log(err)
@@ -193,6 +209,7 @@ export default {
         this.isFollow = false
         this.getFollowing()
         this.getFollower()  
+        this.getMyFollow()
       })
       .catch(err => {
         console.log(err)
@@ -256,6 +273,7 @@ export default {
       await this.getUserProfile();
       await this.getFollowing();
       await this.getFollower();
+      await this.getMyFollow();
     }
 
   },

@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <div class="container">
+    <div class="taping-container">
 
       <div class="radio1">
       <h1>style 선택</h1>
@@ -66,7 +66,7 @@
         </div>
       </div>
 
-      <div class="btn-container">
+      <div class="btn-taping-">
         <v-btn color="orange lighten-5" x-large @click="createTape">스타일 및 bgm 선택 완료</v-btn>
       </div>
     </div>
@@ -104,7 +104,9 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.taping-container {
+  width: 800px;
+  border: 1px solid #ccc;
   padding-top: 100px;
   text-align: center;
 }
