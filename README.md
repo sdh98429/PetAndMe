@@ -1,20 +1,25 @@
 <div align="center">
-    <h1>Pet & Me </h1>
+    <img src="./README.assets/title.jpg">
     <h5>반려동물과 나의 이야기</h5>
     <p>반려동물 큐레이팅 SNS</p>
     <img src="https://img.shields.io/badge/Ubuntu-20.04.3 LTS-E95420?style=flat&logo=Ubuntu&logoColor=white"/><img src="https://img.shields.io/badge/Java-jdk11-007396?style=flat&logo=Java&logoColor=white"/><img src="https://img.shields.io/badge/Spring Boot-2.5.3-6DB33F?style=flat&logo=Spring Boot&logoColor=white"/><img src="https://img.shields.io/badge/MySQL-8.0.28-4479A1?style=flat&logo=MySQL&logoColor=white"/><img src="https://img.shields.io/badge/NGINX-1.18.0(ubuntu)-009639?style=flat&logo=NGINX&logoColor=white"/><br/><img src="https://img.shields.io/badge/npm-6.4.1-CB3837?style=flat&logo=npm&logoColor=white"/><img src="https://img.shields.io/badge/Node.js-10.15.3-339933?style=flat&logo=Node.js&logoColor=white"/><img src="https://img.shields.io/badge/Vue.js-2.6.11-4FC08D?style=flat&logo=Vue.js&logoColor=white"/><img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white"/><img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=CSS3&logoColor=white"/><img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=flat&logo=TensorFlow&logoColor=white"/><br/><img src="https://img.shields.io/badge/Python-3.7.12-3776AB?style=flat&logo=Python&logoColor=white"/><img src="https://img.shields.io/badge/Django-3.2.9-092E20?style=flat&logo=Django&logoColor=white"/><img src="https://img.shields.io/badge/Gunicorn-499848?style=flat&logo=Gunicorn&logoColor=white"/><br/><img src="https://img.shields.io/badge/GitLab-FCA121?style=flat&logo=GitLab&logoColor=white"/><img src="https://img.shields.io/badge/Jira-0052CC?style=flat&logo=Jira Software&logoColor=white"/><img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=Notion&logoColor=white"/>
 </div>
 
 
-## Service Intro
+
+# :book: Service Intro
 
 Pet & Me는 자신의 반려동물과 함께한 시간을 기록하고 다른 사람과 소통하고 싶은 사용자를 대상으로 합니다. 사용자 취향 기반의 피드를 보여주고, 자신의 사진을 등록하면 닮은 동물을 찾을 수 있습니다. 그리고 이를 이용한 닉네임 추천과 관련된 반려동물과 함께하는 유저를 찾을 수 있습니다. 무엇보다 저장한 사진을 이용해 직접 영상을 커스터마이징함으로써 나만의 영상을 만들어 볼 수 있는 웹/앱 서비스입니다.
 
 
 
-## 주요 기능
+# :star: 주요 기능
+
+> 모든 기능은 반응형입니다.
 
 ### 회원가입/로그인 기능
+
+![주요기능_가입](README.assets/주요기능_가입.gif)
 
 - 아이디, 비밀번호 입력 후 메일인증을 한다.
 - 인증에 성공하면 사용자의 반려동물 유무와 정보, 선호 동물을 입력 받는다.
@@ -47,7 +52,7 @@ Pet & Me는 자신의 반려동물과 함께한 시간을 기록하고 다른 �
 
 - 뉴스피드 페이지는 선호 동물과 팔로워 피드를 기반으로 최신 순으로 제공한다.
 
-
+![주요기능_유저피드](README.assets/주요기능_유저피드.gif)
 
 - 마이 피드 페이지는 프로필 사진, 닉네임, 사용자 아이디, 반려동물 정보(이름, 종, 성별, 나이), 소개말을 표시한다.
 - 현재 사용자의 팔로워, 팔로잉 리스트를 확인하고, 팔로우/언팔로우를 할 수 있다.
@@ -60,19 +65,21 @@ Pet & Me는 자신의 반려동물과 함께한 시간을 기록하고 다른 �
 
 
 
-## 시스템 구조
+# 🛠시스템 구조
 
 ![project_architecture](README.assets/project_architecture.jpg)
 
 
 
-## 프로젝트 일정
+# :calendar: 프로젝트 일정
 
 ![Gantt_Chart](README.assets/Gantt_Chart.JPG)
 
 
 
-## Install and Usage
+# :triangular_flag_on_post: Install and Usage
+
+> Ubuntu 
 
 ### Download
 
@@ -116,7 +123,7 @@ python manage.py runserver
 
 
 
-## 역할 분담
+# :family_man_woman_boy: 역할 분담
 
 | 팀원   | 역할            | email                |
 | ------ | --------------- | -------------------- |
@@ -126,4 +133,28 @@ python manage.py runserver
 | 신동호 | 팀원 (Frontend) | sdh98429@gmail.com   |
 | 이진석 | 팀원 (Frontend) | amateur@kakao.com    |
 | 장지빈 | 팀원 (Frontend) | thekey1017@gmail.com |
+
+
+
+# :pushpin: Develop Rules
+
+## Git Policy
+
+- **Branch**
+
+  ```
+  master -> develop -> feature/기능이름
+  ```
+
+- **Commit message Rule**
+
+  ```
+  git commit -m “{TAG}: {TITLE}”
+  예시) git commit -m “Feat: 로그인 기능 추가”
+  ```
+
+## Jira Policy
+
+- 스토리 포인트 규칙
+- 이슈 생성
 
