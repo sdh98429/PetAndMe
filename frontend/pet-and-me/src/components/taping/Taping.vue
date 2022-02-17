@@ -1,7 +1,12 @@
 <template>
+<<<<<<< Updated upstream
   <v-app>
     <div class="container">
 
+=======
+  <v-container>
+    <div class="select-container">
+>>>>>>> Stashed changes
       <div class="radio1">
       <h1>style 선택</h1>
         <div class="form_radio_group">
@@ -72,7 +77,7 @@
     </div>
     
     
-  </v-app>
+  </v-container>
 </template>
 
 <script>

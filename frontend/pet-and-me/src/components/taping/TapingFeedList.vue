@@ -1,24 +1,26 @@
 <template>
   <!-- feed select -->
-  <v-app>
-  <div class="grid">
-    <div v-for="userFeed in userFeeds" :key="userFeed.feedNumber">
-      <input type="checkbox"
-        :id="userFeed.feedDate"
-        v-model="feedArr"
-        :value="userFeed.feedNumber"
-        :class="checked(userFeed.feedNumber)"
-      >
-      <label :for="userFeed.feedDate">
-        <img class="feed-thumbnail" :src="`data:image/png;base64,${userFeed.feedThumbnail}`" />
-      </label>
+  <div>
+  <v-app class="taping-create-container">
+    <div class="grid">
+      <div v-for="(userFeed,index) in userFeeds" :key="userFeed.feedNumber">
+        <input type="checkbox"
+          :id="`feedItem${index}`"
+          v-model="feedArr"
+          :value="userFeed.feedNumber"
+          :class="checked(userFeed.feedNumber)"
+          style="display:none;"
+        >
+        <label :for="`feedItem${index}`">
+          <img class="feed-thumbnail" :src="`data:image/png;base64,${userFeed.feedThumbnail}`" />
+        </label>
+      </div>
     </div>
-  </div>
   <div class="btn-container">
     <v-btn color="info" x-large @click="saveFeedNumber">선택 완료</v-btn>
   </div>
   </v-app>
-  
+  </div>
 </template>
 
 <script>

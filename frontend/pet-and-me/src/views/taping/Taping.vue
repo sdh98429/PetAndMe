@@ -30,6 +30,30 @@
   </div>
 
 
+      <div v-if="level == 2" class="return-video">
+        <h1>Taping 버튼을 누르고 잠시만 기다리시면 동영상이 보입니다.</h1>
+          <div calss="return-circular" style="text-align: center;" v-if="!returnVideo && tapingChecked">
+              <v-progress-circular
+                :size="50"
+                color="amber"
+                indeterminate
+              ></v-progress-circular>
+          </div>
+        <div v-if="this.returnVideo">
+          <video controls autoplay>
+            <source type="video/mp4" :src="`data:video/mp4;base64,${returnVideo[0]}`">
+          </video>
+        </div>
+        <div class="btn-container">
+          <!-- <v-btn color="orange lighten-5" x-large @click="tape">Taping</v-btn>
+          <v-btn color="orange lighten-5" x-large @click="tapingNew">Taping 페이지로 돌아가기</v-btn>
+          <v-btn color="orange lighten-5" x-large @click="toHome">홈으로</v-btn> -->
+          <button class="bttn-pill bttn-md bttn-warning taping-btn" @click="tape">Taping</button>
+          <button class="bttn-pill bttn-md bttn-warning retry-btn" @click="tapingNew">피드 다시 고르기</button>
+          <button class="bttn-pill bttn-md bttn-warning gohome-btn" @click="toHome">뉴스피드로 가기</button>
+        </div>
+      </div>
+    </div>
   </v-app>
 </template>
 
@@ -56,6 +80,7 @@ export default {
       images: null,
       returnVideo: null,
       yourUserNumber: null,
+      tapingChecked: false,
     }
   },
   components: {
@@ -83,6 +108,7 @@ export default {
     },
     // taping
     tape() {
+      this.tapingChecked = true
         axios({
         method: 'post',
         url: `${VIDEO_API_URL}/api/v1/tape/`,
