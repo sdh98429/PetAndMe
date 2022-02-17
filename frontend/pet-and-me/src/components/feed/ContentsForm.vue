@@ -1,10 +1,9 @@
 <template>
-  <div style="border: 1px solid;">
-    <h3>내용 작성</h3>
+  <div>
+    <h3>피드에 적을 내용을 적어주세요.</h3>
     <textarea 
       id="textarea"
       v-model.trim = "content"
-      placeholder="내용을 적어주세요."
       rows="4"
       max-rows="4"></textarea>
     </div>

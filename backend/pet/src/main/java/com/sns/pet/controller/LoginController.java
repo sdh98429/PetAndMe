@@ -37,17 +37,17 @@ public class LoginController {
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
         try {
-            Long loginUserNumber = loginService.findByIdAndPw(user);
+            UserDto loginUser = loginService.findByIdAndPw(user);
 
-            if (loginUserNumber != null) {
+            if (loginUser != null) {
                 // 토큰 생성
-                String token = jwtService.create("userNumber", loginUserNumber, "access-token");// key, data, subject
+                String token = jwtService.create("loginUser", loginUser, "access-token");// key, data, subject
                 logger.debug("로그인 토큰정보 : {}", token);
                 resultMap.put("accessToken", token);
                 resultMap.put("message", SUCCESS);
             } else { // 아이디 또는 비번을 틀림
-                loginUserNumber = loginService.findById(user.get("userID")); // 아이디로 회원 찾기
-                if(loginUserNumber != null) {
+                loginUser = loginService.findById(user.get("userID")); // 아이디로 회원 찾기
+                if(loginUser != null) {
                     resultMap.put("message", "로그인 실패 : 비밀번호가 틀렸습니다.");
                 } else {
                     resultMap.put("message", "로그인 실패 : 가입하지 않은 아이디입니다.");

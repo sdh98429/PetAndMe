@@ -1,0 +1,112 @@
+@media screen and (max-width:768px){
+  .sa-search-container {
+  }
+  .sa-search-container h2 {
+    font-size: 30px;
+    margin-top: 30px;
+  }
+  .sa-search-container .sa-search-item{
+    width: 90%;
+    height: 100px;
+    position: relative;
+    margin: 20px 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid #eee;
+    border-radius: 30px;
+    background-color: #faf4e4;
+    font-weight: bold;
+  }
+  .sa-search-container .sa-search-item .sa-user-image{
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    position: absolute;
+    left: 20px;
+    top: 10px;
+  }
+  .sa-search-container .sa-search-item .sa-user-nickname{
+    font-size: 20px;
+    position: absolute;
+    left: 120px;
+  }
+  .sa-search-container .sa-search-item .sa-user-id{
+    font-size: 18px;
+    position: absolute;
+    left: 120px;
+    top: 20px;
+  }
+  .sa-search-container .sa-search-item .sa-user-follow{
+    font-size: 16px;
+    position: absolute;
+    left: 120px;
+    top: 60px;
+  }
+  .sa-search-container .back-btn{
+    position: relative;
+    width: 200px;
+    top:0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+@media screen and (min-width:768px){
+  .sa-search-container {
+    position: relative;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-bottom: none;
+  }
+  .sa-search-container h2 {
+    font-size: 30px;
+    margin-top: 30px;
+  }
+  .sa-search-container .sa-search-item{
+    width: 500px;
+    height: 100px;
+    position: relative;
+    margin: 20px 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid #eee;
+    border-radius: 30px;
+    background-color: #faf4e4;
+    font-weight: bold;
+  }
+  .sa-search-container .sa-search-item .sa-user-image{
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    position: absolute;
+    left: 20px;
+    top: 10px;
+    cursor:pointer;
+  }
+  .sa-search-container .sa-search-item .sa-user-nickname{
+    font-size: 20px;
+    position: absolute;
+    left: 120px;
+    cursor: pointer;
+  }
+  .sa-search-container .sa-search-item .sa-user-id{
+    font-size: 18px;
+    position: absolute;
+    left: 120px;
+    top: 20px;
+    cursor:pointer;
+  }
+  .sa-search-container .sa-search-item .sa-user-follow{
+    font-size: 16px;
+    position: absolute;
+    left: 120px;
+    top: 60px;
+  }
+  .sa-search-container .back-btn{
+    position: relative;
+    width:300px;
+    left : 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+  }
+}

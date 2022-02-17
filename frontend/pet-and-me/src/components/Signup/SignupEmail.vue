@@ -1,21 +1,24 @@
 <template>
-  <div>
-    <h1>단계표시 2 / 4 진행 중 (Progress bar)</h1>
-    <h1>회원가입 - 이메일</h1>
-    <div>
-      <h3>이메일 인증</h3>
-        <input type="email" v-model="credentials.userEmail" placeholder="이메일을 입력해주세요" @focus="checkFlag = false"/>
-      <span v-if="checkFlag && !credentials.userEmail">이메일을 입력해주세요</span>
-      <button @click="certi"> 인증번호 전송 </button>
+  <div class="second-step">
+    <h1>이메일인증</h1>
+    <div class="group">
+        <input class="my-input" type="text" id="userEmail" v-model="credentials.userEmail" @focus="checkFlag=false" placeholder="이메일을 입력해주세요">
+        <label for="userEmail">Email</label>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <button class="cert-btn" @click="certi">인증메일보내기</button>
     </div>
 
     <div v-show="certiFlag">
-      <input type="text" v-model="credentials.authKey" placeholder="인증번호를 입력해주세요">
-      <button @click="certificateEmail"> 인증 </button>
+      <div class="group">      
+        <input class="my-input"  type="text" id="authkey" v-model="credentials.authKey" placeholder="인증번호를 입력해주세요">
+        <label for="authkey">인증번호 입력</label>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <button class="cert-btn" @click="certificateEmail">인증하기</button>
+      </div>
     </div>
-    <!-- emit -->
-    <button @click="saveData"> 다음 </button>
-
+    <button class="next-btn bttn-gradient bttn-md bttn-warning" @click="saveData">Next</button>
   </div>
 </template>
 
@@ -65,12 +68,14 @@ export default {
       
     },
     certificateEmail() {
+      console.log(this.credentials)
         axios({
           method: 'post',
           url: 'http://i6b106.p.ssafy.io:8080/user/emailConfirm',
           data: this.credentials
         })
           .then((res) => {
+            console.log(res)
             if (res.data == 'success'){
               alert('인증을 성공했습니다.')
               this.certificate = true

@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
@@ -71,6 +72,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean modifyUserNickName(Map<String, Object> user) throws Exception {
+        return sqlSession.getMapper(UserDao.class).updateUserNickName(user) == 1;
+    }
+
+    @Override
     public UserDto findUser(Long userNumber) throws Exception {
         return sqlSession.getMapper(UserDao.class).selectUser(userNumber);
     }
@@ -89,6 +95,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserPetDto findUserInfo(Long userNumber) throws Exception {
         return sqlSession.getMapper(UserDao.class).selectUserInfo(userNumber);
+    }
+
+    @Override
+    public UserPetDto findNoPetUserInfo(Long userNumber) throws Exception {
+        return sqlSession.getMapper(UserDao.class).selectNoPetUserInfo(userNumber);
     }
 
     @Override

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="updateLevel"> Next </button>
+      <button class="next-btn bttn-gradient bttn-md bttn-warning" @click="updateLevel">Next</button>
   </div>
 </template>
 

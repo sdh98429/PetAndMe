@@ -1,0 +1,304 @@
+@media screen and (max-width:768px){
+  .user-update-container .user-update-box{
+    font-family: 'MinSans-Regular', sans-serif;
+    background-color: #fff;
+    width: 100%;
+    max-width: 600px;
+    padding-bottom: 200px;
+    /* margin-bottom: 500px; */
+    position: relative;
+    top: 60px;
+    border: 1px solid #ccc;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .user-update-container .user-update-box .btn-box{
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    top: 20px;
+  }
+  .user-update-container .user-update-box .btn-box .send-btn{
+    font-size: 14px;
+    width: 30%;
+  }
+  .user-update-container .user-update-box .btn-box .back-btn{
+    font-size: 14px;
+    width: 30%;
+  }
+  .user-update-container .user-update-box .logout-btn{
+    position: relative;
+    width: 80%;
+    left: 50%;
+    top: 50px;
+    transform: translateX(-50%);
+  }
+  .user-update-container .user-update-box h1{
+    font-weight: bold;
+    text-align: center;
+  }
+  .user-update-container .user-update-box {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .user-update-container .user-update-box .userid{
+    position: relative;
+    display: flex;
+    gap: 30px;
+    margin-bottom: 20px;
+  }
+  .user-update-container .user-update-box .userid h3{
+    width: 200px;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: right;
+  }
+  .user-update-container .user-update-box .userid input{
+    width: 90%;
+    margin-right:10%;
+    border: 1px solid #eee;
+    font-size: 16px;
+  }
+  .user-update-container .user-update-box .useremail{
+    position: relative;
+    display: flex;
+    gap: 30px;
+    margin-bottom: 20px;
+  }
+  .user-update-container .user-update-box .useremail h3{
+    width: 200px;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: right;
+  }
+  .user-update-container .user-update-box .useremail input{
+    width: 90%;
+    margin-right:10%;
+    border: 1px solid #eee;
+    font-size: 16px;
+  }
+  .user-update-container .user-update-box .nickname{
+    position: relative;
+    display: flex;
+    gap: 30px;
+    margin-bottom: 20px;
+  }
+  .user-update-container .user-update-box .nickname h3{
+    width: 200px;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: right;
+  }
+  .user-update-container .user-update-box .nickname input{
+    width: 90%;
+    margin-right:10%;
+    border: 1px solid #aaa;
+    font-size: 16px;
+  }
+  .user-update-container .user-update-box .user-profile{
+    position: relative;
+    display: flex;
+    gap: 30px;
+    margin-bottom: 20px;
+  }
+  .user-update-container .user-update-box .user-profile h3{
+    width: 200px;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: right;
+  }
+  .user-update-container .user-update-box .user-profile textarea{
+    width: 90%;
+    margin-right:10%;
+    border: 1px solid #aaa;
+    font-size: 16px;
+  }
+  .user-update-container .user-update-box .fav-animal{
+    position: relative;
+    width: 100%;
+    display: flex;
+    overflow: wrap;
+    gap: 30px;
+  }
+  .user-update-container .user-update-box .fav-animal h3{
+    width: 200px;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: right;
+  }
+  .user-update-container .user-update-box .fav-animal .fav-animal-box{
+    position: relative;
+    width: 90%;
+    margin-right:10%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .user-update-container .user-update-box .fav-animal .fav-animal-box .fav-animal-checkbox{
+    width: 70px;
+    height: 30px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    position: relative;
+  }
+  .user-update-container .user-update-box .fav-animal .fav-animal-box .fav-animal-checkbox input{
+    position: relative;
+    top: 5px;
+    left: 5px;
+  }
+}
+@media screen and (min-width:768px){
+  .user-update-container {
+    font-family: 'MinSans-Regular', sans-serif;
+    background-color: #fff;
+    width: 800px;
+    height: 80vh;
+    position: relative;
+    top: 60px;
+    border: 1px solid #ccc;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .user-update-container .user-update-box .btn-box{
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    width: 600px;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 20px;
+  }
+  .user-update-container .user-update-box .btn-box .send-btn{
+    width: 200px;
+  }
+  .user-update-container .user-update-box .btn-box .back-btn{
+    width: 200px;
+  }
+  .user-update-container .user-update-box .logout-btn{
+    position: relative;
+    width: 500px;
+    left: 50%;
+    top: 50px;
+    transform: translateX(-50%);
+  }
+  .user-update-container .user-update-box h1{
+    font-weight: bold;
+    text-align: center;
+  }
+  .user-update-container .user-update-box {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .user-update-container .user-update-box .userid{
+    position: relative;
+    display: flex;
+    gap: 30px;
+    margin-bottom: 20px;
+  }
+  .user-update-container .user-update-box .userid h3{
+    width: 200px;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: right;
+  }
+  .user-update-container .user-update-box .userid input{
+    border: 1px solid #eee;
+    font-size: 16px;
+    width: 50%;
+  }
+  .user-update-container .user-update-box .useremail{
+    position: relative;
+    display: flex;
+    gap: 30px;
+    margin-bottom: 20px;
+  }
+  .user-update-container .user-update-box .useremail h3{
+    width: 200px;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: right;
+  }
+  .user-update-container .user-update-box .useremail input{
+    border: 1px solid #eee;
+    font-size: 16px;
+    width: 50%;
+  }
+  .user-update-container .user-update-box .nickname{
+    position: relative;
+    display: flex;
+    gap: 30px;
+    margin-bottom: 20px;
+  }
+  .user-update-container .user-update-box .nickname h3{
+    width: 200px;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: right;
+  }
+  .user-update-container .user-update-box .nickname input{
+    border: 1px solid #aaa;
+    font-size: 16px;
+    width: 50%;
+  }
+  .user-update-container .user-update-box .user-profile{
+    position: relative;
+    display: flex;
+    gap: 30px;
+    margin-bottom: 20px;
+  }
+  .user-update-container .user-update-box .user-profile h3{
+    width: 200px;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: right;
+  }
+  .user-update-container .user-update-box .user-profile textarea{
+    width: 50%;
+    border: 1px solid #aaa;
+    font-size: 16px;
+  }
+  .user-update-container .user-update-box .user-profile{
+    position: relative;
+  }
+  .user-update-container .user-update-box .fav-animal{
+    position: relative;
+    width: 100%;
+    display: flex;
+    gap: 30px;
+  }
+  .user-update-container .user-update-box .fav-animal h3{
+    width: 200px;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: right;
+  }
+  .user-update-container .user-update-box .fav-animal .fav-animal-box{
+    position: relative;
+    width: 500px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .user-update-container .user-update-box .fav-animal .fav-animal-box .fav-animal-checkbox{
+    width: 100px;
+    height: 50px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    position: relative;
+  }
+  .user-update-container .user-update-box .fav-animal .fav-animal-box .fav-animal-checkbox input{
+    position: relative;
+    top: 12px;
+    left: 5px;
+  }
+  .user-update-container .user-update-box .fav-animal .fav-animal-box .fav-animal-checkbox label{
+    position: relative;
+    top: 12px;
+    left: 10px;
+  }
+
+}

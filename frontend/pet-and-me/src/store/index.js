@@ -9,7 +9,7 @@ export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
     accessToken: localStorage.getItem("accessToken"), // 토큰정보
-    myuserNumber: null
+    userInfo: null
   },
   getters: {
     config: function (state) {
@@ -25,15 +25,22 @@ export default new Vuex.Store({
       return state.accessToken;
     },
     getUserNumber: function (state) {
-      return state.myuserNumber;
+      return state.userInfo.userNumber;
+    },
+    getUserInfo: function (state) {
+      return state.userInfo;
+    },
+    getUserNickName: function () {
+      return localStorage.getItem('nickName')
     }
   },
   mutations: {
     SET_LOGIN: function (state, accessToken) {
       let decode_token = jwt_decode(accessToken);
-      console.log(decode_token)
-      state.myuserNumber = decode_token.userNumber
-
+      
+      // console.log(decode_token)
+      state.userInfo = decode_token.loginUser
+      
       state.accessToken = accessToken
       state.isLogin = true
 
@@ -44,7 +51,11 @@ export default new Vuex.Store({
       state.isLogin = false
       state.myuserNumber = null
       localStorage.removeItem('accessToken')
+      localStorage.removeItem('nickName')
       location.reload();
+    },
+    SET_NICKNAME: function (state, nickname){
+      state.userInfo.userNickName= nickname
     }
   },
   actions: {
@@ -53,6 +64,9 @@ export default new Vuex.Store({
     },
     logoutRemoveToekn: function ({commit}) {
       commit("SET_LOGOUT")
+    },
+    nicknameRenew({commit}, nickname){
+      commit("SET_NICKNAME",nickname)
     }
   },
   modules: {

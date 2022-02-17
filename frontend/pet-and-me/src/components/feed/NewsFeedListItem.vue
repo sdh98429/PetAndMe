@@ -98,30 +98,6 @@ export default {
     feedUploadDate : String,
   },
   methods: {
-    goToNewsFeed() {
-      move('1', '10%', '#fff')
-      this.$router.push({ name : 'NewsFeed'})
-    },
-    goToPage(feednum) {
-      move('2', '30%', '#fff')
-      this.$router.push({ name : 'FeedDetail', params: { feedNumber : feednum }})
-      
-    },
-    goToFeedCreate() {
-      move('3', '50%', '#fff')
-      this.$router.push({ name : 'FeedCreate'})
-    },
-    goToSearch(){
-      move('4', '70%', '#fff')
-      this.$router.push({ name: 'Search' })
-    },
-    goToMyPage() {
-      move('5', '90%', '#fff')
-      this.$router.push({ name : 'UserFeed', params: { yourUserNumber : 1}})
-    },
-    test() {
-      this.$router.push({name: 'FeedDetail', params: { feedNumber: this.feedNumber }})
-    },
     goToComment() {
       this.$router.push({name: 'FeedDetail', params: { feedNumber: this.feedNumber }})
       window.scrollTo({top:300, behavior:'smooth'})

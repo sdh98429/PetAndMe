@@ -38,7 +38,7 @@ export default {
       })
         .then(res => {
           this.userFeeds = res.data
-          console.log(this.userFeeds)
+          // console.log(this.userFeeds)
           this.$emit('feed-length', this.userFeeds.length)
         })
         .catch(err => {

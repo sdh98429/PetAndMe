@@ -28,9 +28,7 @@
           <div>@{{Animal.userID}}</div>
         </div>
       </div>
-    </div>
-
-    
+    </div>    
   </div>
 </template>
 
@@ -163,7 +161,6 @@ export default {
       return this.$store.getters.getUserNumber
     }
   },
-
 }
 </script>
 
