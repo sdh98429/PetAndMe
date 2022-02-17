@@ -28,10 +28,12 @@
 
     <!-- 동물 종(animalName)으로 검색 시, 해당 동물을 펫으로 하는 유저 조회 -->
     <select id="selectUserByAnimalName" parameterType="String" resultType="userDto">
-        SELECT u.userNumber, u.userID, u.userNickName, u.saveFolder, u.userPhotoName
-        FROM User AS u INNER JOIN Pet AS p USING(userNumber)
-        INNER JOIN Animal AS a USING(animalNumber)
+        SELECT u.userNumber, u.userID, u.userNickName, u.saveFolder, u.userPhotoName, count(f.toUserNumber) as followerCnt
+        FROM User u INNER JOIN Follow f ON u.userNumber = f.toUserNumber
+        INNER JOIN Pet p USING(userNumber)
+        INNER JOIN Animal a USING(animalNumber)
         WHERE a.animalName LIKE CONCAT(#{searchWord}, '%')
+        GROUP BY u.userNumber;
     </select>
 
     <!-- 검색어 저장: 날짜는 자동으로 검색날짜로 저장 -->
