@@ -1,7 +1,5 @@
-![title](README.assets/title.jpg)
-
 <div align="center">
-    <h1>Pet & Me </h1>
+    <img src="./README.assets/title.jpg">
     <h5>반려동물과 나의 이야기</h5>
     <p>반려동물 큐레이팅 SNS</p>
     <img src="https://img.shields.io/badge/Ubuntu-20.04.3 LTS-E95420?style=flat&logo=Ubuntu&logoColor=white"/><img src="https://img.shields.io/badge/Java-jdk11-007396?style=flat&logo=Java&logoColor=white"/><img src="https://img.shields.io/badge/Spring Boot-2.5.3-6DB33F?style=flat&logo=Spring Boot&logoColor=white"/><img src="https://img.shields.io/badge/MySQL-8.0.28-4479A1?style=flat&logo=MySQL&logoColor=white"/><img src="https://img.shields.io/badge/NGINX-1.18.0(ubuntu)-009639?style=flat&logo=NGINX&logoColor=white"/><br/><img src="https://img.shields.io/badge/npm-6.4.1-CB3837?style=flat&logo=npm&logoColor=white"/><img src="https://img.shields.io/badge/Node.js-10.15.3-339933?style=flat&logo=Node.js&logoColor=white"/><img src="https://img.shields.io/badge/Vue.js-2.6.11-4FC08D?style=flat&logo=Vue.js&logoColor=white"/><img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white"/><img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=CSS3&logoColor=white"/><img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=flat&logo=TensorFlow&logoColor=white"/><br/><img src="https://img.shields.io/badge/Python-3.7.12-3776AB?style=flat&logo=Python&logoColor=white"/><img src="https://img.shields.io/badge/Django-3.2.9-092E20?style=flat&logo=Django&logoColor=white"/><img src="https://img.shields.io/badge/Gunicorn-499848?style=flat&logo=Gunicorn&logoColor=white"/><br/><img src="https://img.shields.io/badge/GitLab-FCA121?style=flat&logo=GitLab&logoColor=white"/><img src="https://img.shields.io/badge/Jira-0052CC?style=flat&logo=Jira Software&logoColor=white"/><img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=Notion&logoColor=white"/>
@@ -16,6 +14,8 @@ Pet & Me는 자신의 반려동물과 함께한 시간을 기록하고 다른 �
 
 
 # :star: 주요 기능
+
+> 모든 기능은 반응형입니다.
 
 ### 회원가입/로그인 기능
 
