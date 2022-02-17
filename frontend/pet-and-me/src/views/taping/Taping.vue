@@ -19,6 +19,13 @@
 
       <div v-if="level == 2" class="return-video">
         <h1>Taping 버튼을 누르고 잠시만 기다리시면 동영상이 보입니다.</h1>
+        <div calss="return-circular" style="text-align: center;" v-if="!returnVideo && tapingChecked">
+            <v-progress-circular
+              :size="50"
+              color="amber"
+              indeterminate
+            ></v-progress-circular>
+        </div>
         <div v-if="this.returnVideo">
           <video controls autoplay>
             <source type="video/mp4" :src="`data:video/mp4;base64,${returnVideo[0]}`">
