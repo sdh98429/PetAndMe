@@ -6,8 +6,8 @@
     width: 100%;
     max-width: 600px;
     left: 50%;
+    height: calc(100vh - 70px);
     transform: translateX(-50%);
-    padding-bottom: 250px;
     z-index: -1;
   }
   .similar-container h1 {
@@ -105,6 +105,7 @@
     margin: 0 auto;
     position: relative;
     top: 0;
+    padding-bottom: 250px;
   }
   .similar-container .second-step .result-box .result-message{
     width: 100%;
@@ -205,9 +206,8 @@
   .similar-container {
     font-family: 'MinSans-Regular';
     position: relative;
-    height: 100vh;
+    height: calc(100vh + 100px);
     margin: 0 auto;
-    padding-top: 100px;
     border: 1px solid #ccc;
     background-color: #fff;
     top: 60px;

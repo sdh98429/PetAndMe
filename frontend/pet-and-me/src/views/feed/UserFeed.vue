@@ -33,11 +33,6 @@
         class="taping-list"
       >
       </TapingViewer> -->
-      <div class="taping-thumbnail" v-if="returnVideo[0]">
-        <video controls>
-          <source :src="`data:video/mp4;base64,${returnVideo[0]}`" type="video/mp4">
-        </video>
-      </div>
       <div class="follow-and-feed-mobile">
         <div class="feed-length">게시글<br>{{feedLength}}</div>
         <div class="follower" @click="toFollowList()">팔로워<br>{{followerCnt}}</div>
@@ -47,6 +42,11 @@
         <div class="feed-length">게시글&nbsp;{{feedLength}}</div>
         <div class="follower" @click="toFollowList()">팔로워&nbsp;{{followerCnt}}</div>
         <div class="follwing" @click="toFollowList()">팔로잉&nbsp;{{followingCnt}}</div>
+      </div>
+      <div class="taping-thumbnail" v-if="returnVideo[0]">
+        <video controls>
+          <source :src="`data:video/mp4;base64,${returnVideo[0]}`" type="video/mp4">
+        </video>
       </div>
       <div v-if="yourUserNumber != myUserNumber">
         <button class="follow-btn bttn-gradient bttn-sm bttn-warning bttn-block" v-if="!isFollow" @click="followUser">팔로우</button>

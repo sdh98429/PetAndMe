@@ -11,7 +11,7 @@
 
     <!-- Search Bar -->
     <div class="my-search-bar">
-      <input v-model="searchWord" class="my-search-input" type="text"  placeholder="검색 (ex 닉네임, @아이디, #동물종류)" @focus="onFocus" @keyup.enter="goToSearchResult" @input="getRealTimeSearch" />
+      <input v-model="searchWord" class="my-search-input" type="text"  placeholder="검색 (ex 닉네임, @아이디, #동물종류)" @focus="onFocus" @input="getRealTimeSearch" />
       <!-- <div v-if="isRecent">
         <div v-for="(recent, idx) in resultRecent" :key="idx">
           <div @click="goToSearchResult(recent)" style="border: 1px solid;">{{recent}}</div>
@@ -123,7 +123,7 @@ export default {
       // searchResultEl.classList.add('inactive')
     },
     goHome() {
-      this.$router.push({ name : 'Landing'})
+      this.$router.push({ name : 'NewsFeed'})
     },
     goToNewsFeed() {
       move('1', '10%', '#fff')
@@ -177,7 +177,7 @@ export default {
         this.isRecent = false
         axios({
           method: 'get',
-          url: `${BASE_API_URL}/search/rt/userName/${encodeURIComponent(this.searchWord)}`,
+          url: `${BASE_API_URL}/search/rt/userName/${this.searchWord}`,
         })
           .then(response => {
             this.realTimeSearch = response.data
@@ -189,9 +189,11 @@ export default {
         this.isRecent = false
         axios({
           method: 'get',
-          url: `${BASE_API_URL}/search/animal/${encodeURIComponent(this.searchWord.slice(1))}`,
+          url: `${BASE_API_URL}/search/animal/${this.searchWord.slice(1)}`,
         })
           .then(response => {
+            console.log(this.searchWord.slice(1))
+            console.log(response)
             this.realTimeSearch = response.data
           })
           .catch(err => {
