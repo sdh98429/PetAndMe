@@ -48,24 +48,25 @@ def pet_tape(request):
         # 넘어온 images list 돌면서 base64 decode
         imageIdx = 0
         for (idx, image) in enumerate(movieImages):
-            imgdata = base64.b64decode(image)
-            filename = userId + str(idx) + 'image.jpg'
-            imageIdx += 1
-            with open(filename, 'wb') as f:
-                f.write(imgdata)
+            if image:
+                imgdata = base64.b64decode(image)
+                filename = userId + str(idx) + 'image.jpg'
+                imageIdx += 1
+                with open(filename, 'wb') as f:
+                    f.write(imgdata)
 
-            if movieType == "2":
-                typeTrans = cv2.imread(filename, cv2.IMREAD_COLOR)
-                cartoon_img = cv2.stylization(typeTrans, sigma_s=100, sigma_r=0.9)
-                cv2.imwrite(filename, cartoon_img)
+                if movieType == "2":
+                    typeTrans = cv2.imread(filename, cv2.IMREAD_COLOR)
+                    cartoon_img = cv2.stylization(typeTrans, sigma_s=100, sigma_r=0.9)
+                    cv2.imwrite(filename, cartoon_img)
 
-            elif movieType == "3":
-                typeTrans = Image.open(filename)
-                newone = typeTrans.transpose(Image.FLIP_LEFT_RIGHT)
-                newone.save(filename)
-            # elif movieType == "4":
-            #     typeTrans = Image.open(filename).convert('L')
-            #     typeTrans.save(filename)
+                elif movieType == "3":
+                    typeTrans = Image.open(filename)
+                    newone = typeTrans.transpose(Image.FLIP_LEFT_RIGHT)
+                    newone.save(filename)
+                # elif movieType == "4":
+                #     typeTrans = Image.open(filename).convert('L')
+                #     typeTrans.save(filename)
 
     origin = os.path.dirname(os.path.abspath(__file__))
     originPath = os.path.abspath(os.path.join(origin, '..'))
