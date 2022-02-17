@@ -1,20 +1,21 @@
 <template>
   
 <div>
-  <button @click="login">login</button>
   <div class='subject'>DailyUI #003 <strong>Landing Page</strong></div>
 
   <div class='screen'>
 
     <div class='page'>
       <section class='hero'>
-        <div class='cta'>2018 :<span>The year you'll launch your own business</span></div>
-        <button class='button-cta' @click="login">START NOW</button>
+        <div class='cta'><span>반려동물과 나의 이야기<br> </span>PET & ME</div>
+        <button class='button-cta' @click="login">START</button>
       </section>
       <section class='features'>
         <div class='section-name' id='sec-features'>FEATURES</div>
         <div class='section-title'>15 steps to consider</div>
-        <div class='section-subtitle'>Based on the article '15 steps to launch your own startup' by Christian Reber</div>
+        <div class='section-subtitle'><a
+            href='https://medium.com/@christianreber/15-steps-to-launch-your-own-startup-74e945869ca4#.vn1j6yaa5'
+            target='_blank'>Based on the article '15 steps to launch your own startup' by Christian Reber</a></div>
         <div class='features-container'>
           <div class='features-item'>
             <div class='item-number'>01</div>
@@ -23,6 +24,10 @@
           <div class='features-item'>
             <div class='item-number'>02</div>
             <div class='item-text'>Work to learn, not to earn</div>
+          </div>
+          <div class='features-item'>
+            <div class='item-number'>03</div>
+            <div class='item-text'>Join the community</div>
           </div>
           <div class='features-item'>
             <div class='item-number'>04</div>
@@ -48,30 +53,7 @@
             <div class='item-number'>09</div>
             <div class='item-text'>Find the right co-founders</div>
           </div>
-          <div class='features-item'>
-            <div class='item-number'>10</div>
-            <div class='item-text'>Raise your first round of money</div>
-          </div>
-          <div class='features-item'>
-            <div class='item-number'>11</div>
-            <div class='item-text'>Learn about hiring & company culture</div>
-          </div>
-          <div class='features-item'>
-            <div class='item-number'>12</div>
-            <div class='item-text'>Prepare yourself to become a manager</div>
-          </div>
-          <div class='features-item'>
-            <div class='item-number'>13</div>
-            <div class='item-text'>Find advisors and mentors to build your business</div>
-          </div>
-          <div class='features-item'>
-            <div class='item-number'>14</div>
-            <div class='item-text'>Be ready for constant change</div>
-          </div>
-          <div class='features-item'>
-            <div class='item-number'>15</div>
-            <div class='item-text'>Work hard and be nice to people</div>
-          </div>
+          
         </div>
       </section>
       <section class='coments'>
@@ -236,7 +218,7 @@ Screen
 ---------------------*/
 
 .screen {
-  width: 800px;
+  width: 1200px;
   height: 100%;
     scrollbar-width: none;
   position: absolute;
@@ -383,14 +365,15 @@ Call To Actions
 ---------------------*/
 
 .cta {
-  height: 260px;
-  width: 420px;
+  height: 170px;
+  width: 550px;
   border: 12px solid #000;
   margin-top: 80px;
   padding: 20px;
   font-weight: 800;
 	letter-spacing: -3px;
   font-size: 60px;
+  text-align: center;
   color: #000;
   line-height: 0.8;
   
@@ -425,7 +408,7 @@ Call To Actions
   position: absolute;
   float: left;
   left: 270px;
-  bottom: 69px;
+  bottom: 150px;
   background-color: #f3bf02;
   border: 3px solid #272625;
   font-weight: 600;

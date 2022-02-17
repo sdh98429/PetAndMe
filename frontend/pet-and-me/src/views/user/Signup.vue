@@ -109,6 +109,13 @@ export default {
             console.log(err.response)
           })
     }
+  },
+  mounted(){
+    
+    const footerEl = document.querySelector('#footer-container')
+    footerEl.classList.add('inactive')
+    const inputEl = document.querySelector('.my-search-bar')
+    inputEl.classList.add('inactive')
   }
 }
 </script>
@@ -135,7 +142,7 @@ export default {
 
   }
   .signup-container h1 {
-    width: 300px;
+    width: 400px;
     top: 0;
     position: relative;
     text-align: center;
@@ -179,6 +186,10 @@ export default {
     transform: translateX(-50%);
     bottom: -50px;
     width: 300px;
+  }
+  .frst-step {
+    position: relative;
+    top: 50px;
   }
   .first-step .check-btn {
     position: relative;
@@ -306,7 +317,7 @@ export default {
 
   }
   .signup-container h1 {
-    width: 300px;
+    width: 500px;
     top: 0;
     position: relative;
     text-align: center;
