@@ -1,6 +1,6 @@
 <template>
-  <v-app>
-    <div class="taping-container">
+  <div class="taping-container">
+    <v-app>
       <div v-if="level == 0">
         <h1>Taping하고싶은 피드를 선택하고 <br> 아래에 있는 버튼을 눌러 다음단계로 이동해주세요</h1>
         <div>
@@ -40,8 +40,8 @@
           <button class="bttn-pill bttn-md bttn-warning gohome-btn" @click="toHome">뉴스피드로 가기</button>
         </div>
       </div>
-    </div>
-  </v-app>
+    </v-app>
+  </div>
 </template>
 
 <script>
