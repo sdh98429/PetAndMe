@@ -82,7 +82,7 @@ export default {
   }
   
   input.checked + label > img {
-    border: 10px solid rgb(255, 242, 65);
+    border: 10px solid orange;
     box-sizing: border-box;
   }
   
@@ -120,7 +120,7 @@ export default {
     font-family: 'MinSans-Regular', 'Quicksand';
   }
   input.checked + label > img {
-    border: 10px solid rgb(255, 242, 65);
+    border: 10px solid orange;
     box-sizing: border-box;
   }
   .grid {

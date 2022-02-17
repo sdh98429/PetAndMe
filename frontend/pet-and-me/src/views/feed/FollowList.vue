@@ -1,7 +1,7 @@
 <template>
   <div class="follow-container">
     <h2>{{profile.userNickName}}</h2>
-    <button class="back-btn bttn-pill bttn-md bttn-default" @click="goBack">돌아가기</button>
+    <button class="back-btn bttn-gradient bttn-md bttn-default" @click="goBack">돌아가기</button>
     <!-- <button v-for="(tab, index) in tabs"
       :key="index"
       v-bind="{active: currentTab === index}"
@@ -16,8 +16,8 @@
         <img @click="toUserFeed(follower.userID)" class="follow-image" :src="`http://i6b106.p.ssafy.io:8080/main/image?file=${follower.saveFolder}${follower.userPhotoName}`" alt="프로필 사진">
         <div class="follow-user" @click="toUserFeed(follower.userID)">{{follower.userNickName}}<br>@{{follower.userID}}</div>
         <div v-if="follower.userNumber != myUserNumber">
-          <button class="follow-btn bttn-pill bttn-md bttn-warning" @click="unfollowUser(follower.userNumber)" v-if="myFollowingList.includes(follower.userNumber)">언팔로우</button>
-          <button class="follow-btn bttn-pill bttn-md bttn-warning" @click="followUser(follower.userNumber)" v-else>팔로우</button>
+          <button class="follow-btn bttn-gradient bttn-md bttn-warning" @click="unfollowUser(follower.userNumber)" v-if="myFollowingList.includes(follower.userNumber)">언팔로우</button>
+          <button class="follow-btn bttn-gradient bttn-md bttn-warning" @click="followUser(follower.userNumber)" v-else>팔로우</button>
         </div>
         <div class="follow-user-pet">
           {{follower.petName}}({{follower.animalName}}),
@@ -32,8 +32,8 @@
         <img @click="toUserFeed(following.userID)" class="follow-image" :src="`http://i6b106.p.ssafy.io:8080/main/image?file=${following.saveFolder}${following.userPhotoName}`" alt="프로필 사진">
         <div class="follow-user" @click="toUserFeed(following.userID)">{{following.userNickName}}<br>@{{following.userID}}</div>
         <div v-if="following.userNumber != myUserNumber">
-          <button class="follow-btn bttn-pill bttn-md bttn-warning" @click="unfollowUser(following.userNumber)" v-if="myFollowingList.includes(following.userNumber)">언팔로우</button>
-          <button class="follow-btn bttn-pill bttn-md bttn-warning" @click="followUser(following.userNumber)" v-else>팔로우</button>
+          <button class="follow-btn bttn-gradient bttn-md bttn-warning" @click="unfollowUser(following.userNumber)" v-if="myFollowingList.includes(following.userNumber)">언팔로우</button>
+          <button class="follow-btn bttn-gradient bttn-md bttn-warning" @click="followUser(following.userNumber)" v-else>팔로우</button>
         </div>
         <div class="follow-user-pet">
           {{following.petName}}({{following.animalName}}),

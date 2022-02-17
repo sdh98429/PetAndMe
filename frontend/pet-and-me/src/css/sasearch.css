@@ -28,29 +28,35 @@
   .sa-search-container .sa-search-item .sa-user-nickname{
     font-size: 20px;
     position: absolute;
-    left: 100px;
+    left: 120px;
   }
   .sa-search-container .sa-search-item .sa-user-id{
     font-size: 18px;
     position: absolute;
-    left: 100px;
+    left: 120px;
     top: 20px;
   }
   .sa-search-container .sa-search-item .sa-user-follow{
     font-size: 16px;
     position: absolute;
-    left: 100px;
+    left: 120px;
     top: 60px;
   }
   .sa-search-container .back-btn{
-    position: absolute;
+    position: relative;
+    width: 200px;
+    top:0;
     left: 50%;
     transform: translateX(-50%);
-    bottom: 0;
   }
 }
 @media screen and (min-width:768px){
   .sa-search-container {
+    position: relative;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-bottom: none;
   }
   .sa-search-container h2 {
     font-size: 30px;
@@ -75,27 +81,32 @@
     position: absolute;
     left: 20px;
     top: 10px;
+    cursor:pointer;
   }
   .sa-search-container .sa-search-item .sa-user-nickname{
     font-size: 20px;
     position: absolute;
-    left: 100px;
+    left: 120px;
+    cursor: pointer;
   }
   .sa-search-container .sa-search-item .sa-user-id{
     font-size: 18px;
     position: absolute;
-    left: 100px;
+    left: 120px;
     top: 20px;
+    cursor:pointer;
   }
   .sa-search-container .sa-search-item .sa-user-follow{
     font-size: 16px;
     position: absolute;
-    left: 100px;
+    left: 120px;
     top: 60px;
   }
   .sa-search-container .back-btn{
-    position: absolute;
-    left : 10%;
-    top: 5%;
+    position: relative;
+    width:300px;
+    left : 50%;
+    transform: translateX(-50%);
+    bottom: 0;
   }
 }

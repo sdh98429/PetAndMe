@@ -15,8 +15,8 @@
       />
     </div>
     <div class="form-footer">
-      <button class="bttn-pill bttn-sm bttn-warning back-btn" @click="toBack">돌아가기</button>
-      <button class="bttn-pill bttn-sm bttn-warning create-btn" @click="createFeed">생성</button>
+      <button class="bttn-gradient bttn-sm bttn-warning back-btn" @click="toBack">돌아가기</button>
+      <button class="bttn-gradient bttn-sm bttn-warning create-btn" @click="createFeed">생성</button>
     </div>
   </div>
 </template>

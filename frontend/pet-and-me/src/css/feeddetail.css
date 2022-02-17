@@ -213,11 +213,12 @@
     position: fixed;
     width: 90%;
     bottom: 80px;
+    height: 40px;
+    align-items: center;
     left:50%;
     transform: translateX(-50%);
     display: flex;
     gap: 10px;
-    background: #fff;
     background-color: #fff;
     
     /* left: 50%;
@@ -235,9 +236,10 @@
     height: 30px;
   }
   .feed-detail-container .comment-create .comment-input {
-    width: 70%;
+    width: 80%;
     height: 30px;
     border-radius: 15px;
+    padding: 0 15px;
     outline: none;
     border: 1px solid #333;
   }
@@ -246,6 +248,8 @@
     background-color: #faf4e4;
     color: #333;
     border-radius: 50%;
+    position: absolute;
+    right: 0;
   }
   .feed-detail-container .comment-create .comment-btn--pc {
     display:none;
