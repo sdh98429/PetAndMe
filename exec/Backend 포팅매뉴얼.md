@@ -6,14 +6,17 @@ Pet&Me Backend 빌드 매뉴얼
 
 ## 기술스택 및 라이브러리
 
-| Project     | Version | Description              |
-| ----------- | ------- | ------------------------ |
-| Java        | 11      | JDK 11 GA (build 11+28)  |
-| Spring boot | 2.5.3   | Gradle, Build Tool       |
-| MySQL       | 8.0.28  | DB                       |
-| Mybatis     | 2.2.1   | DB                       |
-| Swagger     | 1.6.2   | API 명세                 |
-| IntelliJ    | 21.3.1  | Icommunity/ultimate  IDE |
+| Project     | Version | Description                |
+| ----------- | ------- | -------------------------- |
+| Java        | 11      | JDK 11 GA (build 11+28)    |
+| Spring boot | 2.5.3   | Gradle, Build Tool         |
+| MySQL       | 8.0.28  | DB                         |
+| Mybatis     | 2.2.1   | DB                         |
+| Swagger     | 1.6.2   | API 명세                   |
+| Python      | 3.7.12  |                            |
+| Django      | 3.2.9   | moviepy 사용하기 위한 서버 |
+| IntelliJ    | 21.3.1  | Icommunity/ultimate  IDE   |
+| VS Code     | 1.64.2  | IDE                        |
 
 ## 개발 환경 구성
 
@@ -70,6 +73,10 @@ Pet&Me Backend 빌드 매뉴얼
   spring.datasource.username=petsns
   spring.datasource.password=pet&meb106
   ```
+
+### 4. Python 설치
+
+
 
 ## 디렉토리 구조
 

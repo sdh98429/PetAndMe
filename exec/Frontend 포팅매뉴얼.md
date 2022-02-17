@@ -50,8 +50,8 @@ Pet&Me Frontend 빌드 매뉴얼
 └─src
     ├─api
     ├─assets  /* image, css, js 등의 리소스 */
-    ├─components  /* 컴포넌트 단위의 Vue 파일 */
-    ├─config  /* 설정 파일 */
+    ├─components  /* 컴포넌트 단위의 Feed, Signup, SimilarAnimal관련 Vue 파일 */
+    ├─config  /* API 경로 설정 파일 */
     ├─css  /* css 디자인 파일 */
     ├─js  /* Taping(영상) 제작 관련 파일 */
     ├─router  /* 컴포넌트 단위의 Vue 파일 */
