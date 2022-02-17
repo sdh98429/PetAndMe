@@ -1,6 +1,6 @@
 <template>
   <div class="sa-feed-container">
-    <button class="bttn-pill bttn-md bttn-warning back-btn" @click="goBack" style="top:0px; position:relative;">돌아가기</button>
+    <button class="bttn-gradient bttn-md bttn-warning back-btn" @click="goBack" style="top:0px; position:relative;">돌아가기</button>
     <h2>#{{animal}} 피드 검색결과</h2>
     <div v-if="feedList">
       <div

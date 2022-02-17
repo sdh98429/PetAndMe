@@ -12,7 +12,7 @@
       <div class="sa-user-id">@{{user.userID}}</div>
       <div class="sa-user-follow">팔로워 {{user.followerCnt}}명</div>
     </div>
-    <button class="bttn-pill bttn-md bttn-warning back-btn" @click="goBack">돌아가기</button>
+    <button class="bttn-gradient bttn-md bttn-warning back-btn" @click="goBack">돌아가기</button>
   </div>
 </template>
 

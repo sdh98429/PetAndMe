@@ -1,6 +1,7 @@
 <template>
   <div class="user-feed-container">
-    <div class="user-profile">
+    <div v-show="!ready" class="loader"></div>
+    <div class="user-profile" v-show="ready">
       <input v-if="(yourUserNumber == myUserNumber)" @change='onInputImage()' accept="image/*" ref="image" type="file" style="display : none">
       <img 
         @click="profileChange()" 
@@ -27,11 +28,16 @@
         <font-awesome-icon icon="venus" style="font-size:18px" v-else></font-awesome-icon>
         ,<span v-if="petMonth < 12">{{petMonth}}개월</span><span v-else>{{petAge}}살</span>
       </div>
-      <TapingViewer
+      <!-- <TapingViewer
         :returnUserId="this.yourUserId"
         class="taping-list"
       >
-      </TapingViewer>
+      </TapingViewer> -->
+      <div class="taping-thumbnail">
+        <video controls>
+          <source :src="`data:video/mp4;base64,${returnVideo[0]}`" type="video/mp4">
+        </video>
+      </div>
       <div class="follow-and-feed-mobile">
         <div class="feed-length">게시글<br>{{feedLength}}</div>
         <div class="follower" @click="toFollowList()">팔로워<br>{{followerCnt}}</div>
@@ -43,11 +49,11 @@
         <div class="follwing" @click="toFollowList()">팔로잉&nbsp;{{followingCnt}}</div>
       </div>
       <div v-if="yourUserNumber != myUserNumber">
-        <button class="follow-btn bttn-pill bttn-sm bttn-warning bttn-block" v-if="!isFollow" @click="followUser">팔로우</button>
-        <button class="follow-btn bttn-pill bttn-sm bttn-warning bttn-block" v-else @click="unfollowUser">언팔로우</button>
+        <button class="follow-btn bttn-gradient bttn-sm bttn-warning bttn-block" v-if="!isFollow" @click="followUser">팔로우</button>
+        <button class="follow-btn bttn-gradient bttn-sm bttn-warning bttn-block" v-else @click="unfollowUser">언팔로우</button>
       </div>
     </div>
-    <div class="user-feed-list">
+    <div class="user-feed-list" v-show="ready">
       <UserFeedList
         :your-user-number="yourUserNumber"
         @feed-length="getFeedLength"
@@ -59,16 +65,17 @@
 <script>
 import axios from 'axios'
 import UserFeedList from '@/components/feed/UserFeedList'
-import {BASE_API_URL} from '@/config/config.js'
+import {BASE_API_URL, VIDEO_API_URL} from '@/config/config.js'
 import '@/css/userfeed.css'
 import move from '@/js/move.js'
-import TapingViewer from '@/components/taping/TapingViewer'
+// import TapingViewer from '@/components/taping/TapingViewer'
 
 
 export default {
   name: 'UserFeed',
   data: function () {
     return {
+      ready: false,
       today: new Date(),
       profile: null,
       petMonth: null,
@@ -81,17 +88,32 @@ export default {
       followingCnt : 0,
       feedLength: null,
       files: [],
+      returnVideo: null,
     }
   },
   components: {
     UserFeedList,
-    TapingViewer
+    // TapingViewer
 
   },
   props: {
 
   },
   methods: {
+    catchTape() {
+      axios({
+        method: 'post',
+        url: `${VIDEO_API_URL}/api/v1/returntape/`,
+        data: {returnUserId:this.yourUserId},
+      })
+        .then(res => {
+          this.returnVideo = res.data
+          console.log(this.returnVideo)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
     getPetAge() {
       // const tempdate = new Date(`${this.profile.petBirth.slice(0,4)}-${this.profile.petBirth.slice(4,6)}-${this.profile.petBirth.slice(6,8)}`)
       const tempdate = new Date(this.profile.petBirth);
@@ -109,6 +131,7 @@ export default {
       })
         .then(response => {
           this.yourUserNumber = response.data
+          this.catchTape()
         })
         .catch(err => {
           console.log(err)
@@ -207,7 +230,7 @@ export default {
       .then(() => {
         this.isFollow = false
         this.getFollowing()
-        this.getFollower()  
+        this.getFollower()
         this.getMyFollow()
       })
       .catch(err => {
@@ -266,18 +289,23 @@ export default {
           alert("수정할 프로필 사진을 넣어주세요")
         }
       }
-    },
+    }, 
 
     asyncCall : async function(){
       await this.getUserProfile();
       await this.getFollowing();
       await this.getFollower();
       await this.getMyFollow();
+      await this.catchTape();
     }
 
   },
   created: function(){
     this.asyncCall()
+    this.catchTape()
+    setTimeout(() => {
+      this.ready = true
+    }, 2000);
   },
   mounted() {
     move('5','90%','#fff')

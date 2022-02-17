@@ -5,7 +5,7 @@
       <div 
         v-for="(nickname, idx) in propData.recommendNicknameList"
         :key="idx"
-        class="nickname-result bttn-pill bttn-sm bttn-default"
+        class="nickname-result bttn-gradient bttn-sm bttn-default"
         :id="`nickname-btn${idx}`"
         @click="changeNickname(idx)"
         @mouseover="onHover(idx)"
@@ -15,8 +15,8 @@
       </div>
     </div>
     <div class="btn-box">
-      <button class="bttn-pill bttn-md bttn-warning back-btn" @click="goBack">돌아가기</button>
-      <button class="bttn-pill bttn-md bttn-warning next-step-btn" @click="getNicknameList">새로추천받기</button>
+      <button class="bttn-gradient bttn-md bttn-warning back-btn" @click="goBack">돌아가기</button>
+      <button class="bttn-gradient bttn-md bttn-warning next-step-btn" @click="getNicknameList">새로추천받기</button>
     </div>
   </div>
 </template>

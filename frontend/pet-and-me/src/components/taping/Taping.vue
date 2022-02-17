@@ -366,8 +366,6 @@ export default {
     color: #666;
   }
 
-  .btn-container {
-  }
 
   .radio1 {
     padding: 2em;

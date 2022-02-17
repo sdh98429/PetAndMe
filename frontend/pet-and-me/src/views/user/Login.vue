@@ -15,10 +15,10 @@
         <span class="highlight"></span>
         <span class="bar"></span>
       </div>
-      <button class="login-btn bttn-pill bttn-md bttn-warning" @click="login">로그인</button>
+      <button class="login-btn bttn-gradient bttn-md bttn-warning" @click="login">로그인</button>
     </form>
     <div>
-      <button class="signup-btn bttn-pill bttn-md bttn-warning">가입하기</button>
+      <button class="signup-btn bttn-gradient bttn-md bttn-warning" @click="signup">가입하기</button>
     </div>
     <!-- <h2> - O R - </h2> -->
     <!-- google -->
@@ -47,6 +47,9 @@ export default {
     ...mapActions([
         'loginGetToken',
     ]),
+    signup(){
+      this.$router.push({name: 'Signup'})
+    },
     login() {
       if (this.credentials.userID === '') {
         alert('아이디 미입력')
@@ -182,8 +185,7 @@ export default {
     top: 60px;
     width: 800px;
     height: calc(100vh - 60px);
-    padding-top: 25%;
-    padding-bottom: 200px;
+    padding-top: 20%;
     margin: 0 auto;
     border: 1px solid #ccc;
     background-color: #fff;

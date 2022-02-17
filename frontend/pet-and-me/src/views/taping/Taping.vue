@@ -1,10 +1,6 @@
 <template>
   <v-app>
     <div class="taping-container">
-
-      <div class="loader" v-if="!ready">
-
-      </div>
       <div v-if="level == 0">
         <h1>Taping하고싶은 피드를 선택하고 <br> 아래에 있는 버튼을 눌러 다음단계로 이동해주세요</h1>
         <div>
@@ -52,7 +48,6 @@ import move from '@/js/move.js'
 export default {
   data() {
     return {
-      ready: false,
       level: 0,
       datas: {
         feedPhotoDtoList: [],
@@ -274,70 +269,6 @@ export default {
     left: 50%;
     transform: translateX(-50%);
     margin-bottom: 30px;
-  }
-}
-.loader {
-  top: 500px;
-  font-size: 10px;
-  margin: 50px auto;
-  text-indent: -9999em;
-  width: 11em;
-  height: 11em;
-  border-radius: 50%;
-  background: #000000;
-  background: -moz-linear-gradient(left, #000000 10%, rgba(0,0,0, 0) 42%);
-  background: -webkit-linear-gradient(left, #000000 10%, rgba(0,0,0, 0) 42%);
-  background: -o-linear-gradient(left, #000000 10%, rgba(0,0,0, 0) 42%);
-  background: -ms-linear-gradient(left, #000000 10%, rgba(0,0,0, 0) 42%);
-  background: linear-gradient(to right, #000000 10%, rgba(0,0,0, 0) 42%);
-  position: relative;
-  -webkit-animation: load3 1.4s infinite linear;
-  animation: load3 1.4s infinite linear;
-  -webkit-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  transform: translateZ(0);
-}
-.loader:before {
-  width: 50%;
-  height: 50%;
-  background: #000000;
-  border-radius: 100% 0 0 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  content: '';
-}
-.loader:after {
-  background: #fff;
-  width: 75%;
-  height: 75%;
-  border-radius: 50%;
-  content: '';
-  margin: auto;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-}
-@-webkit-keyframes load3 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-@keyframes load3 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
   }
 }
 

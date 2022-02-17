@@ -13,22 +13,30 @@
     max-width: 600px;
     position: relative;
     top: 60px;
+    padding-top: 15%;
     margin: 0 auto;
     background-color: #fff;
     height: calc(100vh - 60px);
   }
   .feed-create-container h2 {
+    width: 75%;
+    position: relative;
+    left:50%;
+    transform: translateX(-50%);
     text-align: center;
-    margin : 0 auto;
     font-weight: bold;
     font-size: 24px;
   }
   .feed-create-container h3 {
+    width: 75%;
+    position: relative;
+    left:50%;
+    transform: translateX(-50%);
     font-size: 20px;
     text-align: center;
-    margin : 0 auto;
   }
   .feed-create-container input {
+    width: 75%;
     font-size: 20px;
     text-align: center;
     margin : 0 auto;
@@ -46,14 +54,16 @@
     display: flex;
     justify-content: space-around;
     width: 100%;
+    position: relative;
+    top: 50px;
   } 
   .feed-create-container .back-btn {
-    position: a;
-    width: 200px;
+    position: relative;
+    width: 25%;
   }
   .feed-create-container .create-btn {
     position: relative;
-    width: 200px;
+    width: 25%;
   }
 }
 @media screen and (min-width:768px){
@@ -63,17 +73,18 @@
     top: 60px;
     height: calc(100vh - 60px);
     margin: 0 auto;
+    padding: 15% 0;
     background-color: #fff;
     border: 1px solid #ccc;
   }
   .feed-create-container h2 {
-    width: 300px;
+    width: 500px;
     text-align: center;
     margin: 0 auto;
     font-weight: bold;
   }
   .feed-create-container h3 {
-    width: 300px;
+    width: 500px;
     text-align: center;
     margin : 0 auto;
   }
@@ -87,6 +98,8 @@
     display: flex;
     justify-content: space-around;
     width: 100%;
+    position: relative;
+    top: 50px;
   } 
   .feed-create-container .back-btn {
     position: a;
